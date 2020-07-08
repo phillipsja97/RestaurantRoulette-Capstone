@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestaurantRoulette_Capstone.Data_Access;
 
 namespace RestaurantRoulette_Capstone
 {
@@ -26,6 +27,12 @@ namespace RestaurantRoulette_Capstone
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddTransient<AcceptableRestaurantsRepository>();
+            services.AddTransient<QueryParameterRepository>();
+            services.AddTransient<SessionsRepository>();
+            services.AddTransient<UserFriendsRepository>();
+            services.AddTransient<UsersRepository>();
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
