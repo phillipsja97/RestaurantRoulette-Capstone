@@ -1,0 +1,33 @@
+
+
+.profileCard {
+  display: block;
+  justify-content: center;
+}
+
+.profileCardContainer {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.profilePhoto {
+  height: 250px;
+  width: 250px;
+}
+
+.ant-drawer-body {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonContainer {
+  margin-top: 4em;
+}
+
+.editProfilebuttons {
+  margin-bottom: 5em;
+}
+
+.openSessionButton {
+  margin-top: 5em;
+}

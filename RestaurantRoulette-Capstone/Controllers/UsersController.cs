@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantRoulette_Capstone.Data_Access;
 
 namespace RestaurantRoulette_Capstone.Controllers
 {
@@ -11,5 +12,24 @@ namespace RestaurantRoulette_Capstone.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        UsersRepository _repository;
+
+        public UsersController(UsersRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpGet("{userId}")]
+       public IActionResult GetUserById(int userId)
+        {
+            var user = _repository.GetUserById(userId);
+            if (user == null)
+            {
+                return NotFound("No User found with that Id");
+            } else
+            {
+                return Ok(user);
+            }
+        }
     }
 }
