@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import firebase from 'firebase';
+import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Menu, Badge, Avatar, Button } from 'antd';
 import { MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
 import Drawer from '../Drawer/Drawer';
@@ -7,48 +8,55 @@ import userData from '../../../Helpers/Data/userData';
 import './Menu.scss';
 import 'antd/dist/antd.css';
 
-export default function Navbar(props) {
-  const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({});
+class Navbar extends React.Component {
+  state = {
+    visible: false,
+    user: {},
+  }
 
-  const showDrawer = () => {
-    setVisible(true);
+  showDrawer = () => {
+    this.setState({ visible: true });
   };
 
-  const onClose = () => {
-    setVisible(false);
+  onClose = () => {
+    this.setState({ visible: false });
   };
 
-  useEffect(() => {
-    userData.getUserByUserId()
-      .then((response) => {
-        setUser(response);
-      })
-      .catch((errorFromGetUser) => console.error(errorFromGetUser));
-  }, []);
-
-  const logMeOut = (e) => {
+  logMeOut = (e) => {
     e.preventDefault();
     firebase.auth().signOut();
   };
 
-  const loginClickEvent = (e) => {
+  loginClickEvent = (e) => {
     e.preventDefault();
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider);
   };
 
-  return (
-    <div className="menu">
-      <Drawer visible={visible} onClose={onClose} user={user}/>
-        <Menu mode="horizontal" className="menu">
-          <MenuFoldOutlined onClick={showDrawer} style={{ fontSize: '32px', color: '#000000' }} className='drawerButton' />
-          <Badge count={1} className='avatarButton'>
-            <Avatar shape="square" icon={<UserOutlined />} />
-          </Badge>
-          <Button onClick={loginClickEvent}>Login</Button>
-          <Button onClick={logMeOut}>Logout</Button>
-        </Menu>
-    </div>
-  );
+  componentDidMount = () => {
+    userData.getUserByUserId()
+      .then((response) => {
+        this.setState({ user: response });
+      })
+      .catch((errorFromGetUser) => console.error(errorFromGetUser));
+  }
+
+  render() {
+    const { visible, user } = this.state;
+    return (
+      <div className="menu">
+        <Drawer visible={visible} onClose={this.onClose} user={user}/>
+          <Menu mode="horizontal" className="menu">
+            <MenuFoldOutlined onClick={this.showDrawer} style={{ fontSize: '32px', color: '#000000' }} className='drawerButton' />
+            <Badge count={1} className='avatarButton'>
+              <Avatar shape="square" icon={<UserOutlined />} />
+            </Badge>
+            <Button onClick={this.loginClickEvent}>Login</Button>
+            <Button onClick={this.logMeOut}>Logout</Button>
+          </Menu>
+      </div>
+    );
+  }
 }
+
+export default Navbar;

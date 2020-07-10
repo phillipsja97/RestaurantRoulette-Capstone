@@ -15,7 +15,6 @@ export default function DrawerOption(props) {
   const Email = props.user.email;
   const PhoneNumber = props.user.phoneNumber;
 
-
   return (
     <>
       <Drawer

@@ -7,6 +7,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import firebase from 'firebase/app';
+import 'firebase/auth';
 import firebaseConnect from '../Helpers/Data/connection';
 import Home from '../Components/Pages/Home/Home';
 import Sessions from '../Components/Pages/Sessions/Sessions';
@@ -17,12 +18,12 @@ import 'antd/dist/antd.css';
 
 firebaseConnect();
 
-// const PublicRoute = ({ component: Component, authed, ...rest }) => {
-//   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
-//   return <Route {...rest} render={(props) => routeChecker(props)} />;
-// };
+const PublicRoute = ({ component: Component, authed, ...rest }) => {
+  const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
+  return <Route {...rest} render={(props) => routeChecker(props)} />;
+};
 const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = (props) => (authed === true ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
+  const routeChecker = (props) => (authed === true ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />);
   return <Route {...rest} render={(props) => routeChecker(props)} />;
 };
 
@@ -52,9 +53,12 @@ class App extends React.Component {
         <Router>
           <Menu authed={authed} />
             <Switch>
-              <Route path="/" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
-              <PrivateRoute path="/sessions" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
-              <PrivateRoute path="/swipe" exact component={Swipe} authed={authed} />
+              {/* <PublicRoute path="/auth" exact component={Home} authed={authed} />
+              <PrivateRoute path="/" exact component={Sessions} authed={authed} />
+              <PrivateRoute path="/swipe" exact component={Swipe} authed={authed} /> */}
+              <PublicRoute path="/auth" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
             </Switch>
         </Router>
       </div>
