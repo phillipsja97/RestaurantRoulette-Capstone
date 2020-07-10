@@ -59,15 +59,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, uid } = this.state;
     return (
       <div className="App">
         <Router>
           <Menu authed={authed} />
             <Switch>
-              {/* <PublicRoute path="/auth" exact component={Home} authed={authed} />
-              <PrivateRoute path="/" exact component={Sessions} authed={authed} />
-              <PrivateRoute path="/swipe" exact component={Swipe} authed={authed} /> */}
               <PublicRoute path="/auth" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />

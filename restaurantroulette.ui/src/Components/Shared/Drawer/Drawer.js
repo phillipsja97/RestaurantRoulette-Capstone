@@ -6,19 +6,30 @@ import {
 } from 'antd';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-// import userData from '../../../Helpers/Data/userData';
+import userData from '../../../Helpers/Data/userData';
+import authData from '../../../Helpers/Data/authData';
 import 'antd/dist/antd.css';
 import './Drawer.scss';
 
 const pic = 'https://4xaf73575m-flywheel.netdna-ssl.com/wp-content/uploads/2020/03/Blank-Person.jpg';
 
 export default class DrawerOption extends React.Component {
+  state = {
+    user: {},
+  }
+
+  componentDidMount() {
+    userData.getUserByFirebaseUID(authData.getUid())
+      .then((response) => {
+        this.setState({ user: response });
+      })
+      .catch((errorFromDrawerUser) => console.error(errorFromDrawerUser));
+  }
 
   render() {
-    const { user, onClose, visible } = this.props;
-    const fullName = `${user.firstName} ${user.lastName}`;
-    const Email = user.email;
-    const PhoneNumber = user.phoneNumber;
+    const { onClose, visible } = this.props;
+    const { user } = this.state;
+    const fullName = `${user.firstName}${user.lastName}`;
     return (
       <>
         <Drawer
@@ -49,8 +60,8 @@ export default class DrawerOption extends React.Component {
             </div>
             <div className="descriptionCard">
               <Card title={fullName} style={{ width: 300, height: 250 }}>
-                <p>{Email}</p>
-                <p>{PhoneNumber}</p>
+                <p>{user.email}</p>
+                <p>{user.phoneNumber}</p>
               </Card>
             </div>
           </div>
