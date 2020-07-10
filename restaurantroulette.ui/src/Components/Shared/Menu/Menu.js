@@ -1,40 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, Badge, Avatar } from 'antd';
-import { MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import {
+  Menu,
+  Badge,
+  Button,
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import Drawer from '../Drawer/Drawer';
-import userData from '../../../Helpers/Data/userData';
 import './Menu.scss';
 import 'antd/dist/antd.css';
 
-export default function Navbar() {
-  const [visible, setVisible] = useState(false);
-  const [user, setUser] = useState({});
+class MenuComponent extends React.Component {
+  state = {
+    visible: false,
+  }
 
-  const showDrawer = () => {
-    setVisible(true);
+  showDrawer = () => {
+    this.setState({ visible: true });
   };
 
-  const onClose = () => {
-    setVisible(false);
+  onClose = () => {
+    this.setState({ visible: false });
   };
 
-  useEffect(() => {
-    userData.getUserByUserId()
-      .then((response) => {
-        setUser(response);
-      })
-      .catch((errorFromGetUser) => console.error(errorFromGetUser));
-  }, []);
+  logMeOut = (e) => {
+    e.preventDefault();
+    firebase.auth().signOut();
+  };
 
-  return (
-    <div className="menu">
-      <Drawer visible={visible} onClose={onClose} user={user}/>
-        <Menu onClick={showDrawer} mode="horizontal" className="menu">
-          <MenuFoldOutlined onClick={showDrawer} style={{ fontSize: '32px', color: '#000000' }} className='drawerButton' />
-          <Badge count={1} className='avatarButton'>
-            <Avatar shape="square" icon={<UserOutlined />} />
-          </Badge>
-        </Menu>
-    </div>
-  );
+  loginClickEvent = (e) => {
+    e.preventDefault();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+      .then((cred) => {
+      // get token from firebase
+        cred.user.getIdToken()
+          // save the token to the session storage
+          .then((token) => sessionStorage.setItem('token', token));
+      });
+  };
+
+  render() {
+    const { visible } = this.state;
+    const { authed } = this.props;
+    const user = firebase.auth().currentUser;
+    return (
+      <div className="menu">
+        {(authed)
+          ? <Menu mode="horizontal" className="menu">
+              <Drawer visible={visible} onClose={this.onClose} authed={authed}/>
+                <Button type="ghost" onClick={this.logMeOut} className="avatarButton">Logout</Button>
+                    <Badge count={1} className='avatarButton'>
+                        <Button type="ghost" icon={<UserOutlined />} onClick={this.showDrawer} />
+                    </Badge>
+                      <p className="avatarButton">Logged In: {user.displayName}</p>
+            </Menu>
+          : <Menu mode="horizontal" className="menu">
+              <Button type="ghost" onClick={this.loginClickEvent} className="avatarButton">Login</Button>
+            </Menu>
+            }
+      </div>
+    );
+  }
 }
+
+export default MenuComponent;

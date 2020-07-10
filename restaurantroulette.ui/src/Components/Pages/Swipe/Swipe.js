@@ -1,7 +1,9 @@
 import React from 'react';
 
-export default function Swipe() {
+export default function Swipe(props) {
   return (
-    <h1>Swipe</h1>
+    <div className="Swipe">
+      { (props.authed) ? <h1>authed in swipe</h1> : <h1>not authed in swipe</h1> }
+    </div>
   );
 }

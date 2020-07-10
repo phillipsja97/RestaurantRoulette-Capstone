@@ -31,5 +31,18 @@ namespace RestaurantRoulette_Capstone.Controllers
                 return Ok(user);
             }
         }
+
+        [HttpGet("uid/{firebaseUID}")]
+        public IActionResult GetUserByFirebaseUID(string firebaseUID)
+        {
+            var user = _repository.GetUserByFirebaseUID(firebaseUID);
+            if (user == null)
+            {
+                return NotFound("No user found with that UID");
+            } else
+            {
+                return Ok(user);
+            }
+        }
     }
 }
