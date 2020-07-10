@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { Menu, Badge, Avatar, Button } from 'antd';
@@ -8,7 +8,7 @@ import userData from '../../../Helpers/Data/userData';
 import './Menu.scss';
 import 'antd/dist/antd.css';
 
-class Navbar extends React.Component {
+class MenuComponent extends React.Component {
   state = {
     visible: false,
     user: {},
@@ -33,7 +33,7 @@ class Navbar extends React.Component {
     firebase.auth().signInWithPopup(provider);
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     userData.getUserByUserId()
       .then((response) => {
         this.setState({ user: response });
@@ -42,21 +42,29 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const { visible, user } = this.state;
+    const { user, visible } = this.state;
+    const { authed } = this.props;
     return (
       <div className="menu">
-        <Drawer visible={visible} onClose={this.onClose} user={user}/>
+        <Drawer user={user} visible={visible} onClose={this.onClose} authed={authed}/>
           <Menu mode="horizontal" className="menu">
-            <MenuFoldOutlined onClick={this.showDrawer} style={{ fontSize: '32px', color: '#000000' }} className='drawerButton' />
-            <Badge count={1} className='avatarButton'>
-              <Avatar shape="square" icon={<UserOutlined />} />
-            </Badge>
-            <Button onClick={this.loginClickEvent}>Login</Button>
-            <Button onClick={this.logMeOut}>Logout</Button>
+            {(authed)
+              ? <Button type="ghost" onClick={this.logMeOut} className="avatarButton">Logout</Button>
+              : <Button type="ghost" onClick={this.loginClickEvent} className="avatarButton">Login</Button>
+            }
+            {(authed)
+              ? <>
+                <Badge count={1} className='avatarButton'>
+                    <Button type="ghost" icon={<UserOutlined />} onClick={this.showDrawer} />
+                </Badge>
+                <p className="avatarButton">Logged In: {user.firstName}{user.lastName}</p>
+                </>
+              : <Badge></Badge>
+            }
           </Menu>
       </div>
     );
   }
 }
 
-export default Navbar;
+export default MenuComponent;

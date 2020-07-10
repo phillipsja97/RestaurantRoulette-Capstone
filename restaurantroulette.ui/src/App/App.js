@@ -1,3 +1,5 @@
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable arrow-parens */
 /* eslint-disable arrow-body-style */
 import React from 'react';
 import {
@@ -22,9 +24,19 @@ const PublicRoute = ({ component: Component, authed, ...rest }) => {
   const routeChecker = (props) => (authed === false ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/', state: { from: props.location } }} />);
   return <Route {...rest} render={(props) => routeChecker(props)} />;
 };
-const PrivateRoute = ({ component: Component, authed, ...rest }) => {
-  const routeChecker = (props) => (authed === true ? <Component {...props} {...rest}/> : <Redirect to={{ pathname: '/auth', state: { from: props.location } }} />);
-  return <Route {...rest} render={(props) => routeChecker(props)} />;
+
+const PrivateRoute = ({ component: RouteComponent, authed, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={routeProps => authed ? (
+        <RouteComponent {...routeProps} />
+      ) : (
+        <Redirect to={'/auth'} />
+      )
+    }
+    />
+  );
 };
 
 class App extends React.Component {
