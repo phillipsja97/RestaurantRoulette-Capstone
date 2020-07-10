@@ -30,5 +30,19 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return user;
             }
         }
+
+        public Users GetUserByFirebaseUID(string firebaseUID)
+        {
+            var sql = @"select *
+                         from Users
+                            where Users.FirebaseUID = @firebaseUID";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { firebaseUID = firebaseUID };
+                var user = db.QueryFirstOrDefault<Users>(sql, parameter);
+                return user;
+            }
+        }
     }
 }
