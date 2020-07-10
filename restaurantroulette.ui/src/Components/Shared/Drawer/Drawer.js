@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Drawer,
   Button,
@@ -10,8 +10,6 @@ import userData from '../../../Helpers/Data/userData';
 import authData from '../../../Helpers/Data/authData';
 import 'antd/dist/antd.css';
 import './Drawer.scss';
-
-const pic = 'https://4xaf73575m-flywheel.netdna-ssl.com/wp-content/uploads/2020/03/Blank-Person.jpg';
 
 export default class DrawerOption extends React.Component {
   state = {
@@ -30,6 +28,7 @@ export default class DrawerOption extends React.Component {
     const { onClose, visible } = this.props;
     const { user } = this.state;
     const fullName = `${user.firstName}${user.lastName}`;
+    const photo = firebase.auth().currentUser.photoURL;
     return (
       <>
         <Drawer
@@ -56,7 +55,7 @@ export default class DrawerOption extends React.Component {
         <div className="profileCard">
           <div className="profileCardContainer">
             <div className="avatarImage">
-              <img alt="example" src={pic} className="profilePhoto"/>
+              <img alt="example" src={photo} className="profilePhoto"/>
             </div>
             <div className="descriptionCard">
               <Card title={fullName} style={{ width: 300, height: 250 }}>

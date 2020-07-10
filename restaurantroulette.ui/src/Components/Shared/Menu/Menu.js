@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { Menu, Badge, Avatar, Button } from 'antd';
-import { MenuFoldOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  Menu,
+  Badge,
+  Button,
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import Drawer from '../Drawer/Drawer';
-import userData from '../../../Helpers/Data/userData';
-import authData from '../../../Helpers/Data/authData';
 import './Menu.scss';
 import 'antd/dist/antd.css';
 
