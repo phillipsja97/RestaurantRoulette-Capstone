@@ -1,7 +1,12 @@
 import React from 'react';
 
-export default function Sessions() {
-  return (
-    <h1>Sessions</h1>
-  );
+class Sessions extends React.Component {
+  render() {
+    const { authed } = this.props;
+    return (
+      (authed) ? <h1>authed</h1> : <h1>not authed</h1>
+    );
+  }
 }
+
+export default Sessions;
