@@ -16,7 +16,7 @@ export default class DrawerOption extends React.Component {
     user: {},
   }
 
-  componentDidMount() {
+  getUserByUID = () => {
     userData.getUserByFirebaseUID(authData.getUid())
       .then((response) => {
         this.setState({ user: response });
@@ -24,11 +24,15 @@ export default class DrawerOption extends React.Component {
       .catch((errorFromDrawerUser) => console.error(errorFromDrawerUser));
   }
 
+  componentDidMount() {
+    setTimeout(this.getUserByUID, 4000);
+  }
+
   render() {
     const { onClose, visible } = this.props;
     const { user } = this.state;
-    const fullName = `${user.firstName}${user.lastName}`;
     const photo = firebase.auth().currentUser.photoURL;
+    const blankPhoto = 'https://immedilet-invest.com/wp-content/uploads/2016/01/user-placeholder.jpg';
     return (
       <>
         <Drawer
@@ -55,10 +59,13 @@ export default class DrawerOption extends React.Component {
         <div className="profileCard">
           <div className="profileCardContainer">
             <div className="avatarImage">
-              <img alt="example" src={photo} className="profilePhoto"/>
+              {(photo === null)
+                ? <img alt="example" src={blankPhoto} className="profilePhoto"/>
+                : <img alt="example" src={photo} className="profilePhoto"/>
+              }
             </div>
             <div className="descriptionCard">
-              <Card title={fullName} style={{ width: 300, height: 250 }}>
+              <Card title={user.fullName} style={{ width: 300, height: 250 }}>
                 <p>{user.email}</p>
                 <p>{user.phoneNumber}</p>
               </Card>

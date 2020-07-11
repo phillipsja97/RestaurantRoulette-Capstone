@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { Form, Input, Button } from 'antd';
@@ -6,11 +6,8 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './LoginForm.scss';
 
 export default function NormalLoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const onFinish = (values) => {
-    firebase.auth().createUserWithEmailAndPassword(values.email, values.password);
+    firebase.auth().signInWithEmailAndPassword(values.email, values.password);
   };
 
   return (
