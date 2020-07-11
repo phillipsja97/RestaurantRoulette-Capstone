@@ -44,5 +44,66 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return user;
             }
         }
+
+        public Users GetUserByEmail(string email)
+        {
+            var sql = @"select *
+                        from Users
+                            where Users.Email = @email";
+            
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { email = email };
+                var user = db.QueryFirstOrDefault<Users>(sql, parameter);
+                return user;
+            }
+        }
+
+        public IEnumerable<NewUser> SignUpNewUser(NewUser userToSignUp)
+        {
+            var sql = @"insert into Users (FullName, Email, PhoneNumber, FirebaseUID)
+                          output inserted.*
+                            values (@FullName, @Email, @PhoneNumber, @FirebaseUID)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    FullName = userToSignUp.FullName,
+                    Email = userToSignUp.Email,
+                    PhoneNumber = userToSignUp.PhoneNumber,
+                    FirebaseUID = userToSignUp.FirebaseUID
+                };
+                var user = db.Query<NewUser>(sql, parameters);
+                return user;
+            }
+        }
+
+        public IEnumerable<Users> UpdateUser(Users user)
+        {
+
+            var sql = @"update Users
+	                    set Users.FullName,
+                            Users.Email = @Email,
+                            Users.FirebaseUID = @FirebaseUID,
+                            Users.PhoneNumber = @PhoneNumber
+                                output inserted.*		                        
+                                    where Users.Email = @Email";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    FirebaseUID = user.FirebaseUID,
+                    PhoneNumber = user.PhoneNumber
+                };
+                var updatedUser = db.Query<Users>(sql, parameters);
+                return updatedUser;
+
+            }
+        }
+
     }
 }

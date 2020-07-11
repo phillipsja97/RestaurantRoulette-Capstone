@@ -12,4 +12,10 @@ const getUserByFirebaseUID = (uid) => new Promise((resolve, reject) => {
     .catch((errorFromUserData) => reject(errorFromUserData));
 });
 
-export default { getUserByUserId, getUserByFirebaseUID };
+const SignUpOrSignIn = (userToAdd) => new Promise((resolve, reject) => {
+  axios.post('https://localhost:44347/api/users/newUser', userToAdd)
+    .then((result) => resolve(result.data))
+    .catch((errorFromUserData) => reject(errorFromUserData));
+});
+
+export default { getUserByUserId, getUserByFirebaseUID, SignUpOrSignIn };

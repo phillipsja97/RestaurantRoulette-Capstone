@@ -50,9 +50,9 @@ class MenuComponent extends React.Component {
         {(authed)
           ? <Menu mode="horizontal" className="menu">
               <Drawer visible={visible} onClose={this.onClose} authed={authed}/>
-                <Button type="ghost" onClick={this.logMeOut} className="avatarButton">Logout</Button>
+                <Button onClick={this.logMeOut} className="avatarButton" ghost>Logout</Button>
                     <Badge count={1} className='avatarButton'>
-                        <Button type="ghost" icon={<UserOutlined />} onClick={this.showDrawer} />
+                        <Button type="primary" icon={<UserOutlined />} onClick={this.showDrawer} ghost/>
                     </Badge>
                       <p className="avatarButton">Logged In: {user.displayName}</p>
             </Menu>

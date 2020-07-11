@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantRoulette_Capstone.Data_Access;
+using RestaurantRoulette_Capstone.Models;
 
 namespace RestaurantRoulette_Capstone.Controllers
 {
@@ -43,6 +44,18 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 return Ok(user);
             }
+        }
+
+        [HttpPost("newUser")]
+        public IActionResult GetUserOrSignUpUser(NewUser userToSignUp)
+        {
+            var newUser = _repository.SignUpNewUser(userToSignUp);
+            if (newUser == null)
+            {
+                return BadRequest("No User was created. Try again.");
+            }
+            return Created("New User Created", newUser);
+
         }
     }
 }
