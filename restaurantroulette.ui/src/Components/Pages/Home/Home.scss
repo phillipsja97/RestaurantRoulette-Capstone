@@ -1,5 +1,5 @@
 .home {
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .loginCard {
-  height: 15em;
+  height: 25em;
   background-color: aqua;
   position: absolute;
   display: flex;
@@ -37,7 +37,17 @@
   justify-content: center;
 }
 
-.registerForAccount {
+.loginButtonGroup {
   display: flex;
   justify-content: center;
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+.googleSignIn {
+  margin-right: .5em;
+}
+
+.registerLogin {
+  margin-left: .5em;
 }

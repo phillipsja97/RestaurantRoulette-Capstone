@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Divider } from 'antd';
+import LoginForm from '../../Shared/LoginForm/LoginForm';
 import './Home.scss';
-
-
 
 export default function Home(props) {
   return (
@@ -13,18 +12,23 @@ export default function Home(props) {
           <Card style={{ width: 600, backgroundColor: 'gray' }} className="loginCard">
             <div className="loginCardContent">
               <div className="signInWithGoogle">
-                <Button ghost>Sign In With Google Account</Button>
+                <LoginForm />
               </div>
                 <Divider>Or</Divider>
-              <div className="registerForAccount">
-                <Button ghost>Register For An Account</Button>
+              <div className="loginButtonGroup">
+                <div className="googleSignIn">
+                  <Button ghost>Sign In With Google Email</Button>
+                </div>
+                <div className="registerButton">
+                  <Button ghost>Register For An Account</Button>
+                </div>
               </div>
             </div>
           </Card>
          </div>
       </div>
-      { (props.authed) ? <h1>authed in home</h1> : <h1>not authed in home</h1> }
-      <Link to={'/swipe'}><Button>Swipe</Button></Link>
-       </div>
+        <div className="bottomHomePage">
+        </div>
+    </div>
   );
 }
