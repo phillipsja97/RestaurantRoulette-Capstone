@@ -16,6 +16,7 @@ import Sessions from '../Components/Pages/Sessions/Sessions';
 import Swipe from '../Components/Pages/Swipe/Swipe';
 import Menu from '../Components/Shared/Menu/Menu';
 import NewSession from '../Components/Pages/NewSession/NewSession';
+import SessionDetails from '../Components/Pages/SessionDetails/SessionDetails';
 import './App.scss';
 import 'antd/dist/antd.css';
 
@@ -68,6 +69,7 @@ class App extends React.Component {
             <Switch>
               <PublicRoute path="/auth" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/session/:sessionId" exact component={(props) => <SessionDetails {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession" exact component={(props) => <NewSession {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
             </Switch>
