@@ -9,13 +9,19 @@ import CardContent from '@bit/mui-org.material-ui.card-content';
 import CardMedia from '@bit/mui-org.material-ui.card-media';
 import Button from '@bit/mui-org.material-ui.button';
 import Typography from '@bit/mui-org.material-ui.typography';
+import Chip from '@bit/mui-org.material-ui.chip';
+import FaceIcon from '@bit/mui-org.material-ui-icons.face';
 import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
 import sessionData from '../../../Helpers/Data/sessionData';
+import './SessionCard.scss';
 
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
     margin: '2em',
+  },
+  userTitleCard: {
+    marginBottom: '10px',
   },
 });
 
@@ -45,13 +51,11 @@ export default function SessionCard(props) {
           <Typography gutterBottom variant="h5" component="h2">
             <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
           </Typography>
-          <Typography variant="h5" component="h2">
+          <Typography variant="h5" component="h2" className={classes.userTitleCard}>
             Users Involved:
           </Typography>
           {users.map((user) =>
-          <Typography gutterBottom variant="body1" component="body1">
-            {user.fullName},
-          </Typography>)
+          <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
           }
         </CardContent>
       </CardActionArea>

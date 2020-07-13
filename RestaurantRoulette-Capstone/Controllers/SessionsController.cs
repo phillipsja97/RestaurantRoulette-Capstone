@@ -23,7 +23,7 @@ namespace RestaurantRoulette_Capstone.Controllers
         }
 
         [HttpGet("{uid}")]
-        public List<SessionsWithUser> GetSessionsByUserId(string uid)
+        public IActionResult GetSessionsByUserId(string uid)
         {
             var userId = _UsersRepository.GetUserByFirebaseUID(uid);
             var sessions = _repository.GetSessionsByUserId(userId.ID);
@@ -32,11 +32,11 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 NotFound("You have no session history");
             }
-            return sessions;
+            return Ok(sessions);
         }
 
         [HttpGet("needsSwipedSessions/{uid}")]
-        public List<OpenSession> GetNeedsSwipedSessionsByUserId(string uid)
+        public IActionResult GetNeedsSwipedSessionsByUserId(string uid)
         {
             var userId = _UsersRepository.GetUserByFirebaseUID(uid);
             var needSwipedSessions = _repository.GetNeedsSwipedSessionsByUserId(userId.ID);
@@ -45,11 +45,11 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 NotFound("You don't have any open sessions");
             }
-            return needSwipedSessions;
+            return Ok(needSwipedSessions);
         }
 
         [HttpGet("users/{sessionId}")]
-        public List<Users> GetAllUsersOnASession(int sessionId)
+        public IActionResult GetAllUsersOnASession(int sessionId)
         {
             var users = _repository.GetAllUsersOnASession(sessionId);
             var noUsers = !users.Any();
@@ -57,7 +57,18 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 NotFound("No users");
             }
-            return users;
+            return Ok(users);
+        }
+
+        [HttpGet("singleSession/{sessionId}")]
+        public IActionResult GetASession(int sessionId)
+        {
+            var singleSession = _repository.GetASession(sessionId);
+            if (singleSession == null)
+            {
+                NotFound("No session to be found");
+            }
+            return Ok(singleSession);
         }
     }
 }

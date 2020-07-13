@@ -57,17 +57,29 @@ namespace RestaurantRoulette_Capstone.Data_Access
         {
             var sql = @"select *
 	                        from UserSessions
-		                        join Sessions
-			                        on Sessions.ID = UserSessions.sessionId
 				                        join Users
 					                        on UserSessions.UserId = Users.ID
-						                        where Sessions.Id = 2";
+						                        where UserSessions.sessionId = @sessionId";
 
             using (var db = new SqlConnection(ConnectionString))
             {
                 var parameter = new { sessionId = sessionId };
                 var users = db.Query<Users>(sql, parameter).ToList();
                 return users;
+            }
+        }
+
+        public IEnumerable<Sessions> GetASession(int sessionId)
+        {
+            var sql = @"select *
+	                       from Sessions
+							    where Sessions.Id = @sessionId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { sessionId = sessionId };
+                var session = db.Query<Sessions>(sql, parameter);
+                return session;
             }
         }
     }
