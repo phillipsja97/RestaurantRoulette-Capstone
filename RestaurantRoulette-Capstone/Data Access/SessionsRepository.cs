@@ -32,5 +32,43 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return sessions;
             }
         }
+
+        public List<OpenSession> GetNeedsSwipedSessionsByUserId(int userId)
+        {
+            var sql = @"select UserSessions.sessionId, UserSessions.UserId, UserSessions.isSwiped, Sessions.OwnerId, 
+                        Sessions.isSessionComplete, Users.fullName, Users.FirebaseUID
+                            from UserSessions
+                                join Sessions
+                                    on Sessions.ID = UserSessions.sessionId
+                                        join Users
+                                            on UserSessions.UserId = Users.ID
+                                                where UserSessions.UserId = @userId
+                                                  and Sessions.isSessionComplete = 0";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { userId = userId };
+                var needSwipedSessions = db.Query<OpenSession>(sql, parameter).ToList();
+                return needSwipedSessions;
+            }
+        }
+
+        public List<Users> GetAllUsersOnASession(int sessionId)
+        {
+            var sql = @"select *
+	                        from UserSessions
+		                        join Sessions
+			                        on Sessions.ID = UserSessions.sessionId
+				                        join Users
+					                        on UserSessions.UserId = Users.ID
+						                        where Sessions.Id = 2";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { sessionId = sessionId };
+                var users = db.Query<Users>(sql, parameter).ToList();
+                return users;
+            }
+        }
     }
 }

@@ -14,22 +14,50 @@ namespace RestaurantRoulette_Capstone.Controllers
     public class SessionsController : ControllerBase
     {
         SessionsRepository _repository;
+        UsersRepository _UsersRepository;
 
-        public SessionsController(SessionsRepository repository)
+        public SessionsController(SessionsRepository repository, UsersRepository UsersRepository)
         {
             _repository = repository;
+            _UsersRepository = UsersRepository;
         }
 
-        [HttpGet("openSessions/{userId}")]
-        public List<SessionsWithUser> GetSessionsByUserId(int userId)
+        [HttpGet("{uid}")]
+        public List<SessionsWithUser> GetSessionsByUserId(string uid)
         {
-            var openSessions = _repository.GetSessionsByUserId(userId);
-            var noSessions = !openSessions.Any();
+            var userId = _UsersRepository.GetUserByFirebaseUID(uid);
+            var sessions = _repository.GetSessionsByUserId(userId.ID);
+            var noSessions = !sessions.Any();
             if (noSessions)
             {
-                NotFound("You have no open Sessions");
+                NotFound("You have no session history");
             }
-            return openSessions;
+            return sessions;
+        }
+
+        [HttpGet("needsSwipedSessions/{uid}")]
+        public List<OpenSession> GetNeedsSwipedSessionsByUserId(string uid)
+        {
+            var userId = _UsersRepository.GetUserByFirebaseUID(uid);
+            var needSwipedSessions = _repository.GetNeedsSwipedSessionsByUserId(userId.ID);
+            var noNeedSwipedSessions = !needSwipedSessions.Any();
+            if (noNeedSwipedSessions)
+            {
+                NotFound("You don't have any open sessions");
+            }
+            return needSwipedSessions;
+        }
+
+        [HttpGet("users/{sessionId}")]
+        public List<Users> GetAllUsersOnASession(int sessionId)
+        {
+            var users = _repository.GetAllUsersOnASession(sessionId);
+            var noUsers = !users.Any();
+            if (noUsers)
+            {
+                NotFound("No users");
+            }
+            return users;
         }
     }
 }
