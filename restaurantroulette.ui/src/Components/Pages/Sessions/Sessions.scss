@@ -20,11 +20,12 @@
   margin: 2em;
 }
 
-// .openSessions {
-//   display: flex;
-//   flex-wrap: wrap;
-//   margin: 2em;
-// }
+.openSessionTag {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2em;
+}
 
 .openSessionData {
   display: inline-flex;

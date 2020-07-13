@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Divider } from 'antd';
+import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
 import sessionData from '../../../Helpers/Data/sessionData';
 import userData from '../../../Helpers/Data/userData';
 import authData from '../../../Helpers/Data/authData';
@@ -13,7 +14,7 @@ export default function Sessions(props) {
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    sessionData.getSessionsByUID(authData.getUid())
+    sessionData.getSessionsThatNeedSwipedByUID(authData.getUid())
       .then((result) => {
         setSessions(result);
       })
@@ -29,8 +30,12 @@ export default function Sessions(props) {
         <div className="openTitle">
           <h1>Open Sessions</h1>
         </div>
+        <div className="openSessionTag">
+          <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
+          <EmphasisTag text="You need to Swipe!" type='urgent' size='small'/>
+        </div>
         <div className="openSessionData">
-          {sessions.map((session) => <SessionCard key={session.id} session={session} />)}
+          {sessions.map((session) => <SessionCard key={session.sessionId} session={session} />)}
         </div>
       </div>
       <div className="previousSessions">

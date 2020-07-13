@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bit/fho-wtag.tofa.emphasis-tag": "0.0.2",
     "@bit/mui-org.material-ui.button": "^4.9.10",
     "@bit/mui-org.material-ui.card": "^4.9.10",
     "@bit/mui-org.material-ui.card-action-area": "^4.9.10",
