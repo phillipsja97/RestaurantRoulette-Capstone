@@ -3,7 +3,7 @@ import axios from 'axios';
 const getSessionsByUID = (uid) => new Promise((resolve, reject) => {
   axios.get(`https://localhost:44347/api/sessions/${uid}`)
     .then((result) => resolve(result.data))
-    .catch((errorFromUserData) => reject(errorFromUserData));
+    .catch((errorFromGetSessions) => reject(errorFromGetSessions));
 });
 
 const getSessionsThatNeedSwipedByUID = (uid) => new Promise((resolve, reject) => {
@@ -18,4 +18,15 @@ const getAllUsersOnASession = (sessionId) => new Promise((resolve, reject) => {
     .catch((errorFromGetSessions) => reject(errorFromGetSessions));
 });
 
-export default { getSessionsByUID, getSessionsThatNeedSwipedByUID, getAllUsersOnASession };
+const getASession = (sessionId) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/sessions/singleSession/${sessionId}`)
+    .then((result) => resolve(result.data))
+    .catch((errorFromGetSessions) => reject(errorFromGetSessions));
+});
+
+export default {
+  getSessionsByUID,
+  getSessionsThatNeedSwipedByUID,
+  getAllUsersOnASession,
+  getASession,
+};

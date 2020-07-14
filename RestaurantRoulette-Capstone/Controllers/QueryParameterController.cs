@@ -30,5 +30,7 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(sessionParams);
         }
+
+        // need to set up a create session, and then add query params.
     }
 }

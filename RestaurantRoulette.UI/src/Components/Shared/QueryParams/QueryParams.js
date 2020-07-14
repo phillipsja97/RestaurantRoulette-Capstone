@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import GridList from '@bit/mui-org.material-ui.grid-list';
 import GridListTile from '@bit/mui-org.material-ui.grid-list-tile';
@@ -13,62 +13,59 @@ const tileData = [
     value: 'bbq',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/burgers.jpg',
+    img: 'https://images.pexels.com/photos/511763/pexels-photo-511763.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     title: 'Breakfast & Brunch',
     value: 'breakfast_brunch',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/camera.jpg',
-    title: 'Camera',
-    author: 'Danson67',
+    img: 'https://images.pexels.com/photos/2089717/pexels-photo-2089717.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    title: 'Burgers',
+    value: 'burgers',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/morning.jpg',
-    title: 'Morning',
-    author: 'fancycrave1',
-    featured: true,
+    img: 'https://images.pexels.com/photos/1907228/pexels-photo-1907228.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    title: 'Chinese',
+    value: 'chinese',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/hats.jpg',
-    title: 'Hats',
-    author: 'Hans',
+    img: 'https://cdn.pixabay.com/photo/2019/10/12/15/12/gyros-4544061_1280.jpg',
+    title: 'Greek',
+    value: 'greek',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/honey.jpg',
-    title: 'Honey',
-    author: 'fancycravel',
+    img: 'https://images.pexels.com/photos/2474661/pexels-photo-2474661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    title: 'Indian',
+    value: 'indpak',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/vegetables.jpg',
-    title: 'Vegetables',
-    author: 'jill111',
-    cols: 2,
+    img: 'https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    title: 'Italian',
+    value: 'italian',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/plant.jpg',
-    title: 'Water plant',
-    author: 'BkrmadtyaKarki',
+    img: 'https://images.pexels.com/photos/2087748/pexels-photo-2087748.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    title: 'Mexican',
+    value: 'mexican',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/mushroom.jpg',
-    title: 'Mushrooms',
-    author: 'PublicDomainPictures',
+    img: 'https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    title: 'Pizza',
+    value: 'pizza',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/olive.jpg',
-    title: 'Olive oil',
-    author: 'congerdesign',
+    img: 'https://cdn.pixabay.com/photo/2015/12/08/19/08/steak-1083567_1280.jpg',
+    title: 'Steakhouse',
+    value: 'steak',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/star.jpg',
-    title: 'Sea star',
-    cols: 2,
-    author: '821292',
+    img: 'https://images.pexels.com/photos/681586/sushi-japan-soya-rice-681586.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+    title: 'Sushi',
+    value: 'sushi',
   },
   {
-    img: 'https://material-ui.com/static/images/grid-list/bike.jpg',
-    title: 'Bike',
-    author: 'danfador',
+    img: 'https://images.pexels.com/photos/1143754/pexels-photo-1143754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    title: 'Vegetarian',
+    value: 'vegetarian',
   },
 ];
 
@@ -82,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   gridList: {
     width: 700,
-    height: 350,
+    height: 450,
   },
   icon: {
     color: 'rgba(255, 255, 255, 0.54)',
@@ -90,10 +87,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function QueryParams() {
+  const params = [];
   const classes = useStyles();
 
   function onChange(e) {
-    console.log(`${e.target.value} = ${e.target.checked}`);
+    params.push(e.target.value);
+    console.log(params, 'params');
   }
 
   return (
@@ -109,7 +108,7 @@ export default function QueryParams() {
             <GridListTileBar
               title={tile.title}
               actionIcon={
-                <Checkbox value={tile.value} onChange={onChange}>Add to List</Checkbox>
+                <Checkbox value={tile.value} onChange={onChange}></Checkbox>
               }
             />
           </GridListTile>

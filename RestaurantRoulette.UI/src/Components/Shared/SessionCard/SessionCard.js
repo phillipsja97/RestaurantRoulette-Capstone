@@ -34,7 +34,7 @@ export default function SessionCard(props) {
       .then((result) => {
         setUsers(result);
       });
-  });
+  }, []);
 
   return (
     <Card className={classes.card} raised={true}>
