@@ -10,21 +10,36 @@ import './Sessions.scss';
 
 export default function Sessions(props) {
   const [authed, setAuthed] = useState(props);
-  const [user, setUser] = useState();
+  const [userId, setUserId] = useState('');
   const [sessions, setSessions] = useState([]);
+  const [newSession, setNewSession] = useState({});
 
   useEffect(() => {
     sessionData.getSessionsThatNeedSwipedByUID(authData.getUid())
       .then((result) => {
         setSessions(result);
+        const user = result.map((x) => x.userId);
+        setUserId(user[0]);
       })
       .catch((errorFromGetSessions) => console.error(errorFromGetSessions));
-  }, [sessions.length]);
+  }, [sessions.userId]);
+
+  const createSession = () => {
+    const createdSession = {
+      OwnerId: userId,
+      isSessionComplete: false,
+    };
+    sessionData.createNewSession(createdSession)
+      .then((result) => {
+        setNewSession(result);
+      })
+      .catch((errorFromSessions) => console.error(errorFromSessions));
+  };
 
   return (
     <div className="sessions">
       <div className="newSessionButton">
-        <Link to="/newSession"><Button type="ghost">Start A New Session</Button></Link>
+        <Link to={`/newSession/${userId}`}><Button type="ghost" onClick={createSession}>Start A New Session</Button></Link>
       </div>
       <div className="openSessions">
         <div className="openTitle">
