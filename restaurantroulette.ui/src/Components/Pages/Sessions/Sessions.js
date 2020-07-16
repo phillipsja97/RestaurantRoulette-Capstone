@@ -22,7 +22,7 @@ export default function Sessions(props) {
         setUserId(user[0]);
       })
       .catch((errorFromGetSessions) => console.error(errorFromGetSessions));
-  }, [sessions.userId]);
+  }, [sessions.length]);
 
   const createSession = () => {
     const createdSession = {
@@ -31,7 +31,11 @@ export default function Sessions(props) {
     };
     sessionData.createNewSession(createdSession)
       .then((result) => {
-        setNewSession(result);
+        console.log(result.data[0].id, 'result');
+        props.history.push({
+          pathname: `/newSession/${result.data[0].id}`,
+          state: { session: newSession },
+        });
       })
       .catch((errorFromSessions) => console.error(errorFromSessions));
   };
@@ -39,7 +43,7 @@ export default function Sessions(props) {
   return (
     <div className="sessions">
       <div className="newSessionButton">
-        <Link to={`/newSession/${userId}`}><Button type="ghost" onClick={createSession}>Start A New Session</Button></Link>
+        <Button type="ghost" onClick={createSession}>Start A New Session</Button>
       </div>
       <div className="openSessions">
         <div className="openTitle">

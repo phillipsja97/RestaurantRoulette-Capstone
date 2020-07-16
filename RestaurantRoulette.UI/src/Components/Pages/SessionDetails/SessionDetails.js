@@ -34,6 +34,7 @@ export default class SessionDetails extends React.Component {
         <h1>Session Details</h1>
         {(stateOfSession === true) ? <h1>Complete</h1> : <h1>Incomplete</h1>}
         {this.state.queryParams.map((x) => <h1>{x.queryName}</h1>)}
+        {this.state.queryParams.map((x) => <h1>{x.queryCity}</h1>)}
         {this.state.users.map((x) => <h1>{x.fullName}</h1>)}
       </React.Fragment>
     );

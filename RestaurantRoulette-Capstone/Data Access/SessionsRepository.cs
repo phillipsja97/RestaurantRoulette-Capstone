@@ -82,5 +82,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return session;
             }
         }
+
+        public IEnumerable<Sessions> CreateASession(Sessions sessionToCreate)
+        {
+            var sql = @"insert into Sessions (OwnerId, isSessionComplete)
+                        output inserted.*
+                            values (@ownerId, @isSessionComplete)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    ownerId = sessionToCreate.OwnerId,
+                    isSessionComplete = sessionToCreate.isSessionComplete,
+                };
+                var createdSession = db.Query<Sessions>(sql, parameter);
+                return createdSession;
+            }
+        }
     }
 }

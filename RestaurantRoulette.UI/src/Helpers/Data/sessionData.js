@@ -24,9 +24,12 @@ const getASession = (sessionId) => new Promise((resolve, reject) => {
     .catch((errorFromGetSessions) => reject(errorFromGetSessions));
 });
 
+const createNewSession = (sessionToCreate) => axios.post('https://localhost:44347/api/sessions/createSession/newSession', sessionToCreate);
+
 export default {
   getSessionsByUID,
   getSessionsThatNeedSwipedByUID,
   getAllUsersOnASession,
   getASession,
+  createNewSession,
 };

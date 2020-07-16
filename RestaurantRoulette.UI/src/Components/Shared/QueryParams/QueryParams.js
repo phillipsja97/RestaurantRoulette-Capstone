@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import GridList from '@bit/mui-org.material-ui.grid-list';
 import GridListTile from '@bit/mui-org.material-ui.grid-list-tile';
 import GridListTileBar from '@bit/mui-org.material-ui.grid-list-tile-bar';
+import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import { Checkbox } from 'antd';
+import React from 'react';
 import './QueryParams.scss';
 
 const tileData = [
@@ -86,21 +86,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function QueryParams() {
+export default function QueryParams(props) {
   const params = [];
   const classes = useStyles();
 
   function onChange(e) {
-    params.push(e.target.value);
-    console.log(params, 'params');
+    if (e.target.checked) {
+      params.push(e.target.value);
+    } else {
+      const index = params.indexOf(e.target.value);
+      params.splice(index, 1);
+    }
+    const joined = params.join(',');
+    props.onChange(joined);
+    return joined;
   }
 
   return (
     <div className="queryParams">
       <div className="queryParamsTitle">
-        <h1>QueryParams</h1>
+        <h1>What categories?</h1>
       </div>
-      <div className={classes.root} style={{width: 'auto', height: 'auto'}}>
+      <div className={classes.root} style={{ width: 'auto', height: 'auto' }}>
       <GridList cellHeight={180} className={classes.gridList}>
         {tileData.map((tile) => (
           <GridListTile key={tile.img}>

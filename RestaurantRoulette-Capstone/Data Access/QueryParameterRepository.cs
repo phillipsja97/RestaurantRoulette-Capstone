@@ -30,5 +30,24 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return sessionParams;
             }
         }
+
+        public IEnumerable<QueryParameter> AddQueryToCurrentSession(QueryParameter queryToAdd)
+        {
+            var sql = @"insert into QueryParameter (SessionId, QueryCity, QueryName)
+                            output inserted.*
+                                values (@sessionId, @QueryCity, @QueryName)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    sessionId = queryToAdd.SessionId,
+                    QueryCity = queryToAdd.QueryCity,
+                    QueryName = queryToAdd.QueryName,
+                };
+                var queryParams = db.Query<QueryParameter>(sql, parameter);
+                return queryParams;
+            }
+        }
     }
 }

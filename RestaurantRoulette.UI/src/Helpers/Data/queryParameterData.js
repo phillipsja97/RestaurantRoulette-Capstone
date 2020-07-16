@@ -6,4 +6,6 @@ const getQueryParametersWithSessionId = (sessionId) => new Promise((resolve, rej
     .catch((errorFromQueryParameterData) => reject(errorFromQueryParameterData));
 });
 
-export default { getQueryParametersWithSessionId };
+const addQueryLocationToSession = (queryToAdd) => axios.post('https://localhost:44347/api/queryParameter/addQueryParam', queryToAdd);
+
+export default { getQueryParametersWithSessionId, addQueryLocationToSession };

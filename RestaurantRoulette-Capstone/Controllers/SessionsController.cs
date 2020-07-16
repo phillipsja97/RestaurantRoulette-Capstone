@@ -70,5 +70,19 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(singleSession);
         }
+
+        [HttpPost("createSession/newSession")]
+        public IActionResult CreateASession(Sessions sessionToStart)
+        {
+            var createdSession = _repository.CreateASession(sessionToStart);
+            if (createdSession == null)
+            {
+                return NotFound("There was an error creating your session");
+            }
+            else
+            {
+                return Created("", createdSession);
+            }
+        }
     }
 }
