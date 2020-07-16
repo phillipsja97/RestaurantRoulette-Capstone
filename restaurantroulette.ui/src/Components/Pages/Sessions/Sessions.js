@@ -33,8 +33,7 @@ export default function Sessions(props) {
       .then((result) => {
         console.log(result.data[0].id, 'result');
         props.history.push({
-          pathname: `/newSession/${result.data[0].id}`,
-          state: { session: newSession },
+          pathname: `/newSession/${userId}/${result.data[0].id}`,
         });
       })
       .catch((errorFromSessions) => console.error(errorFromSessions));
