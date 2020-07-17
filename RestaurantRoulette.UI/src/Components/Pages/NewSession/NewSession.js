@@ -1,9 +1,13 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-const-assign */
 import React, { useState } from 'react';
 import { Steps, Button, message } from 'antd';
 import QueryParams from '../../Shared/QueryParams/QueryParams';
 import LocationParam from '../../Shared/LocationParam/LocationParam';
 import AddFriendsParam from '../../Shared/AddFriendsParam/AddFriendsParam';
 import queryParamaterData from '../../../Helpers/Data/queryParameterData';
+import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import './NewSession.scss';
 
 const { Step } = Steps;
@@ -12,6 +16,7 @@ export default function NewSession(props) {
   const [current, setCurrent] = useState(0);
   const [queryParams, setQueryParams] = useState([]);
   const [location, setLocation] = useState('');
+  const [usersData, setUsersData] = useState([]);
   const foodParams = [];
   const friendsToAdd = [];
 
@@ -41,18 +46,41 @@ export default function NewSession(props) {
         })
         .catch((errorFromNewParams) => console.error(errorFromNewParams));
     } else {
-      console.log(current, 'current');
       const query = foodParams[foodParams.length - 1];
-      console.log(query);
+      const updatedQuery = {
+        queryName: query,
+      };
+      queryParamaterData.updateQueryNames(Number(props.match.params.newSessionId), updatedQuery)
+        .then((result) => {
+          setQueryParams(result);
+        })
+        .catch((errorFromUpdateParams) => console.error(errorFromUpdateParams));
     }
   };
 
-  const prev = () => {
-    setCurrent((prevCurrent) => prevCurrent - 1);
-  };
-
   const done = () => {
-    console.log(friendsToAdd, 'friendstoAdd');
+    const addFriends = [];
+    friendsToAdd.push(Number(props.match.params.userId));
+    let length = friendsToAdd.length;
+    let k = 0;
+    while (length > 0) {
+      const friends = {
+        sessionId: Number(props.match.params.newSessionId),
+        userId: friendsToAdd[k],
+        isSwiped: false,
+      };
+      addFriends.push(friends);
+      k++;
+      length--;
+    }
+    userSessionsData.addUsersToSession(addFriends)
+      .then((result) => {
+        setUsersData(result);
+      })
+      .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
+    props.history.push({
+      pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/swipe`,
+    });
   };
 
   return (
@@ -77,11 +105,6 @@ export default function NewSession(props) {
         {current === steps.length - 1 && (
           <Button type="primary" onClick={() => done()}>
             Done
-          </Button>
-        )}
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
-            Previous
           </Button>
         )}
       </div>

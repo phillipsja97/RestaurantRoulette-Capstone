@@ -8,4 +8,6 @@ const getQueryParametersWithSessionId = (sessionId) => new Promise((resolve, rej
 
 const addQueryLocationToSession = (queryToAdd) => axios.post('https://localhost:44347/api/queryParameter/addQueryParam', queryToAdd);
 
-export default { getQueryParametersWithSessionId, addQueryLocationToSession };
+const updateQueryNames = (sessionId, updatedQuery) => axios.put(`https://localhost:44347/api/queryParameter/updateQueryName/${sessionId}`, updatedQuery);
+
+export default { getQueryParametersWithSessionId, addQueryLocationToSession, updateQueryNames };

@@ -44,7 +44,17 @@ namespace RestaurantRoulette_Capstone.Controllers
             return Created("", queryParams);
         }
 
+        [HttpPut("updateQueryName/{sessionId}")]
+        public IActionResult UpdateQueryNameOnSessionId(int sessionId, QueryParameter updatedQuery)
+        {
+            var queryParams = _repository.UpdateQueryNameOnSessionId(sessionId, updatedQuery);
+            var noQuery = !queryParams.Any();
+            if (noQuery)
+            {
+                return BadRequest("Could not update the query name");
+            }
+            return Ok(queryParams);
+        }
 
-        // need to set up a create session, and then add query params.
     }
 }
