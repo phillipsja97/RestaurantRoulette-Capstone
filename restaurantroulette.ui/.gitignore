@@ -27,3 +27,4 @@ package-lock.json
 dist/
 .firebase/
 /src/Helpers/apiKeys.json
+/src/Helpers/yelpKey.js
