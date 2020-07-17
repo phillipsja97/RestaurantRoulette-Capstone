@@ -71,7 +71,7 @@ class App extends React.Component {
               <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/session/:sessionId" exact component={(props) => <SessionDetails {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId" exact component={(props) => <NewSession {...props} authed={authed} />} authed={authed} />
-              <PrivateRoute path="/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/newSession/:userId/:newSessionId/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
             </Switch>
         </Router>
       </div>
