@@ -1,0 +1,30 @@
+.restaurantCard {
+  height: 200px !important;
+  width: 200px !important;
+}
+
+.restaurantPhoto {
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
+  height: 30em;
+  width: 100%;
+  opacity: 0.6;
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.root {
+  max-width: 345px;
+}
+
+.media {
+  height: 140px;
+}
