@@ -1,10 +1,11 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react';
 import { Card, CardWrapper } from 'react-swipeable-cards';
-import BitCard from '@bit/farmland-finder.components.card';
-import Avatar from '@bit/farmland-finder.components.avatar';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
+import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestaurantsData';
 import yelpData from '../../../Helpers/Data/yelpData';
 import './Swipe.scss';
 
@@ -21,7 +22,24 @@ export default function Swipe(props) {
   };
 
   const finishSwipe = () => {
-    console.log(acceptableRestaurants, 'restaurants');
+    const restaurantsToAdd = [];
+    let length = acceptableRestaurants.length;
+    let k = 0;
+    while (length > 0) {
+      const restaurantsData = {
+        sessionId: Number(props.match.params.newSessionId),
+        userId: Number(props.match.params.userId),
+        restaurantId: acceptableRestaurants[k],
+      };
+      restaurantsToAdd.push(restaurantsData);
+      k++;
+      length--;
+    }
+    acceptableRestaurantsData.addRestaurantsToAcceptableList(restaurantsToAdd)
+      .then((result) => {
+        setAcceptableRestaurants(result);
+      })
+      .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
   };
 
   const onSwipeLeft = (data) => {
