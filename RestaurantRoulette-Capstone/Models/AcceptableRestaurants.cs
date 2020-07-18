@@ -11,4 +11,15 @@ namespace RestaurantRoulette_Capstone.Models
         public int UserId { get; set; }
         public string RestaurantId { get; set; }
     }
+
+    public class RestaurantIdAndUser
+    {
+        public int UserId { get; set; }
+        public string RestaurantId { get; set; }
+    }
+
+    public class RestaurantIdOnly
+    {
+        public string RestaurantId { get; set; }
+    }
 }

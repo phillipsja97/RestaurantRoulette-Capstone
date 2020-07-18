@@ -35,5 +35,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return restaurants;
             }
         }
+        public IEnumerable<RestaurantIdAndUser> GetAllAcceptableRestaurantsByUserAndSessionId(int userId, int sessionId)
+        {
+            var sql = @"select UserId, RestaurantId
+                            from AcceptableRestaurants
+                                where UserId = @userId
+                                    and SessionId = @sessionId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    userId = userId,
+                    sessionId = sessionId,
+                };
+                var restaurants = db.Query<RestaurantIdAndUser>(sql, parameter);
+                return restaurants;
+            }
+        }
     }
 }

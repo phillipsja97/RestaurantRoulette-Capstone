@@ -22,4 +22,9 @@ namespace RestaurantRoulette_Capstone.Models
         public string PhoneNumber { get; set; }
         public string FirebaseUID { get; set; }
     }
+
+    public class UserIdOnly
+    {
+        public int Id { get; set; }
+    }
 }
