@@ -37,36 +37,68 @@ export default function SessionCard(props) {
   }, []);
 
   return (
-    <Card className={classes.card} raised={true}>
-      <Link to={`session/${props.session.sessionId}`}>
-      <CardActionArea>
-          <CardMedia
-            component="img"
-            alt={props.session.sessionId}
-            height="140"
-            image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
-            title={props.session.sessionId}
-          />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
-          </Typography>
-          <Typography variant="h5" component="h2" className={classes.userTitleCard}>
-            Users Involved:
-          </Typography>
-          {users.map((user) =>
-          <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
-          }
-        </CardContent>
-      </CardActionArea>
-      </Link>
-      <CardActions>
-        <Link to={`/session/${props.session.sessionId}`}>
-          <Button size="small" color="primary">
-            Session Details
-          </Button>
-        </Link>
-      </CardActions>
-    </Card>
+    (props.session.isSwiped)
+      ? <Card className={classes.card} raised={true}>
+          <Link to={`session/${props.session.sessionId}`}>
+          <CardActionArea>
+              <CardMedia
+                component="img"
+                alt={props.session.sessionId}
+                height="140"
+                image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
+                title={props.session.sessionId}
+              />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
+              </Typography>
+              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                Users Involved:
+              </Typography>
+              {users.map((user) =>
+              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
+              }
+            </CardContent>
+          </CardActionArea>
+          </Link>
+          <CardActions>
+            <Link to={`/session/${props.session.sessionId}`}>
+              <Button size="small" color="primary">
+                Session Details
+              </Button>
+            </Link>
+          </CardActions>
+        </Card>
+      : <Card className={classes.card} raised={true}>
+          <Link to={`/newSession/${props.session.userId}/${props.session.sessionId}/swipe`}>
+          <CardActionArea>
+              <CardMedia
+                component="img"
+                alt={props.session.sessionId}
+                height="140"
+                image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
+                title={props.session.sessionId}
+              />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                <EmphasisTag text="You need to swipe!" type='urgent' size='small'/>
+              </Typography>
+              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                Users Involved:
+              </Typography>
+              {users.map((user) =>
+              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
+              }
+            </CardContent>
+          </CardActionArea>
+          </Link>
+          <CardActions>
+            <Link to={`/session/${props.session.sessionId}`}>
+              <Button size="small" color="primary">
+                Session Details
+              </Button>
+            </Link>
+          </CardActions>
+        </Card>
   );
 }

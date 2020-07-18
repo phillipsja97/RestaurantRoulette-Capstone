@@ -1,8 +1,11 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react';
 import { Card, CardWrapper } from 'react-swipeable-cards';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
+import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestaurantsData';
 import yelpData from '../../../Helpers/Data/yelpData';
 import './Swipe.scss';
 
@@ -14,8 +17,29 @@ export default function Swipe(props) {
 
   const getEndCard = () => {
     return (
-      <MyEndCard/>
+      <MyEndCard finishSwipe={finishSwipe} />
     );
+  };
+
+  const finishSwipe = () => {
+    const restaurantsToAdd = [];
+    let length = acceptableRestaurants.length;
+    let k = 0;
+    while (length > 0) {
+      const restaurantsData = {
+        sessionId: Number(props.match.params.newSessionId),
+        userId: Number(props.match.params.userId),
+        restaurantId: acceptableRestaurants[k],
+      };
+      restaurantsToAdd.push(restaurantsData);
+      k++;
+      length--;
+    }
+    acceptableRestaurantsData.addRestaurantsToAcceptableList(restaurantsToAdd)
+      .then((result) => {
+        setAcceptableRestaurants(result);
+      })
+      .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
   };
 
   const onSwipeLeft = (data) => {
@@ -62,14 +86,19 @@ export default function Swipe(props) {
             <div className="title">
               <h1>{d.name}</h1>
             </div>
+            {/* <div className="insideCard">
+              <h1>Hello</h1>
+            </div> */}
         </Card>
       );
     });
   };
 
   return (
+    <div>
     <CardWrapper addEndCard={getEndCard.bind(this)}>
      {renderCards()}
     </CardWrapper>
+  </div>
   );
 }
