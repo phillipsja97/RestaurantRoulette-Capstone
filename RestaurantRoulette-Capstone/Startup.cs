@@ -54,7 +54,7 @@ namespace RestaurantRoulette_Capstone
                 }
             );
 
-            services.AddTransient<AcceptableRestaurantsRepository>();
+            services.AddTransient<YelpRepository>();
             services.AddTransient<QueryParameterRepository>();
             services.AddTransient<UserSessionsRepository>();
             services.AddTransient<SessionsRepository>();

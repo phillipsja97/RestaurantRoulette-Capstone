@@ -6,6 +6,7 @@ import { Card, CardWrapper } from 'react-swipeable-cards';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestaurantsData';
+import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import yelpData from '../../../Helpers/Data/yelpData';
 import './Swipe.scss';
 
@@ -14,6 +15,7 @@ export default function Swipe(props) {
   const [restaurants, setRestaurants] = useState([]);
   const [noRestaurants, setNoRestaurants] = useState([]);
   const [acceptableRestaurants, setAcceptableRestaurants] = useState([]);
+  const [swipeStatus, setSwipeStatus] = useState({});
 
   const getEndCard = () => {
     return (
@@ -38,6 +40,16 @@ export default function Swipe(props) {
     acceptableRestaurantsData.addRestaurantsToAcceptableList(restaurantsToAdd)
       .then((result) => {
         setAcceptableRestaurants(result);
+      })
+      .then(() => {
+        const statusToUpdate = {
+          sessionId: Number(props.match.params.newSessionId),
+          userId: Number(props.match.params.userId),
+        };
+        userSessionsData.updateSwipeStatus(statusToUpdate)
+          .then((result) => {
+            setSwipeStatus(result);
+          });
       })
       .then(() => {
         props.history.push({
