@@ -67,6 +67,24 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
+        public IEnumerable<UserIdOnly> GetAllUserIdsOnASession(int sessionId)
+        {
+            var sql = @"select Users.Id
+	                        from UserSessions
+				                        join Users
+					                        on UserSessions.UserId = Users.Id
+						                        where UserSessions.sessionId = @sessionId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { sessionId = sessionId };
+                var users = db.Query<UserIdOnly>(sql, parameter);
+                return users;
+            }
+        }
+
+
+
         public IEnumerable<Sessions> GetASession(int sessionId)
         {
             var sql = @"select *
@@ -96,6 +114,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 };
                 var createdSession = db.Query<Sessions>(sql, parameter);
                 return createdSession;
+            }
+        }
+
+        public SessionIdOnly CompleteASession(int sessionId)
+        {
+            var sql = @"update Sessions
+                            set isSessionComplete = 1
+                                where Id = @sessionId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    sessionId = sessionId,
+                };
+                var updateSession = db.QueryFirstOrDefault<SessionIdOnly>(sql, parameter);
+                return updateSession;
             }
         }
     }
