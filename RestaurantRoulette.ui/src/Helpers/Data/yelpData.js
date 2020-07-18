@@ -11,4 +11,10 @@ const getRestaurantsByParams = (City, params) => new Promise((resolve, reject) =
     .catch((error) => reject(error));
 });
 
-export default { getRestaurantsByParams };
+const getWinningRestaurant = (sessionId) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/yelp/getWinner/${sessionId}`)
+    .then((result) => resolve(result.data))
+    .catch((error) => reject(error));
+});
+
+export default { getRestaurantsByParams, getWinningRestaurant };

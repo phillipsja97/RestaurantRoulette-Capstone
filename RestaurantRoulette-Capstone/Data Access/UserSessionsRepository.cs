@@ -56,6 +56,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
+        public IEnumerable<SwipeStatus> GetAllUsersSwipeStatus(int sessionId)
+        {
+            var sql = @"select UserSessions.UserId, UserSessions.isSwiped, Users.FullName
+                            from UserSessions
+	                            join Users	
+		                            on UserSessions.UserId = Users.Id
+                                        where SessionId = @sessionId";
 
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    sessionId = sessionId,
+                };
+                var status = db.Query<SwipeStatus>(sql, parameter);
+                return status;
+            }
+        }
     }
 }

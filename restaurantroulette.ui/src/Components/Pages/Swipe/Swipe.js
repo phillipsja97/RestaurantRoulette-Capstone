@@ -49,12 +49,12 @@ export default function Swipe(props) {
         userSessionsData.updateSwipeStatus(statusToUpdate)
           .then((result) => {
             setSwipeStatus(result);
+          })
+          .then(() => {
+            props.history.push({
+              pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/winner`,
+            });
           });
-      })
-      .then(() => {
-        props.history.push({
-          pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/winner`,
-        });
       })
       .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
   };

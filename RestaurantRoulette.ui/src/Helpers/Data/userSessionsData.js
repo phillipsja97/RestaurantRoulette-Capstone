@@ -4,4 +4,10 @@ const addUsersToSession = (usersToAdd) => axios.post('https://localhost:44347/ap
 
 const updateSwipeStatus = (updatedStatus) => axios.put('https://localhost:44347/api/userSessions/updateSwipeStatus', updatedStatus);
 
-export default { addUsersToSession, updateSwipeStatus };
+const getAllUsersSwipeStatusOnSessionId = (sessionId) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/userSessions/getAllUsersSwipeStatus/${sessionId}`)
+    .then((result) => resolve(result.data))
+    .catch((errorFromUserData) => reject(errorFromUserData));
+});
+
+export default { addUsersToSession, updateSwipeStatus, getAllUsersSwipeStatusOnSessionId };

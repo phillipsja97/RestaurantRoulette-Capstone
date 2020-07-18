@@ -58,6 +58,43 @@ namespace RestaurantRoulette_Capstone.Models
 
     }
 
+    public class Open
+    {
+        public bool is_overnight { get; set; }
+        public string start { get; set; }
+        public string end { get; set; }
+        public int day { get; set; }
+
+    }
+
+    public class Hour
+    {
+        public List<Open> open { get; set; }
+        public string hours_type { get; set; }
+        public bool is_open_now { get; set; }
+
+    }
+
+    public class WinningRestaurant
+    {
+        public string id { get; set; }
+        public string alias { get; set; }
+        public string name { get; set; }
+        public string image_url { get; set; }
+        public bool is_closed { get; set; }
+        public string url { get; set; }
+        public string display_phone { get; set; }
+        public List<Category> categories { get; set; }
+        public double rating { get; set; }
+        public Location location { get; set; }
+        public List<string> photos { get; set; }
+        public string price { get; set; }
+        public List<Hour> hours { get; set; }
+
+    }
+
+
+
 
 
 }
