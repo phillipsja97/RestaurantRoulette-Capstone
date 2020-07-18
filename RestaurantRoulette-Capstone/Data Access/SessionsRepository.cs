@@ -1,11 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using RestaurantRoulette_Capstone.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using RestaurantRoulette_Capstone.Models;
-using Microsoft.Data.SqlClient;
-using Dapper;
 
 namespace RestaurantRoulette_Capstone.Data_Access
 {

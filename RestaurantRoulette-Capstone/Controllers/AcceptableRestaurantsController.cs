@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantRoulette_Capstone.Data_Access;
+using RestaurantRoulette_Capstone.Models;
 
 namespace RestaurantRoulette_Capstone.Controllers
 {
@@ -11,5 +13,28 @@ namespace RestaurantRoulette_Capstone.Controllers
     [ApiController]
     public class AcceptableRestaurantsController : ControllerBase
     {
+        AcceptableRestaurantsRepository _repository;
+
+        public AcceptableRestaurantsController(AcceptableRestaurantsRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpPost("restaurantsToAdd")]
+        public IActionResult AcceptableRestaurantsToAdd(List<AcceptableRestaurants> restaurantIds)
+        {
+            var restaurants = new List<AcceptableRestaurants>();
+            foreach (var item in restaurantIds)
+            {
+                var id = _repository.AcceptableRestaurantsToAdd(item);
+                restaurants.Add(id);
+            }
+            var noUsers = !restaurants.Any();
+            if (noUsers)
+            {
+                return BadRequest("There was an issue in adding your restaurants to your acceptable restaurants list.");
+            }
+            return Ok(restaurants);
+        }
     }
 }

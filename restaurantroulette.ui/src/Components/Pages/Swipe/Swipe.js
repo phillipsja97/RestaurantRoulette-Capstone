@@ -1,6 +1,8 @@
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react';
 import { Card, CardWrapper } from 'react-swipeable-cards';
+import BitCard from '@bit/farmland-finder.components.card';
+import Avatar from '@bit/farmland-finder.components.avatar';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import yelpData from '../../../Helpers/Data/yelpData';
@@ -14,8 +16,12 @@ export default function Swipe(props) {
 
   const getEndCard = () => {
     return (
-      <MyEndCard/>
+      <MyEndCard finishSwipe={finishSwipe} />
     );
+  };
+
+  const finishSwipe = () => {
+    console.log(acceptableRestaurants, 'restaurants');
   };
 
   const onSwipeLeft = (data) => {
@@ -62,14 +68,19 @@ export default function Swipe(props) {
             <div className="title">
               <h1>{d.name}</h1>
             </div>
+            {/* <div className="insideCard">
+              <h1>Hello</h1>
+            </div> */}
         </Card>
       );
     });
   };
 
   return (
+    <div>
     <CardWrapper addEndCard={getEndCard.bind(this)}>
      {renderCards()}
     </CardWrapper>
+  </div>
   );
 }

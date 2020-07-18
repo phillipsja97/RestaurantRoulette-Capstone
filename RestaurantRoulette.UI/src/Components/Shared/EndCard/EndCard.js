@@ -1,7 +1,11 @@
 import React from 'react';
+import { Button } from 'antd';
+import './EndCard.scss';
 
-export default function MyEndCard() {
+export default function MyEndCard(props) {
   return (
-    <div>You Finished Swiping!</div>
+    <div className="finishSwipeButtonContainer">
+       <Button type="primary" className="finishSwipeButton" onClick={props.finishSwipe}>Finish</Button>
+    </div>
   );
 }
