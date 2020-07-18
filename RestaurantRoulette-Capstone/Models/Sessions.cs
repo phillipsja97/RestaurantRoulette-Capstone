@@ -31,4 +31,9 @@ namespace RestaurantRoulette_Capstone.Models
         public string FullName { get; set; }
         public string FirebaseUID { get; set; }
     }
+
+    public class SessionIdOnly
+    {
+        public int Id { get; set; }
+    }
 }

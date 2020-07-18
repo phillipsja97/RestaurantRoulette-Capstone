@@ -1,17 +1,17 @@
 /* eslint-disable implicit-arrow-linebreak */
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { makeStyles } from '@bit/mui-org.material-ui.styles';
+import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
+import FaceIcon from '@bit/mui-org.material-ui-icons.face';
+import Button from '@bit/mui-org.material-ui.button';
 import Card from '@bit/mui-org.material-ui.card';
 import CardActionArea from '@bit/mui-org.material-ui.card-action-area';
 import CardActions from '@bit/mui-org.material-ui.card-actions';
 import CardContent from '@bit/mui-org.material-ui.card-content';
 import CardMedia from '@bit/mui-org.material-ui.card-media';
-import Button from '@bit/mui-org.material-ui.button';
-import Typography from '@bit/mui-org.material-ui.typography';
 import Chip from '@bit/mui-org.material-ui.chip';
-import FaceIcon from '@bit/mui-org.material-ui-icons.face';
-import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
+import { makeStyles } from '@bit/mui-org.material-ui.styles';
+import Typography from '@bit/mui-org.material-ui.typography';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import sessionData from '../../../Helpers/Data/sessionData';
 import './SessionCard.scss';
 

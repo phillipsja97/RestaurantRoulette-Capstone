@@ -36,5 +36,18 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(restaurants);
         }
+
+        [HttpGet("getRestaurants/{userId}/{sessionId}")]
+        public IActionResult GetAllRestaurants(int userId, int sessionId)
+        {
+            var restaurants = _repository.GetAllAcceptableRestaurantsByUserAndSessionId(userId, sessionId);
+            if (restaurants == null)
+            {
+                return NotFound("not found");
+            }
+            return Ok(restaurants);
+        }
+
+
     }
 }
