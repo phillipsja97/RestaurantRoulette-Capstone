@@ -31,7 +31,7 @@ export default function Winner(props) {
         }
       })
       .catch((errorFromGetUsersStatus) => console.error(errorFromGetUsersStatus));
-  },[]);
+  }, []);
 
   return (
     <h1>{winningRestaurant.name}</h1>
