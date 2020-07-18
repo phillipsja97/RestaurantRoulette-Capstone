@@ -39,6 +39,11 @@ export default function Swipe(props) {
       .then((result) => {
         setAcceptableRestaurants(result);
       })
+      .then(() => {
+        props.history.push({
+          pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/winner`,
+        });
+      })
       .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
   };
 
