@@ -12,6 +12,12 @@ const getSessionsThatNeedSwipedByUID = (uid) => new Promise((resolve, reject) =>
     .catch((errorFromGetSessions) => reject(errorFromGetSessions));
 });
 
+const getCompletedSessionsByUID = (uid) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/sessions/completedSessions/${uid}`)
+    .then((result) => resolve(result.data))
+    .catch((errorFromGetSessions) => reject(errorFromGetSessions));
+});
+
 const getAllUsersOnASession = (sessionId) => new Promise((resolve, reject) => {
   axios.get(`https://localhost:44347/api/sessions/users/${sessionId}`)
     .then((result) => resolve(result.data))
@@ -32,4 +38,5 @@ export default {
   getAllUsersOnASession,
   getASession,
   createNewSession,
+  getCompletedSessionsByUID,
 };
