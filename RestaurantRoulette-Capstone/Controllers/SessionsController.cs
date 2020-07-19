@@ -84,5 +84,18 @@ namespace RestaurantRoulette_Capstone.Controllers
                 return Created("", createdSession);
             }
         }
+
+        [HttpGet("completedSessions/{uid}")]
+        public IActionResult GetCompletedSessionsByUserId(string uid)
+        {
+            var userId = _UsersRepository.GetUserByFirebaseUID(uid);
+            var completedSessions = _repository.GetCompletedSessionsByUserId(userId.ID);
+            var noCompletedSession = !completedSessions.Any();
+            if (noCompletedSession)
+            {
+                NotFound("You don't have any open sessions");
+            }
+            return Ok(completedSessions);
+        }
     }
 }

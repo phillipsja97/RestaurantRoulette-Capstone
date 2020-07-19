@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using RestaurantRoulette_Capstone.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -83,8 +84,6 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
-
-
         public IEnumerable<Sessions> GetASession(int sessionId)
         {
             var sql = @"select *
@@ -131,6 +130,26 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 };
                 var updateSession = db.QueryFirstOrDefault<SessionIdOnly>(sql, parameter);
                 return updateSession;
+            }
+        }
+
+        public IEnumerable<ClosedSession> GetCompletedSessionsByUserId(int userId)
+        {
+            var sql = @"select UserSessions.sessionId, UserSessions.UserId, UserSessions.isSwiped, Sessions.OwnerId, 
+                            Sessions.isSessionComplete, Users.fullName, Users.FirebaseUID
+                                from UserSessions
+                                    join Sessions
+                                        on Sessions.ID = UserSessions.sessionId
+                                            join Users
+                                                on UserSessions.UserId = Users.ID
+                                                    where UserSessions.UserId = 1
+                                                        and Sessions.isSessionComplete = 1";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new { userId = userId };
+                var completedSessions = db.Query<ClosedSession>(sql, parameter);
+                return completedSessions;
             }
         }
     }
