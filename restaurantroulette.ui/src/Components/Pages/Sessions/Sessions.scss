@@ -27,9 +27,22 @@
   margin: 2em;
 }
 
-.openSessionData {
-  display: inline-flex;
-  flex-wrap: wrap;
-  margin: 2em;
+.tabListContainer {
+  margin-top: 2em;
+}
+
+.openSessionCardContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.tabList {
+  display: flex;
+  justify-content: center;
+}
+
+.tabListContainer {
+  display: flex;
+  justify-content: center;
 }
 
