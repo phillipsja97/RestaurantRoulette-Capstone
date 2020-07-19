@@ -63,5 +63,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             var completeSession = _sessionsRepository.CompleteASession(sessionId);
             return Ok(winningRestaurant);
         }
+
+        [HttpGet("allRestaurantsByCoords/{coordinates}")]
+        public IActionResult GetAllRestaurantsByCoordinates(string coordinates, string categories)
+        {
+            var result = _repository.GetAllResturantsByCoordinates(coordinates, categories);
+            if (result == null)
+            {
+                return NotFound("Restaurants not found");
+            }
+            return Ok(result);
+        }
     }
 }

@@ -16,13 +16,23 @@ export default function NewSession(props) {
   const [current, setCurrent] = useState(0);
   const [queryParams, setQueryParams] = useState([]);
   const [location, setLocation] = useState('');
+  const [mapping, setMapping] = useState(false);
+  const [latitude, setLatitude] = useState();
+  const [longitude, setLongitude] = useState();
   const [usersData, setUsersData] = useState([]);
   const foodParams = [];
   const friendsToAdd = [];
 
   const steps = [
     {
-      content: <LocationParam onChange={(value) => setLocation(value)} />,
+      content: <LocationParam onChange={(value) => setLocation(value)}
+                              latitude={latitude}
+                              longitude={longitude}
+                              mapping={mapping}
+                              setLatitude={setLatitude}
+                              setLongitude={setLongitude}
+                              setMapping={setMapping}
+                              />,
     },
     {
       content: <QueryParams onChange={(value) => foodParams.push(value)} />,
@@ -35,16 +45,30 @@ export default function NewSession(props) {
   const next = () => {
     setCurrent((prevCurrent) => prevCurrent + 1);
     if (current === 0) {
-      const queryToCreate = {
-        sessionId: Number(props.match.params.newSessionId),
-        queryCity: location,
-        queryName: 'toBeUpdated',
-      };
-      queryParamaterData.addQueryLocationToSession(queryToCreate)
-        .then((result) => {
-          setQueryParams(result);
-        })
-        .catch((errorFromNewParams) => console.error(errorFromNewParams));
+      if (mapping) {
+        const locationCoordinates = `${latitude},${longitude}`;
+        const queryToCreate = {
+          sessionId: Number(props.match.params.newSessionId),
+          queryCity: locationCoordinates,
+          queryName: 'toBeUpdated',
+        };
+        queryParamaterData.addQueryLocationToSession(queryToCreate)
+          .then((result) => {
+            setQueryParams(result);
+          })
+          .catch((errorFromNewParams) => console.error(errorFromNewParams));
+      } else {
+        const queryToCreate = {
+          sessionId: Number(props.match.params.newSessionId),
+          queryCity: location,
+          queryName: 'toBeUpdated',
+        };
+        queryParamaterData.addQueryLocationToSession(queryToCreate)
+          .then((result) => {
+            setQueryParams(result);
+          })
+          .catch((errorFromNewParams) => console.error(errorFromNewParams));
+      }
     } else {
       const query = foodParams[foodParams.length - 1];
       const updatedQuery = {
@@ -80,6 +104,7 @@ export default function NewSession(props) {
       .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
     props.history.push({
       pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/swipe`,
+      state: mapping,
     });
   };
 

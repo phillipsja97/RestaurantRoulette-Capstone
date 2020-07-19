@@ -13,7 +13,17 @@
 }
 
 .locationFieldContainer {
-  position: fixed;
-  bottom: 40%;
-  left: 35%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.dividerLocation {
+  width: 50%;
+}
+
+.dividerLocationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
 }

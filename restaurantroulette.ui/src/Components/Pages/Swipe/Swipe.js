@@ -74,17 +74,38 @@ export default function Swipe(props) {
   useEffect(() => {
     let queryCity = '';
     let queryName = '';
+    let queryCoordinates = '';
+    let latitude = '';
+    let longitude = '';
     queryParameterData.getQueryParametersWithSessionId(Number(props.match.params.newSessionId))
       .then((result) => {
-        queryCity = result[0].queryCity;
-        queryName = result[0].queryName;
-        setParameters(result);
+        // queryCity = result[0].queryCity;
+        // queryName = result[0].queryName;
+        if (result[0].queryCity.includes('.')) {
+          queryCoordinates = result[0].queryCity;
+          const splitCoords = queryCoordinates.split(',');
+          latitude = splitCoords[0];
+          longitude = splitCoords[1].trim();
+          queryName = result[0].queryName;
+          setParameters(result);
+        } else {
+          queryCity = result[0].queryCity;
+          queryName = result[0].queryName;
+          setParameters(result);
+        }
       })
       .then(() => {
-        yelpData.getRestaurantsByParams(queryCity, queryName)
-          .then((result) => {
-            setRestaurants(result.businesses);
-          });
+        if (queryCoordinates === '') {
+          yelpData.getRestaurantsByParams(queryCity, queryName)
+            .then((result) => {
+              setRestaurants(result.businesses);
+            });
+        } else {
+          yelpData.getRestaurantsByCoordinatesAndParams(queryCoordinates, queryName)
+            .then((result) => {
+              setRestaurants(result.businesses);
+            });
+        }
       })
       .catch((errorFromGetParameters) => console.error(errorFromGetParameters));
   }, []);
