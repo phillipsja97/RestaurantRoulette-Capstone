@@ -44,5 +44,22 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
             return response.Data;
         }
+
+        public AllRestaurantData GetAllResturantsByCoordinates(string coordinates, string cityParams)
+        {
+            var client = new RestClient("https://api.yelp.com/v3/businesses/search");
+            client.AddDefaultHeaders(new Dictionary<string, string> { { "Authorization", $"Bearer {_key}" } });
+
+            var coordinatesSplit = coordinates.Split(",");
+            var latitude = coordinatesSplit[0];
+            var longitude = coordinatesSplit[1];
+            var request = new RestRequest($"?{latitude}&{longitude}&categories={cityParams}");
+            var response = client.Get<AllRestaurantData>(request);
+            if (!response.IsSuccessful)
+            {
+                return null;
+            }
+            return response.Data;
+        }
     }
 }

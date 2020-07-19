@@ -11,10 +11,20 @@ const getRestaurantsByParams = (City, params) => new Promise((resolve, reject) =
     .catch((error) => reject(error));
 });
 
+const getRestaurantsByCoordinatesAndParams = (coordinates, params) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/yelp/allrestaurants/${coordinates}`, {
+    params: {
+      categories: params,
+    },
+  })
+    .then((result) => resolve(result.data))
+    .catch((error) => reject(error));
+});
+
 const getWinningRestaurant = (sessionId) => new Promise((resolve, reject) => {
   axios.get(`https://localhost:44347/api/yelp/getWinner/${sessionId}`)
     .then((result) => resolve(result.data))
     .catch((error) => reject(error));
 });
 
-export default { getRestaurantsByParams, getWinningRestaurant };
+export default { getRestaurantsByParams, getWinningRestaurant, getRestaurantsByCoordinatesAndParams };

@@ -55,6 +55,5 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(queryParams);
         }
-
     }
 }
