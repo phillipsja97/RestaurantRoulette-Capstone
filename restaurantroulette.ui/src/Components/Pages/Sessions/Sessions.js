@@ -8,6 +8,7 @@ import userData from '../../../Helpers/Data/userData';
 import authData from '../../../Helpers/Data/authData';
 import SessionCard from '../../Shared/SessionCard/SessionCard';
 import CompletedSessionCard from '../../Shared/CompletedSessionCard/CompletedSessionCard';
+import NewSessionButton from '../../Shared/NewSessionButton/NewSessionButton';
 import './Sessions.scss';
 
 const { TabPane } = Tabs;
@@ -77,7 +78,8 @@ export default function Sessions(props) {
             </TabPane>
             <TabPane tab="Start A New Session" key="3">
               <div className="newSessionButton">
-                <Button type="ghost" onClick={createSession}>Start A New Session</Button>
+                <NewSessionButton createSession={createSession} />
+                {/* <Button type="ghost" onClick={createSession}>Start A New Session</Button> */}
               </div>
             </TabPane>
           </Tabs>

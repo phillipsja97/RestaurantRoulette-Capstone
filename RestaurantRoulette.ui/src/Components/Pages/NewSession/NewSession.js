@@ -47,9 +47,10 @@ export default function NewSession(props) {
     if (current === 0) {
       if (mapping) {
         const locationCoordinates = `${latitude},${longitude}`;
+        setLocation(locationCoordinates);
         const queryToCreate = {
           sessionId: Number(props.match.params.newSessionId),
-          queryCity: locationCoordinates,
+          queryCity: location,
           queryName: 'toBeUpdated',
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
@@ -122,13 +123,13 @@ export default function NewSession(props) {
         {steps[current].content}
       </div>
       <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button type="ghost" onClick={() => next()}>
-            Next
+         {current < steps.length - 1 && (
+          <Button type="ghost" block className="nextButtonSession" onClick={() => next()}>
+            Next Section
           </Button>
-        )}
+         )}
         {current === steps.length - 1 && (
-          <Button type="ghost" onClick={() => done()}>
+          <Button type="ghost" block className="nextButtonSession" onClick={() => done()}>
             Done
           </Button>
         )}
