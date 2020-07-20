@@ -19,9 +19,19 @@ const useStyles = makeStyles({
   card: {
     maxWidth: 345,
     margin: '2em',
+    backgroundColor: '#F4EBD0',
+    borderColor: '#E27D60',
+    borderWidth: '2px',
+    color: '#41B3A3',
   },
   userTitleCard: {
     marginBottom: '10px',
+  },
+  button: {
+    color: '#E27D60',
+  },
+  chipText: {
+    color: '#41B3A3',
   },
 });
 
@@ -56,14 +66,14 @@ export default function SessionCard(props) {
                 Users Involved:
               </Typography>
               {users.map((user) =>
-              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
+              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined" className={classes.chipText} />)
               }
             </CardContent>
           </CardActionArea>
           </Link>
           <CardActions>
             <Link to={`/session/${props.session.sessionId}`}>
-              <Button size="small" color="primary">
+              <Button size="small" className={classes.button}>
                 Session Details
               </Button>
             </Link>
@@ -87,14 +97,14 @@ export default function SessionCard(props) {
                 Users Involved:
               </Typography>
               {users.map((user) =>
-              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
+              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined" className={classes.chipText}/>)
               }
             </CardContent>
           </CardActionArea>
           </Link>
           <CardActions>
             <Link to={`/session/${props.session.sessionId}`}>
-              <Button size="small" color="primary">
+              <Button size="small" className={classes.button}>
                 Session Details
               </Button>
             </Link>

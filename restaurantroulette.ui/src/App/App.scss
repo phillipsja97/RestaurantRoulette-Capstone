@@ -1,4 +1,6 @@
+@import '../styles/variables';
+
 .App {
-  background-color: gray;
+  background-color: $background;
   height: 100vh;
 }

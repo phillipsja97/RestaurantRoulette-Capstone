@@ -35,8 +35,8 @@ export default function NormalLoginForm() {
       </Form.Item>
       <Form.Item>
         <div className="loginFormButton">
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
+          <Button type="ghost" htmlType="submit" className="login-form-button">
+            Login
           </Button>
         </div>
       </Form.Item>

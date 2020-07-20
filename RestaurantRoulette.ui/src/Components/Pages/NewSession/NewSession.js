@@ -115,7 +115,7 @@ export default function NewSession(props) {
       </div>
       <Steps current={current}>
         {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
+          <Step key={item.title} title={item.title} className="stepsContent" />
         ))}
       </Steps>
       <div className="steps-content">
@@ -123,12 +123,12 @@ export default function NewSession(props) {
       </div>
       <div className="steps-action">
         {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
+          <Button type="ghost" onClick={() => next()}>
             Next
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => done()}>
+          <Button type="ghost" onClick={() => done()}>
             Done
           </Button>
         )}

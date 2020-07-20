@@ -45,7 +45,7 @@ export default function LocationParam(props) {
                   </div>
                 </div>
               <div className="locationFieldContainer">
-              <Button type="primary" icon={<EnvironmentFilled />} size='lg' onClick={getCurrentLocation}>
+              <Button type="ghost" icon={<EnvironmentFilled />} size='lg' onClick={getCurrentLocation}>
                   Get My Current Location
               </Button>
               </div>
