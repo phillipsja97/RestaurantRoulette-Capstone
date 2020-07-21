@@ -123,5 +123,30 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
+        public Users UpdateUserProfile(int userId, Users userToUpdate)
+        {
+            var sql = @"update Users
+                            set FullName = @FullName,
+                                    Email = @Email,
+	                                    PhoneNumber = @PhoneNumber,
+                                            FirebaseUID = @FirebaseUID
+                                                output inserted.*
+                                                    where Id = @userId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    FullName = userToUpdate.FullName,
+                    Email = userToUpdate.Email,
+                    PhoneNumber = userToUpdate.PhoneNumber,
+                    UserId = userId,
+                    FirebaseUID = userToUpdate.FirebaseUID,
+                };
+                var updatedUser = db.QueryFirstOrDefault<Users>(sql, parameters);
+                return updatedUser;
+            }
+        }
+
     }
 }
