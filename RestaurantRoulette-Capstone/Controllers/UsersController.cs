@@ -73,5 +73,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok("User already exists");
         }
+
+        [HttpPut("updateProfile/{userId}")]
+        public IActionResult UpdateProfile(int userId, Users updatedProfile)
+        {
+            var updatedUser = _repository.UpdateUserProfile(userId, updatedProfile);
+            if (updatedUser == null)
+            {
+                return BadRequest("Profile could not be updated");
+            }
+            return Ok(updatedUser);
+        }
     }
 }

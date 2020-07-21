@@ -20,9 +20,12 @@ const SignUpOrSignIn = (userToAdd) => new Promise((resolve, reject) => {
 
 const SignUpThroughGoogleAuth = (userToAdd) => axios.post('https://localhost:44347/api/users/googleAuth/newOrReturningUser', userToAdd);
 
+const UpdateProfile = (userId, updatedUser) => axios.put(`https://localhost:44347/api/users/updateProfile/${userId}`, updatedUser);
+
 export default {
   getUserByUserId,
   getUserByFirebaseUID,
   SignUpOrSignIn,
   SignUpThroughGoogleAuth,
+  UpdateProfile,
 };

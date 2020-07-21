@@ -3,7 +3,9 @@ import {
   Drawer,
   Button,
   Card,
+  Input,
 } from 'antd';
+import { UserOutlined, PhoneOutlined, ContactsOutlined } from '@ant-design/icons';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import userData from '../../../Helpers/Data/userData';
@@ -14,6 +16,10 @@ import './Drawer.scss';
 export default class DrawerOption extends React.Component {
   state = {
     user: {},
+    editMode: false,
+    editEmail: '',
+    editPhoneNumber: '',
+    updatedUserInfo: {},
   }
 
   getUserByUID = () => {
@@ -27,11 +33,48 @@ export default class DrawerOption extends React.Component {
     }
   }
 
+  setEditMode = (e) => {
+    e.preventDefault();
+    this.setState({ editMode: true });
+  }
+
+  cancelEditMode = (e) => {
+    e.preventDefault();
+    this.setState({ editMode: false });
+  }
+
+  emailChange = (e) => {
+    e.preventDefault();
+    this.setState({ editEmail: e.target.value });
+  }
+
+  phoneNumberChange = (e) => {
+    e.preventDefault();
+    this.setState({ editPhoneNumber: e.target.value });
+  }
+
   componentDidMount() {
     const { authed } = this.props;
     if (authed) {
       setTimeout(this.getUserByUID, 4000);
     }
+  }
+
+  submitProfileUpdate = () => {
+    const updatedProfile = {
+      FullName: this.state.user.fullName,
+      Email: this.state.editEmail,
+      PhoneNumber: this.state.editPhoneNumber,
+      FirebaseUID: authData.getUid(),
+    };
+    userData.UpdateProfile(this.state.user.id, updatedProfile)
+      .then((result) => {
+        this.setState({ user: result.data });
+      })
+      .then(() => {
+        this.setState({ editMode: false });
+      })
+      .catch((errorFromDrawerComponent) => console.error(errorFromDrawerComponent));
   }
 
   render() {
@@ -53,12 +96,18 @@ export default class DrawerOption extends React.Component {
                 textAlign: 'right',
               }}
             >
-              <Button onClick={onClose} style={{ marginRight: 8 }} type="ghost">
-                Cancel
-              </Button>
-              <Button onClick={onClose} type="ghost">
-                Submit
-              </Button>
+            {(this.state.editMode)
+              ? <React.Fragment>
+                  <Button onClick={this.submitProfileUpdate} style={{ marginRight: 8 }} type="ghost">
+                    Submit
+                  </Button>
+                  <Button onClick={onClose} style={{ marginRight: 8 }} type="ghost">
+                    Cancel
+                  </Button>
+                </React.Fragment>
+              : <Button onClick={onClose} style={{ marginRight: 8 }} type="ghost">
+                  Cancel
+                </Button>}
             </div>
           }
         >
@@ -72,21 +121,34 @@ export default class DrawerOption extends React.Component {
             </div>
             <div className="descriptionCard">
               <Card title={user.fullName} style={{ width: 300, height: 250 }}>
-                <p>{user.email}</p>
-                <p>{user.phoneNumber}</p>
+                {(this.state.editMode)
+                  ? <React.Fragment>
+                    <h4>Email</h4>
+                      <Input placeholder="default size" prefix={<ContactsOutlined />} value={this.state.editEmail} onChange={this.emailChange} />
+                    <h4>Phone Number</h4>
+                      <Input placeholder="default size" prefix={<PhoneOutlined />} value={this.state.editPhoneNumber} onChange={this.phoneNumberChange} />
+                    </React.Fragment>
+                  : <React.Fragment>
+                      <h4>Email:</h4><p>{user.email}</p>
+                      <h4>Phone Number:</h4><p>{user.phoneNumber}</p>
+                    </React.Fragment>}
               </Card>
             </div>
           </div>
           <div className="buttonContainer">
             <div className="editProfilebutton">
-              <Button type="ghost" block>
-                Edit Profile
-              </Button>
-            </div>
-            <div className="openSessionButton">
-              <Button type="ghost" block>
-                Primary
-              </Button>
+            {(this.state.editMode)
+              ? <React.Fragment className="editingButtons">
+                  <Button className="editingButtons" type="ghost" block onClick={this.cancelEditMode}>
+                    Cancel
+                  </Button>
+                  <Button type="ghost" block onClick={this.submitProfileUpdate}>
+                    Submit Changes
+                  </Button>
+                </React.Fragment>
+              : <Button type="ghost" block onClick={this.setEditMode}>
+                  Edit Profile
+                </Button>}
             </div>
           </div>
         </div>
