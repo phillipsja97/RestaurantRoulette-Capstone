@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Divider, Tabs, Upload } from 'antd';
+import { Tabs } from 'antd';
 import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
-import { PlusOutlined } from '@ant-design/icons';
 import sessionData from '../../../Helpers/Data/sessionData';
-import userData from '../../../Helpers/Data/userData';
 import authData from '../../../Helpers/Data/authData';
 import SessionCard from '../../Shared/SessionCard/SessionCard';
 import CompletedSessionCard from '../../Shared/CompletedSessionCard/CompletedSessionCard';
+import NewSessionButton from '../../Shared/NewSessionButton/NewSessionButton';
 import './Sessions.scss';
 
 const { TabPane } = Tabs;
 
 export default function Sessions(props) {
-  const [authed, setAuthed] = useState(props);
   const [userId, setUserId] = useState('');
   const [sessions, setSessions] = useState([]);
-  const [newSession, setNewSession] = useState({});
   const [completedSessions, setCompletedSessions] = useState([]);
 
   function callback(key) {
-    console.log(key);
   }
 
   useEffect(() => {
@@ -46,7 +41,6 @@ export default function Sessions(props) {
     };
     sessionData.createNewSession(createdSession)
       .then((result) => {
-        console.log(result.data[0].id, 'result');
         props.history.push({
           pathname: `/newSession/${userId}/${result.data[0].id}`,
         });
@@ -77,17 +71,12 @@ export default function Sessions(props) {
             </TabPane>
             <TabPane tab="Start A New Session" key="3">
               <div className="newSessionButton">
-                <Button type="ghost" onClick={createSession}>Start A New Session</Button>
+                <NewSessionButton createSession={createSession} />
               </div>
             </TabPane>
           </Tabs>
         </div>
       </div>
-      {/* <div className="previousSessions">
-        <div className="previousTitle">
-          <h1>Previous Sessions</h1>
-        </div>
-      </div> */}
     </div>
   );
 }

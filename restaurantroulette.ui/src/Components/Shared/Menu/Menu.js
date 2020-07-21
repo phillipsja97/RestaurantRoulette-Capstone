@@ -2,9 +2,8 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import {
-  Menu,
-  Badge,
   Button,
+  PageHeader,
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import Drawer from '../Drawer/Drawer';
@@ -48,17 +47,30 @@ class MenuComponent extends React.Component {
     return (
       <div className="menu">
         {(authed)
-          ? <Menu mode="horizontal" className="menu">
+          ? <React.Fragment>
+              <PageHeader
+                ghost={true}
+                title="Restaurant Roulette"
+                extra={[
+                  <Button key="1" type="ghost" icon={<UserOutlined />} onClick={this.showDrawer} />,
+                  <Button key="2" type="ghost" onClick={this.logMeOut}>
+                    Logout
+                  </Button>,
+                ]}
+              />
               <Drawer visible={visible} onClose={this.onClose} authed={authed}/>
-                <Button onClick={this.logMeOut} className="avatarButton" ghost>Logout</Button>
-                    <Badge count={1} className='avatarButton'>
-                        <Button type="primary" icon={<UserOutlined />} onClick={this.showDrawer} ghost/>
-                    </Badge>
-                      <p className="avatarButton">Logged In: {user.displayName}</p>
-            </Menu>
-          : <Menu mode="horizontal" className="menu">
-              <Button type="ghost" onClick={this.loginClickEvent} className="avatarButton">Login</Button>
-            </Menu>
+            </React.Fragment>
+          : <React.Fragment>
+              <PageHeader
+                  ghost={true}
+                  title="Restaurant Roulette"
+                  extra={[
+                    <Button key="1" type="ghost" onClick={this.loginClickEvent}>
+                      Login
+                    </Button>,
+                  ]}
+              />
+            </React.Fragment>
             }
       </div>
     );

@@ -7,6 +7,7 @@
     "@bit/mui-org.material-ui-icons.face": "^3.9.2",
     "@bit/mui-org.material-ui-icons.location-on": "^3.9.2",
     "@bit/mui-org.material-ui.button": "^4.9.10",
+    "@bit/mui-org.material-ui.button-base": "^4.9.10",
     "@bit/mui-org.material-ui.card": "^4.9.10",
     "@bit/mui-org.material-ui.card-action-area": "^4.9.10",
     "@bit/mui-org.material-ui.card-actions": "^4.9.10",

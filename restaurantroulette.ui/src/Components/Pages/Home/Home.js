@@ -46,7 +46,7 @@ export default function Home(props) {
     <div className="home">
       <div className="loginPictureForm">
         <div className="loginCardContainer">
-          <Card style={{ width: 600, backgroundColor: 'gray' }} className="loginCard">
+          <Card style={{ width: 600, backgroundColor: '#ddf5f8' }} className="loginCard">
             <div className="loginCardContent">
               <div className="signInWithGoogle">
                 <LoginForm />
@@ -54,10 +54,10 @@ export default function Home(props) {
                 <Divider>Or</Divider>
               <div className="loginButtonGroup">
                 <div className="googleSignIn">
-                  <Button ghost onClick={loginClickEvent}>Sign In With Google Email</Button>
+                  <Button type="ghost" onClick={loginClickEvent}>Sign In With Google Email</Button>
                 </div>
                 <div className="registerButton">
-                  <Button ghost onClick={showDrawer}>Register For An Account</Button>
+                  <Button type="ghost" onClick={showDrawer}>Register For An Account</Button>
                 </div>
               </div>
             </div>

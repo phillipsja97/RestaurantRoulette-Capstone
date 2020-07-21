@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 .home {
   height: 100%;
   width: 100%;
@@ -67,4 +69,17 @@
 .howItWorksTitle {
   display: flex;
   justify-content: center;
+}
+
+.ant-btn-ghost {
+  background-color: $dullAqua;
+  border-color: $darkOrange;
+  border-width: 2px;
+  color: black;
+}
+
+.ant-btn-ghost:hover {
+  background-color: $dullOrange;
+  border-color: $darkOrange;
+  color: black;
 }

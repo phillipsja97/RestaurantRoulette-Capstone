@@ -2,7 +2,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-const-assign */
 import React, { useState } from 'react';
-import { Steps, Button, message } from 'antd';
+import { Steps, Button } from 'antd';
 import QueryParams from '../../Shared/QueryParams/QueryParams';
 import LocationParam from '../../Shared/LocationParam/LocationParam';
 import AddFriendsParam from '../../Shared/AddFriendsParam/AddFriendsParam';
@@ -47,9 +47,10 @@ export default function NewSession(props) {
     if (current === 0) {
       if (mapping) {
         const locationCoordinates = `${latitude},${longitude}`;
+        setLocation(locationCoordinates);
         const queryToCreate = {
           sessionId: Number(props.match.params.newSessionId),
-          queryCity: locationCoordinates,
+          queryCity: location,
           queryName: 'toBeUpdated',
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
@@ -115,20 +116,20 @@ export default function NewSession(props) {
       </div>
       <Steps current={current}>
         {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
+          <Step key={item.title} title={item.title} className="stepsContent" />
         ))}
       </Steps>
       <div className="steps-content">
         {steps[current].content}
       </div>
       <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
+         {current < steps.length - 1 && (
+          <Button type="ghost" block className="nextButtonSession" onClick={() => next()}>
+            Next Section
           </Button>
-        )}
+         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => done()}>
+          <Button type="ghost" block className="nextButtonSession" onClick={() => done()}>
             Done
           </Button>
         )}

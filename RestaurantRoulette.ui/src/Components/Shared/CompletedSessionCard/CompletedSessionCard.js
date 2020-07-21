@@ -1,5 +1,5 @@
 /* eslint-disable implicit-arrow-linebreak */
-import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
+import React, { useEffect, useState } from 'react';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
 import Button from '@bit/mui-org.material-ui.button';
 import Card from '@bit/mui-org.material-ui.card';
@@ -10,7 +10,6 @@ import CardMedia from '@bit/mui-org.material-ui.card-media';
 import Chip from '@bit/mui-org.material-ui.chip';
 import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import Typography from '@bit/mui-org.material-ui.typography';
-import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import sessionData from '../../../Helpers/Data/sessionData';
 
@@ -33,7 +32,7 @@ export default function CompletedSessionCard(props) {
       .then((result) => {
         setUsers(result);
       });
-  }, []);
+  }, [props.completedSession.sessionId]);
 
   return (
       <Card className={classes.card} raised={true}>
@@ -51,7 +50,7 @@ export default function CompletedSessionCard(props) {
                 Users Involved:
               </Typography>
               {users.map((user) =>
-              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined"/>)
+              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
               }
             </CardContent>
           </CardActionArea>
