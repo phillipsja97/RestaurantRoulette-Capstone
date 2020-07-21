@@ -47,10 +47,10 @@ export default class DrawerOption extends React.Component {
                 textAlign: 'right',
               }}
             >
-              <Button onClick={onClose} style={{ marginRight: 8 }}>
+              <Button onClick={onClose} style={{ marginRight: 8 }} type="ghost">
                 Cancel
               </Button>
-              <Button onClick={onClose} type="primary">
+              <Button onClick={onClose} type="ghost">
                 Submit
               </Button>
             </div>
@@ -73,12 +73,12 @@ export default class DrawerOption extends React.Component {
           </div>
           <div className="buttonContainer">
             <div className="editProfilebutton">
-              <Button type="primary" block>
+              <Button type="ghost" block>
                 Edit Profile
               </Button>
             </div>
             <div className="openSessionButton">
-              <Button type="primary" block>
+              <Button type="ghost" block>
                 Primary
               </Button>
             </div>

@@ -46,7 +46,7 @@ export default function Home(props) {
     <div className="home">
       <div className="loginPictureForm">
         <div className="loginCardContainer">
-          <Card style={{ width: 600, backgroundColor: '#41B3A3' }} className="loginCard">
+          <Card style={{ width: 600, backgroundColor: '#ddf5f8' }} className="loginCard">
             <div className="loginCardContent">
               <div className="signInWithGoogle">
                 <LoginForm />
