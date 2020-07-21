@@ -44,7 +44,7 @@ export default function SessionCard(props) {
       .then((result) => {
         setUsers(result);
       });
-  }, []);
+  }, [props.session.sessionId]);
 
   return (
     (props.session.isSwiped)
@@ -66,7 +66,7 @@ export default function SessionCard(props) {
                 Users Involved:
               </Typography>
               {users.map((user) =>
-              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined" className={classes.chipText} />)
+              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
               }
             </CardContent>
           </CardActionArea>
@@ -97,7 +97,7 @@ export default function SessionCard(props) {
                 Users Involved:
               </Typography>
               {users.map((user) =>
-              <Chip icon={<FaceIcon />} label={user.fullName} variant="outlined" className={classes.chipText}/>)
+              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText}/>)
               }
             </CardContent>
           </CardActionArea>

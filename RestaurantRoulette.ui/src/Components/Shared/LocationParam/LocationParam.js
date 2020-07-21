@@ -1,22 +1,17 @@
 /* eslint-disable prefer-template */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Input, Button, Divider } from 'antd';
 import { EnvironmentFilled } from '@ant-design/icons';
 import MapComponent from '../MapComponent/MapComponent';
 import './LocationParam.scss';
 
 export default function LocationParam(props) {
-  const [value, setValue] = useState('');
-  const [coordinates, setCoordinates] = useState();
-
   const onChange = (e) => {
     props.onChange(e.target.value);
   };
 
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log('Latitude is :', position.coords.latitude);
-      console.log('Longitude is :', position.coords.longitude);
       const latitudeCoord = parseFloat(`${position.coords.latitude}`);
       const longitudeCoord = parseFloat(`${position.coords.longitude}`);
       props.setLatitude(latitudeCoord);

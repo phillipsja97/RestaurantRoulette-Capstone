@@ -12,12 +12,10 @@ export default function Winner(props) {
     // console.log(statusId);
     const isTrue = (swiped) => swiped === true;
     const result = statusToCheck.every(isTrue);
-    console.log(result);
     return result;
   };
 
   useEffect(() => {
-    const userStatuses = [];
     userSessionsData.getAllUsersSwipeStatusOnSessionId(Number(props.match.params.newSessionId))
       .then((result) => {
         setAllUsersStatus(result);
@@ -31,7 +29,7 @@ export default function Winner(props) {
         }
       })
       .catch((errorFromGetUsersStatus) => console.error(errorFromGetUsersStatus));
-  }, []);
+  }, [props.match.params.newSessionId]);
 
   return (
     <h1>{winningRestaurant.name}</h1>

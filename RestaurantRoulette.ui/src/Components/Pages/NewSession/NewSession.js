@@ -2,7 +2,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-const-assign */
 import React, { useState } from 'react';
-import { Steps, Button, message } from 'antd';
+import { Steps, Button } from 'antd';
 import QueryParams from '../../Shared/QueryParams/QueryParams';
 import LocationParam from '../../Shared/LocationParam/LocationParam';
 import AddFriendsParam from '../../Shared/AddFriendsParam/AddFriendsParam';
