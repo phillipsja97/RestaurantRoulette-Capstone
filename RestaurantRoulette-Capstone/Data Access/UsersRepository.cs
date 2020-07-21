@@ -105,5 +105,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
+        public GoogleAuthNewUser GoogleAuthSignUpUser(GoogleAuthNewUser userToSignUp)
+        {
+            var sql = @"insert into Users (FullName, FirebaseUID)
+                          output inserted.*
+                            values (@FullName, @FirebaseUID)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    FullName = userToSignUp.FullName,
+                    FirebaseUID = userToSignUp.FirebaseUID,
+                };
+                var newUser = db.QueryFirstOrDefault<GoogleAuthNewUser>(sql, parameters);
+                return newUser;
+            }
+        }
+
     }
 }

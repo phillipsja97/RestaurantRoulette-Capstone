@@ -39,6 +39,10 @@ namespace RestaurantRoulette_Capstone.Controllers
         public IActionResult GetNeedsSwipedSessionsByUserId(string uid)
         {
             var userId = _UsersRepository.GetUserByFirebaseUID(uid);
+            if (userId == null)
+            {
+                return Ok("No swiped sessions for that user yet.");
+            }
             var needSwipedSessions = _repository.GetNeedsSwipedSessionsByUserId(userId.ID);
             var noNeedSwipedSessions = !needSwipedSessions.Any();
             if (noNeedSwipedSessions)
@@ -89,6 +93,10 @@ namespace RestaurantRoulette_Capstone.Controllers
         public IActionResult GetCompletedSessionsByUserId(string uid)
         {
             var userId = _UsersRepository.GetUserByFirebaseUID(uid);
+            if (userId == null)
+            {
+                return Ok("No swiped sessions for that user yet.");
+            }
             var completedSessions = _repository.GetCompletedSessionsByUserId(userId.ID);
             var noCompletedSession = !completedSessions.Any();
             if (noCompletedSession)

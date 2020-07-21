@@ -18,4 +18,11 @@ const SignUpOrSignIn = (userToAdd) => new Promise((resolve, reject) => {
     .catch((errorFromUserData) => reject(errorFromUserData));
 });
 
-export default { getUserByUserId, getUserByFirebaseUID, SignUpOrSignIn };
+const SignUpThroughGoogleAuth = (userToAdd) => axios.post('https://localhost:44347/api/users/googleAuth/newOrReturningUser', userToAdd);
+
+export default {
+  getUserByUserId,
+  getUserByFirebaseUID,
+  SignUpOrSignIn,
+  SignUpThroughGoogleAuth,
+};

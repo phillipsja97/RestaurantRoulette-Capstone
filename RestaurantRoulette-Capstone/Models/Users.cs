@@ -27,4 +27,10 @@ namespace RestaurantRoulette_Capstone.Models
     {
         public int Id { get; set; }
     }
+
+    public class GoogleAuthNewUser
+    {
+        public string FullName { get; set; }
+        public string FirebaseUID { get; set; }
+    }
 }

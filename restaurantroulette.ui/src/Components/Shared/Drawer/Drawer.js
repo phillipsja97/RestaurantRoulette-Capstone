@@ -17,15 +17,21 @@ export default class DrawerOption extends React.Component {
   }
 
   getUserByUID = () => {
-    userData.getUserByFirebaseUID(authData.getUid())
-      .then((response) => {
-        this.setState({ user: response });
-      })
-      .catch((errorFromDrawerUser) => console.error(errorFromDrawerUser));
+    const { authed } = this.props;
+    if (authed) {
+      userData.getUserByFirebaseUID(authData.getUid())
+        .then((response) => {
+          this.setState({ user: response });
+        })
+        .catch((errorFromDrawerUser) => console.error(errorFromDrawerUser));
+    }
   }
 
   componentDidMount() {
-    setTimeout(this.getUserByUID, 4000);
+    const { authed } = this.props;
+    if (authed) {
+      setTimeout(this.getUserByUID, 4000);
+    }
   }
 
   render() {

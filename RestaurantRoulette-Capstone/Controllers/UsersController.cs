@@ -57,5 +57,21 @@ namespace RestaurantRoulette_Capstone.Controllers
             return Created("New User Created", newUser);
 
         }
+
+        [HttpPost("googleAuth/newOrReturningUser")]
+        public IActionResult GoogleAuthSignUpUser(GoogleAuthNewUser userToSignUp)
+        {
+            var userCheck = _repository.GetUserByFirebaseUID(userToSignUp.FirebaseUID);
+            if (userCheck == null)
+            {
+                var newUser = _repository.GoogleAuthSignUpUser(userToSignUp);
+                if (newUser == null)
+                {
+                    return BadRequest("No User was created. Try again");
+                }
+                return Created("New User Created", newUser);
+            }
+            return Ok("User already exists");
+        }
     }
 }

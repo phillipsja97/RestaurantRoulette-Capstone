@@ -21,18 +21,28 @@ export default function Sessions(props) {
   useEffect(() => {
     sessionData.getSessionsThatNeedSwipedByUID(authData.getUid())
       .then((result) => {
-        setSessions(result);
-        const user = result.map((x) => x.userId);
-        setUserId(user[0]);
+        if (result.includes('No swiped sessions for that user yet.') || result.length === 0) {
+          setSessions(null);
+        } else {
+          setSessions(result);
+          const user = result.map((x) => x.userId);
+          setUserId(user[0]);
+        }
       })
       .then(() => {
         sessionData.getCompletedSessionsByUID(authData.getUid())
           .then((result) => {
-            setCompletedSessions(result);
+            if (result.includes('No swiped sessions for that user yet.') || result.length === 0) {
+              setCompletedSessions(null);
+            } else {
+              setCompletedSessions(result);
+              const user = result.map((x) => x.userId);
+              setUserId(user[0]);
+            }
           });
       })
       .catch((errorFromGetSessions) => console.error(errorFromGetSessions));
-  }, [sessions.length]);
+  }, []);
 
   const createSession = () => {
     const createdSession = {
@@ -60,13 +70,15 @@ export default function Sessions(props) {
                   <EmphasisTag text="You need to Swipe!" type='urgent' size='small'/>
                 </div>
                    <div className="openSessionCardContainer">
-                    {sessions.map((session) => <SessionCard key={session.sessionId} session={session} />)}
+                    {(sessions === null) ? <h1>You don't have any open sessions currently.</h1>
+                      : sessions.map((session) => <SessionCard key={session.sessionId} session={session} />)}
                    </div>
                 </div>
             </TabPane>
             <TabPane tab="Previous Sessions" key="2">
                   <div className="openSessionCardContainer">
-                    {completedSessions.map((completedSession) => <CompletedSessionCard key={completedSession.sessionId} completedSession={completedSession} />)}
+                  {(completedSessions === null) ? <h1>You don't have any open sessions currently.</h1>
+                    : completedSessions.map((session) => <SessionCard key={session.sessionId} session={session} />)}
                   </div>
             </TabPane>
             <TabPane tab="Start A New Session" key="3">

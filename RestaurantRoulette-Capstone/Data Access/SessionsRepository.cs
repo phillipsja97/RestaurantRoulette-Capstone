@@ -142,7 +142,7 @@ namespace RestaurantRoulette_Capstone.Data_Access
                                         on Sessions.ID = UserSessions.sessionId
                                             join Users
                                                 on UserSessions.UserId = Users.ID
-                                                    where UserSessions.UserId = 1
+                                                    where UserSessions.UserId = @userId
                                                         and Sessions.isSessionComplete = 1";
 
             using (var db = new SqlConnection(ConnectionString))
