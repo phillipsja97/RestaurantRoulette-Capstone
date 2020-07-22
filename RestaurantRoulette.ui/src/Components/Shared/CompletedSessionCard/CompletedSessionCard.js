@@ -36,7 +36,7 @@ export default function CompletedSessionCard(props) {
 
   return (
       <Card className={classes.card} raised={true}>
-          <Link to={`session/${props.completedSession.sessionId}`}>
+        <Link to={`completedSession/${props.completedSession.sessionId}`}>
           <CardActionArea>
               <CardMedia
                 component="img"
@@ -56,7 +56,7 @@ export default function CompletedSessionCard(props) {
           </CardActionArea>
           </Link>
           <CardActions>
-            <Link to={`/session/${props.completedSession.sessionId}`}>
+            <Link to={`completedSession/${props.completedSession.sessionId}`}>
               <Button size="small" color="primary">
                 Session Details
               </Button>

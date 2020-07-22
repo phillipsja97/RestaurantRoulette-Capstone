@@ -18,6 +18,7 @@ import Menu from '../Components/Shared/Menu/Menu';
 import NewSession from '../Components/Pages/NewSession/NewSession';
 import Winner from '../Components/Pages/Winner/Winner';
 import SessionDetails from '../Components/Pages/SessionDetails/SessionDetails';
+import CompletedSessionDetails from '../Components/Pages/CompletedSessionDetails/CompletedSessionDetails';
 import './App.scss';
 import 'antd/dist/antd.css';
 
@@ -71,6 +72,7 @@ class App extends React.Component {
               <PublicRoute path="/auth" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/session/:sessionId" exact component={(props) => <SessionDetails {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/completedSession/:sessionId" exact component={(props) => <CompletedSessionDetails {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId" exact component={(props) => <NewSession {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId/winner" exact component={(props) => <Winner {...props} authed={authed} />} authed={authed} />

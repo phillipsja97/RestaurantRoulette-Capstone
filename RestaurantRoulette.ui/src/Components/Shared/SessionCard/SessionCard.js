@@ -49,7 +49,10 @@ export default function SessionCard(props) {
   return (
     (props.session.isSwiped)
       ? <Card className={classes.card} raised={true}>
-          <Link to={`session/${props.session.sessionId}`}>
+          <Link to={{
+            pathname: `session/${props.session.sessionId}`,
+            state: { status: props.session.isSwiped },
+          }}>
           <CardActionArea>
               <CardMedia
                 component="img"
@@ -72,7 +75,10 @@ export default function SessionCard(props) {
           </CardActionArea>
           </Link>
           <CardActions>
-            <Link to={`/session/${props.session.sessionId}`}>
+            <Link to={{
+              pathname: `session/${props.session.sessionId}`,
+              state: { status: props.session.isSwiped },
+            }}>
               <Button size="small" className={classes.button}>
                 Session Details
               </Button>

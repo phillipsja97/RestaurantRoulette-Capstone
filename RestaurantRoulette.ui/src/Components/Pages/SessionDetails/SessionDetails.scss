@@ -1,0 +1,29 @@
+@import '../../../styles/variables';
+
+.userStatusChipContainer {
+  width: 500px;
+}
+
+.userStatusSection {
+  display: flex;
+  justify-content: center;
+}
+
+.sessionInformationSection {
+  display: flex;
+  justify-content: center;
+}
+
+.sessionInformationContainer {
+  width: 800px;
+  background-color: $dullAqua;
+}
+
+.sessionDetails {
+  height: 100%;
+}
+
+.sessionDetailsBackButton {
+  display: flex;
+  justify-content: center;
+}
