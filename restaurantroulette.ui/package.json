@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bit/aurora.aurora-ds.status-chip": "0.0.3",
     "@bit/fho-wtag.tofa.emphasis-tag": "0.0.2",
     "@bit/mui-org.material-ui-icons.face": "^3.9.2",
     "@bit/mui-org.material-ui-icons.location-on": "^3.9.2",

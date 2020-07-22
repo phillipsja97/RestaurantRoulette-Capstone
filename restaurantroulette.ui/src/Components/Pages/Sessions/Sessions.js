@@ -78,7 +78,7 @@ export default function Sessions(props) {
             <TabPane tab="Previous Sessions" key="2">
                   <div className="openSessionCardContainer">
                   {(completedSessions === null) ? <h1>You don't have any open sessions currently.</h1>
-                    : completedSessions.map((session) => <SessionCard key={session.sessionId} session={session} />)}
+                    : completedSessions.map((completedSession) => <CompletedSessionCard key={completedSession.sessionId} completedSession={completedSession} />)}
                   </div>
             </TabPane>
             <TabPane tab="Start A New Session" key="3">
