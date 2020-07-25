@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'antd';
 import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import yelpData from '../../../Helpers/Data/yelpData';
 
@@ -26,12 +28,23 @@ export default function Winner(props) {
             .then((restaurant) => {
               setWinningRestaurant(restaurant);
             });
+        } else {
+          props.history.push({
+            pathname: `/session/${Number(props.match.params.newSessionId)}`,
+          });
         }
       })
       .catch((errorFromGetUsersStatus) => console.error(errorFromGetUsersStatus));
   }, [props.match.params.newSessionId]);
 
   return (
-    <h1>{winningRestaurant.name}</h1>
+    <React.Fragment>
+    {(winningRestaurant === null || winningRestaurant.includes('No matching restaurants.'))
+      ? <Link to={`/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/swipe`}>
+        <Button type="ghost">Next 20</Button>
+        </Link>
+      : <h1>{winningRestaurant.name}</h1>
+    }
+    </React.Fragment>
   );
 }

@@ -55,5 +55,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(queryParams);
         }
+
+        [HttpPut("updateOffsetNumber/{sessionId}")]
+        public IActionResult UpdateOffsetNumber(int sessionId, QueryParameter updatedQuery)
+        {
+            var queryParams = _repository.UpdateOffsetNumber(sessionId, updatedQuery);
+            if (queryParams == null)
+            {
+                return BadRequest("Could not update the query offset number");
+            }
+            return Ok(queryParams);
+        }
     }
 }

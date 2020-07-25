@@ -52,6 +52,8 @@ export default function NewSession(props) {
           sessionId: Number(props.match.params.newSessionId),
           queryCity: location,
           queryName: 'toBeUpdated',
+          offsetStatus: false,
+          offsetNumber: 21,
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
           .then((result) => {
@@ -63,6 +65,8 @@ export default function NewSession(props) {
           sessionId: Number(props.match.params.newSessionId),
           queryCity: location,
           queryName: 'toBeUpdated',
+          offsetStatus: false,
+          offsetNumber: 21,
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
           .then((result) => {

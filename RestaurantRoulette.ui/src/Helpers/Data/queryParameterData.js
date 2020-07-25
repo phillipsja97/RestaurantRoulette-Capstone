@@ -10,4 +10,11 @@ const addQueryLocationToSession = (queryToAdd) => axios.post('https://localhost:
 
 const updateQueryNames = (sessionId, updatedQuery) => axios.put(`https://localhost:44347/api/queryParameter/updateQueryName/${sessionId}`, updatedQuery);
 
-export default { getQueryParametersWithSessionId, addQueryLocationToSession, updateQueryNames };
+const updateQueryOffsetNumber = (sessionId, updatedQuery) => axios.put(`https://localhost:44347/api/queryParameter/updateOffsetNumber/${sessionId}`, updatedQuery);
+
+export default {
+  getQueryParametersWithSessionId,
+  addQueryLocationToSession,
+  updateQueryOffsetNumber,
+  updateQueryNames,
+};

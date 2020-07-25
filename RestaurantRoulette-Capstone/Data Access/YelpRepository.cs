@@ -61,5 +61,19 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
             return response.Data;
         }
+
+        public AllRestaurantData GetNext20Resturants(string City, string categories, int offSet)
+        {
+            var client = new RestClient("https://api.yelp.com/v3/businesses/search");
+            client.AddDefaultHeaders(new Dictionary<string, string> { { "Authorization", $"Bearer {_key}" } });
+
+            var request = new RestRequest($"?location={City}&categories={categories}&offset={offSet}");
+            var response = client.Get<AllRestaurantData>(request);
+            if (!response.IsSuccessful)
+            {
+                return null;
+            }
+            return response.Data;
+        }
     }
 }

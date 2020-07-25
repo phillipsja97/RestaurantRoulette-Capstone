@@ -10,4 +10,11 @@ const getAllUsersSwipeStatusOnSessionId = (sessionId) => new Promise((resolve, r
     .catch((errorFromUserData) => reject(errorFromUserData));
 });
 
-export default { addUsersToSession, updateSwipeStatus, getAllUsersSwipeStatusOnSessionId };
+const ResetSwipeStatusForAllUsers = (sessionId) => axios.put(`https://localhost:44347/api/userSessions/updateAllUsersSwipeStatus/${sessionId}`);
+
+export default {
+  addUsersToSession,
+  updateSwipeStatus,
+  getAllUsersSwipeStatusOnSessionId,
+  ResetSwipeStatusForAllUsers,
+};

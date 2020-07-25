@@ -6,6 +6,7 @@ import authData from '../../../Helpers/Data/authData';
 import SessionCard from '../../Shared/SessionCard/SessionCard';
 import CompletedSessionCard from '../../Shared/CompletedSessionCard/CompletedSessionCard';
 import NewSessionButton from '../../Shared/NewSessionButton/NewSessionButton';
+import userData from '../../../Helpers/Data/userData';
 import './Sessions.scss';
 
 const { TabPane } = Tabs;
@@ -23,6 +24,10 @@ export default function Sessions(props) {
       .then((result) => {
         if (result.includes('No swiped sessions for that user yet.') || result.length === 0) {
           setSessions(null);
+          userData.getUserByFirebaseUID(authData.getUid())
+            .then((user) => {
+              setUserId(user.id);
+            });
         } else {
           setSessions(result);
           const user = result.map((x) => x.userId);

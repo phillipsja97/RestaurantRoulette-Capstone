@@ -16,10 +16,13 @@ export default function Swipe(props) {
   const [noRestaurants, setNoRestaurants] = useState([]);
   const [acceptableRestaurants, setAcceptableRestaurants] = useState([]);
   const [swipeStatus, setSwipeStatus] = useState({});
+  const [next20Status, setNext20Status] = useState([]);
+  const [restCount, setRestCount] = useState(21);
+  const [reset, setReset] = useState([]);
 
   const getEndCard = () => {
     return (
-      <MyEndCard finishSwipe={finishSwipe} />
+      <MyEndCard finishSwipe={finishSwipe} next20Status={next20Status} nextTwenty={nextTwenty} acceptableRestaurants={acceptableRestaurants} parameters={parameters} />
     );
   };
 
@@ -37,26 +40,31 @@ export default function Swipe(props) {
       k++;
       length--;
     }
-    acceptableRestaurantsData.addRestaurantsToAcceptableList(restaurantsToAdd)
-      .then((result) => {
-        setAcceptableRestaurants(result);
-      })
-      .then(() => {
-        const statusToUpdate = {
-          sessionId: Number(props.match.params.newSessionId),
-          userId: Number(props.match.params.userId),
-        };
-        userSessionsData.updateSwipeStatus(statusToUpdate)
-          .then((result) => {
-            setSwipeStatus(result);
-          })
-          .then(() => {
-            props.history.push({
-              pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/winner`,
+    if (acceptableRestaurants.length === 0) {
+      setNext20Status(true);
+    } else {
+      acceptableRestaurantsData.addRestaurantsToAcceptableList(restaurantsToAdd)
+        .then((result) => {
+          setAcceptableRestaurants(result);
+        })
+        .then(() => {
+          const statusToUpdate = {
+            sessionId: Number(props.match.params.newSessionId),
+            userId: Number(props.match.params.userId),
+            isSwiped: true,
+          };
+          userSessionsData.updateSwipeStatus(statusToUpdate)
+            .then((result) => {
+              setSwipeStatus(result);
+            })
+            .then(() => {
+              props.history.push({
+                pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/winner`,
+              });
             });
-          });
-      })
-      .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
+        })
+        .catch((errorFromAddingUsers) => console.error(errorFromAddingUsers));
+    }
   };
 
   const onSwipeLeft = (data) => {
@@ -75,33 +83,119 @@ export default function Swipe(props) {
     let queryCity = '';
     let queryName = '';
     let queryCoordinates = '';
+    let queryOffsetStatus = false;
     queryParameterData.getQueryParametersWithSessionId(Number(props.match.params.newSessionId))
       .then((result) => {
         if (result[0].queryCity.includes('.')) {
           queryCoordinates = result[0].queryCity;
           queryName = result[0].queryName;
+          queryOffsetStatus = result[0].offsetStatus;
           setParameters(result);
         } else {
           queryCity = result[0].queryCity;
           queryName = result[0].queryName;
+          queryOffsetStatus = result[0].offsetStatus;
+          setParameters(result);
+        }
+      })
+      .then(() => {
+        if (!queryOffsetStatus) {
+          if (queryCoordinates === '') {
+            yelpData.getRestaurantsByParams(queryCity, queryName)
+              .then((result) => {
+                setRestaurants(result.businesses);
+              });
+          } else {
+            yelpData.getRestaurantsByCoordinatesAndParams(queryCoordinates, queryName)
+              .then((result) => {
+                setRestaurants(result.businesses);
+              });
+          }
+        } else {
+          nextTwenty();
+        }
+      })
+      .catch((errorFromGetParameters) => console.error(errorFromGetParameters));
+  }, [props.match.params.newSessionId]);
+
+  const nextTwenty = () => {
+    let queryCity = '';
+    let queryName = '';
+    let queryCoordinates = '';
+    let offsetNumber;
+    queryParameterData.getQueryParametersWithSessionId(Number(props.match.params.newSessionId))
+      .then((result) => {
+        if (result[0].queryCity.includes('.')) {
+          queryCoordinates = result[0].queryCity;
+          queryName = result[0].queryName;
+          offsetNumber = result[0].offsetNumber;
+          setParameters(result);
+        } else {
+          queryCity = result[0].queryCity;
+          queryName = result[0].queryName;
+          offsetNumber = result[0].offsetNumber;
           setParameters(result);
         }
       })
       .then(() => {
         if (queryCoordinates === '') {
-          yelpData.getRestaurantsByParams(queryCity, queryName)
+          yelpData.getNext20RestaurantsByParams(queryCity, queryName, restCount)
             .then((result) => {
-              setRestaurants(result.businesses);
+              if (result.businesses.length === 0) {
+                const statusToUpdate = {
+                  sessionId: Number(props.match.params.newSessionId),
+                  userId: Number(props.match.params.userId),
+                  isSwiped: false,
+                };
+                userSessionsData.updateSwipeStatus(statusToUpdate)
+                  .then((swipeResult) => {
+                    setSwipeStatus(swipeResult);
+                  });
+                alert('No more restaurants in these categories.');
+                setRestCount(restCount - 20);
+              } else {
+                setRestaurants(result.businesses);
+              }
             });
         } else {
           yelpData.getRestaurantsByCoordinatesAndParams(queryCoordinates, queryName)
             .then((result) => {
-              setRestaurants(result.businesses);
+              if (result.businesses.length === 0) {
+                const statusToUpdate = {
+                  sessionId: Number(props.match.params.newSessionId),
+                  userId: Number(props.match.params.userId),
+                  isSwiped: false,
+                };
+                userSessionsData.updateSwipeStatus(statusToUpdate)
+                  .then((swipeResult) => {
+                    setSwipeStatus(swipeResult);
+                  });
+                alert('No more restaurants in these categories.');
+                setRestCount(restCount - 20);
+              } else {
+                setRestaurants(result.businesses);
+              }
             });
         }
       })
       .catch((errorFromGetParameters) => console.error(errorFromGetParameters));
-  }, [props.match.params.newSessionId]);
+    setRestCount(restCount + 20);
+    const updatedQuery = {
+      OffsetNumber: restCount,
+      OffsetStatus: true,
+    };
+    queryParameterData.updateQueryOffsetNumber(Number(props.match.params.newSessionId), updatedQuery)
+      .then((params) => {
+        setParameters(params);
+      })
+      .then(() => {
+        userSessionsData.ResetSwipeStatusForAllUsers(Number(props.match.params.newSessionId))
+          .then((resetUsers) => {
+            setReset(resetUsers);
+          });
+      })
+    ;
+  };
 
   const renderCards = () => {
     return restaurants.map((d) => {
