@@ -12,6 +12,12 @@ const getUserByFirebaseUID = (uid) => new Promise((resolve, reject) => {
     .catch((errorFromUserData) => reject(errorFromUserData));
 });
 
+const FindUsersByParameter = (input) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/users/searchUsers/${input}`)
+    .then((result) => resolve(result.data))
+    .catch((errorFromUserData) => reject(errorFromUserData));
+});
+
 const SignUpOrSignIn = (userToAdd) => new Promise((resolve, reject) => {
   axios.post('https://localhost:44347/api/users/newUser', userToAdd)
     .then((result) => resolve(result.data))
@@ -28,4 +34,5 @@ export default {
   SignUpOrSignIn,
   SignUpThroughGoogleAuth,
   UpdateProfile,
+  FindUsersByParameter,
 };

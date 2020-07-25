@@ -84,5 +84,17 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(updatedUser);
         }
+
+        [HttpGet("searchUsers/{input}")]
+        public IActionResult SearchForUsers(string input)
+        {
+            var users = _repository.SearchForUsers(input);
+            var noUsers = !users.Any();
+            if (noUsers)
+            {
+                return NotFound("No users found.");
+            }
+            return Ok(users);
+        }
     }
 }

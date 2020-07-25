@@ -33,5 +33,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(friends);
         }
+
+        [HttpPost("addFriend/{userId1}/{userId2}")]
+        public IActionResult AddAFriend(int userId1, int userId2)
+        {
+            var addedFriend = _repository.AddAFriend(userId1, userId2);
+            if (addedFriend == null)
+            {
+                BadRequest("User could not be added to your friends list");
+            }
+            return Ok(addedFriend);
+        }
     }
 }

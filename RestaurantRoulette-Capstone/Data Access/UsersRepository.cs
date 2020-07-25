@@ -148,5 +148,27 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
+        public IEnumerable<Users> SearchForUsers(string input)
+        {
+            //string sql;
+            //if (parameter == "FullName")
+            //{
+                var sql = @"Select *
+                            From Users
+                                    Where FullName like @input
+                                        or PhoneNumber like @input";
+
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    input = input + "%",
+                };
+                var users = db.Query<Users>(sql, parameters);
+                return users;
+            }
+        }
+
     }
 }

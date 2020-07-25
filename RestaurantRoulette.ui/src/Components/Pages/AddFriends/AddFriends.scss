@@ -1,0 +1,36 @@
+.searchFriendsTitle {
+  display: flex;
+  justify-content: center;
+}
+
+.searchInputContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.searchFriends {
+  width: 300px;
+}
+
+.radioParameterContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+.usersListContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.usersList {
+  width: 500px;
+  height: 300px;
+  overflow-y: scroll;
+  margin: 2em;
+}
+
+.usersIFollowTitle {
+  display: flex;
+  justify-content: center;
+}

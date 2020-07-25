@@ -32,5 +32,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 return friends;
             }
         }
+
+        public UserFriends AddAFriend(int userId1, int userId2)
+        {
+            var sql = @"insert into UserFriends (userId1, userId2)
+                          output inserted.*
+                            values (@userId1, @userId2)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new
+                {
+                    UserId1 = userId1,
+                    UserId2 = userId2,
+                };
+                var newFriend = db.QueryFirstOrDefault<UserFriends>(sql, parameters);
+                return newFriend;
+            }
+        }
     }
 }
