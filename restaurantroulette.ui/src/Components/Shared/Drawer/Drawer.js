@@ -5,7 +5,8 @@ import {
   Card,
   Input,
 } from 'antd';
-import { UserOutlined, PhoneOutlined, ContactsOutlined } from '@ant-design/icons';
+import { PhoneOutlined, ContactsOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import userData from '../../../Helpers/Data/userData';
@@ -19,7 +20,6 @@ export default class DrawerOption extends React.Component {
     editMode: false,
     editEmail: '',
     editPhoneNumber: '',
-    updatedUserInfo: {},
   }
 
   getUserByUID = () => {
@@ -78,7 +78,7 @@ export default class DrawerOption extends React.Component {
   }
 
   render() {
-    const { onClose, visible } = this.props;
+    const { onClose, visible, goToAddFriends } = this.props;
     const { user } = this.state;
     const photo = firebase.auth().currentUser.photoURL;
     const blankPhoto = 'https://immedilet-invest.com/wp-content/uploads/2016/01/user-placeholder.jpg';
@@ -149,6 +149,15 @@ export default class DrawerOption extends React.Component {
               : <Button type="ghost" block onClick={this.setEditMode}>
                   Edit Profile
                 </Button>}
+            </div>
+            <div className="addFriendsContainer">
+              <div className="addFriendsButton">
+                <Link to={`${this.state.user.id}/addFriends`}>
+                  <Button type="ghost" block onClick={goToAddFriends}>
+                    Manage Friends
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>

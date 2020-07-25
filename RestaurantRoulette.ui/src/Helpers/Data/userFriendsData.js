@@ -6,4 +6,6 @@ const getMyFriends = (uid) => new Promise((resolve, reject) => {
     .catch((errorFromUserData) => reject(errorFromUserData));
 });
 
-export default { getMyFriends };
+const AddFriend = (userId1, userId2) => axios.post(`https://localhost:44347/api/userFriends/addFriend/${userId1}/${userId2}`);
+
+export default { getMyFriends, AddFriend };

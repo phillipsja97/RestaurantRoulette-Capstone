@@ -58,6 +58,10 @@ class MenuComponent extends React.Component {
       .catch((errorFromMenuComponent) => console.error(errorFromMenuComponent));
   };
 
+  goToAddFriends = () => {
+    this.setState({ visible: false });
+  }
+
   render() {
     const { visible } = this.state;
     const { authed } = this.props;
@@ -76,7 +80,7 @@ class MenuComponent extends React.Component {
                   </Button>,
                 ]}
               />
-              <Drawer visible={visible} onClose={this.onClose} authed={authed}/>
+              <Drawer visible={visible} onClose={this.onClose} authed={authed} goToAddFriends={this.goToAddFriends}/>
             </React.Fragment>
           : <React.Fragment>
               <PageHeader
