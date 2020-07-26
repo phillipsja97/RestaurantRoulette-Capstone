@@ -13,7 +13,7 @@ export default function AddFriendsParam(props) {
         setFriends(result);
       })
       .catch((errorFromAddFriends) => console.error(errorFromAddFriends));
-  });
+  }, [friends]);
 
   const AddFriends = (value) => {
     props.onChange(value);

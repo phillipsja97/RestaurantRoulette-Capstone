@@ -11,6 +11,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import LoginForm from '../../Shared/LoginForm/LoginForm';
 import RegisterDrawer from '../../Shared/RegisterDrawer/RegisterDrawer';
+import userData from '../../../Helpers/Data/userData';
 import './Home.scss';
 
 const { Step } = Steps;
@@ -18,28 +19,39 @@ const { Step } = Steps;
 export default function Home(props) {
   const [current, setCurrent] = useState();
   const [visible, setVisible] = useState(false);
+  const [user, setUser] = useState({});
 
   const showDrawer = () => {
     setVisible(true);
   };
 
-  function onChange(a, b, c) {
-  }
-
-  function onChangeSteps(newCurrent) {
-    setCurrent(newCurrent);
-  }
-
   const loginClickEvent = (e) => {
     e.preventDefault();
+    let displayName = '';
+    let email = '';
+    let uid = '';
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
       .then((cred) => {
-      // get token from firebase
+        displayName = cred.user.displayName;
+        email = cred.user.email;
+        uid = cred.user.uid;
         cred.user.getIdToken()
           // save the token to the session storage
           .then((token) => sessionStorage.setItem('token', token));
-      });
+      })
+      .then(() => {
+        const newUser = {
+          fullName: displayName,
+          Email: email,
+          FirebaseUID: uid,
+        };
+        userData.SignUpThroughGoogleAuth(newUser)
+          .then((result) => {
+            setUser(result);
+          });
+      })
+      .catch((errorFromMenuComponent) => console.error(errorFromMenuComponent));
   };
 
   return (
@@ -48,10 +60,11 @@ export default function Home(props) {
         <div className="loginCardContainer">
           <Card style={{ width: 600, backgroundColor: '#ddf5f8' }} className="loginCard">
             <div className="loginCardContent">
+            <Divider>Sign in</Divider>
               <div className="signInWithGoogle">
                 <LoginForm />
               </div>
-                <Divider>Or</Divider>
+                <Divider>Or Sign Up</Divider>
               <div className="loginButtonGroup">
                 <div className="googleSignIn">
                   <Button type="ghost" onClick={loginClickEvent}>Sign In With Google Email</Button>
@@ -64,30 +77,7 @@ export default function Home(props) {
           </Card>
          </div>
       </div>
-        <div className="bottomHomePage">
-          <h1 className="howItWorksTitle">Here's how it works</h1>
-          <Steps current={current} onChange={onChangeSteps}>
-          <Step title="Step 1" description="This is a description." />
-          <Step title="Step 2" description="This is a description." />
-          <Step title="Step 3" description="This is a description." />
-          <Step title="Step 4" description="This is a description." />
-        </Steps>
-        <Carousel afterChange={onChange}>
-          <div>
-            <h3>1</h3>
-          </div>
-          <div>
-            <h3>2</h3>
-          </div>
-          <div>
-            <h3>3</h3>
-          </div>
-          <div>
-            <h3>4</h3>
-          </div>
-        </Carousel>
-        </div>
-        <RegisterDrawer visible={visible} setVisible={setVisible} />
+      <RegisterDrawer visible={visible} setVisible={setVisible} />
     </div>
   );
 }
