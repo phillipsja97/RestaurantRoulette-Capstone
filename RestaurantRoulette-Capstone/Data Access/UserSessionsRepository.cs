@@ -39,7 +39,7 @@ namespace RestaurantRoulette_Capstone.Data_Access
         public UserSessions UpdateSwipeStatus(UserSessions statusToUpdate)
         {
             var sql = @"update UserSessions
-                          set isSwiped = 1
+                          set isSwiped = @isSwiped
                              output inserted.*
                                 where SessionId = @sessionId
                                     and userId = @userId";
@@ -50,6 +50,7 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 {
                     sessionId = statusToUpdate.SessionId,
                     userId = statusToUpdate.UserId,
+                    isSwiped = statusToUpdate.isSwiped,
                 };
                 var updatedStatus = db.QueryFirstOrDefault<UserSessions>(sql, parameter);
                 return updatedStatus;
@@ -72,6 +73,26 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 };
                 var status = db.Query<SwipeStatus>(sql, parameter);
                 return status;
+            }
+        }
+
+        public SwipeStatus ResetAllUsersToNotSwiped(int userId, int sessionId)
+        {
+            var sql = @"update UserSessions
+                          set isSwiped = 0
+                             output inserted.*
+                                where SessionId = @sessionId
+                                    and userId = @userId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    sessionId = sessionId,
+                    userId = userId,
+                };
+                var updatedUser = db.QueryFirstOrDefault<SwipeStatus>(sql, parameter);
+                return updatedUser;
             }
         }
     }

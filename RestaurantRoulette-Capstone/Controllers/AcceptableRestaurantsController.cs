@@ -24,6 +24,10 @@ namespace RestaurantRoulette_Capstone.Controllers
         public IActionResult AcceptableRestaurantsToAdd(List<AcceptableRestaurants> restaurantIds)
         {
             var restaurants = new List<AcceptableRestaurants>();
+            if (restaurantIds == null)
+            {
+                Ok("No restaurants to add");
+            }
             foreach (var item in restaurantIds)
             {
                 var id = _repository.AcceptableRestaurantsToAdd(item);

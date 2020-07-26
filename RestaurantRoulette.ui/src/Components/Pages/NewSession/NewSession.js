@@ -48,10 +48,13 @@ export default function NewSession(props) {
       if (mapping) {
         const locationCoordinates = `${latitude},${longitude}`;
         setLocation(locationCoordinates);
+        console.log(location);
         const queryToCreate = {
           sessionId: Number(props.match.params.newSessionId),
-          queryCity: location,
+          queryCity: locationCoordinates,
           queryName: 'toBeUpdated',
+          offsetStatus: false,
+          offsetNumber: 21,
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
           .then((result) => {
@@ -63,6 +66,8 @@ export default function NewSession(props) {
           sessionId: Number(props.match.params.newSessionId),
           queryCity: location,
           queryName: 'toBeUpdated',
+          offsetStatus: false,
+          offsetNumber: 21,
         };
         queryParamaterData.addQueryLocationToSession(queryToCreate)
           .then((result) => {

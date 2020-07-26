@@ -60,5 +60,23 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(users);
         }
+
+        [HttpPut("updateAllUsersSwipeStatus/{sessionId}")]
+        public IActionResult UpdateAllUsersSwipeStatus(int sessionId)
+        {
+            var users = _repository.GetAllUsersSwipeStatus(sessionId);
+            var updatedUsers = new List<SwipeStatus>();
+            foreach (var item in users)
+            {
+                var updatedUser = _repository.ResetAllUsersToNotSwiped(item.UserId, sessionId);
+                updatedUsers.Add(updatedUser);
+            }
+            var noUsers = !updatedUsers.Any();
+            if (noUsers)
+            {
+                return BadRequest("Could not update users");
+            }
+            return Ok(updatedUsers);
+        }
     }
 }

@@ -33,9 +33,9 @@ namespace RestaurantRoulette_Capstone.Data_Access
 
         public IEnumerable<QueryParameter> AddQueryToCurrentSession(QueryParameter queryToAdd)
         {
-            var sql = @"insert into QueryParameter (SessionId, QueryCity, QueryName)
+            var sql = @"insert into QueryParameter (SessionId, QueryCity, QueryName, OffsetStatus, OffsetNumber)
                             output inserted.*
-                                values (@sessionId, @QueryCity, @QueryName)";
+                                values (@sessionId, @QueryCity, @QueryName, @OffsetStatus, @OffsetNumber)";
 
             using (var db = new SqlConnection(ConnectionString))
             {
@@ -44,6 +44,8 @@ namespace RestaurantRoulette_Capstone.Data_Access
                     sessionId = queryToAdd.SessionId,
                     QueryCity = queryToAdd.QueryCity,
                     QueryName = queryToAdd.QueryName,
+                    OffsetStatus = queryToAdd.OffsetStatus,
+                    OffsetNumber = queryToAdd.OffsetNumber,
                 };
                 var queryParams = db.Query<QueryParameter>(sql, parameter);
                 return queryParams;
@@ -63,6 +65,27 @@ namespace RestaurantRoulette_Capstone.Data_Access
                 {
                     QueryName = updatedQuery.QueryName,
                     sessionId = sessionId,
+                };
+                var queryParams = db.Query<QueryParameter>(sql, parameter);
+                return queryParams;
+            }
+        }
+        
+        public IEnumerable<QueryParameter> UpdateOffsetNumber(int sessionId, QueryParameter updatedQuery)
+        {
+            var sql = @"update QueryParameter
+                        set OffsetNumber = @OffsetNumber,
+                            OffsetStatus = @OffsetStatus
+                            OUTPUT INSERTED.*
+                                where SessionId = @sessionId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameter = new
+                {
+                    OffsetNumber = updatedQuery.OffsetNumber,
+                    sessionId = sessionId,
+                    OffsetStatus = updatedQuery.OffsetStatus,
                 };
                 var queryParams = db.Query<QueryParameter>(sql, parameter);
                 return queryParams;

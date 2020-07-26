@@ -18,12 +18,14 @@ namespace RestaurantRoulette_Capstone.Controllers
         YelpRepository _repository;
         AcceptableRestaurantsRepository _acceptableRestaurantsRepository;
         SessionsRepository _sessionsRepository;
+        UserSessionsRepository _userSessionsRepository;
 
-        public YelpController(YelpRepository repository, AcceptableRestaurantsRepository acceptableRestaurantsRepository, SessionsRepository sessionsRepository)
+        public YelpController(YelpRepository repository, AcceptableRestaurantsRepository acceptableRestaurantsRepository, SessionsRepository sessionsRepository, UserSessionsRepository userSessionsRepository)
         {
             _repository = repository;
             _acceptableRestaurantsRepository = acceptableRestaurantsRepository;
             _sessionsRepository = sessionsRepository;
+            _userSessionsRepository = userSessionsRepository;
         }
 
         [HttpGet("allRestaurants/{city}")]
@@ -52,6 +54,10 @@ namespace RestaurantRoulette_Capstone.Controllers
                 }
             }
             var query = allRestaurantIds.GroupBy(x => x).Where(g => g.Count() > 1).Select(y => y.Key).ToList();
+            if (query.Count == 0)
+            {
+                return Ok("No matching restaurants.");
+            }
             Random rnd = new Random();
             var winningIndex = rnd.Next(0, query.Count());
             var winningId = query[winningIndex];
@@ -68,6 +74,28 @@ namespace RestaurantRoulette_Capstone.Controllers
         public IActionResult GetAllRestaurantsByCoordinates(string coordinates, string categories)
         {
             var result = _repository.GetAllResturantsByCoordinates(coordinates, categories);
+            if (result == null)
+            {
+                return NotFound("Restaurants not found");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("allRestaurants/next20/{city}")]
+        public IActionResult GetNext20Restaurants(string city, string categories, int offSet)
+        {
+            var result = _repository.GetNext20Resturants(city, categories, offSet);
+            if (result == null)
+            {
+                return NotFound("Restaurants not found");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("allRestaurants/next20byCoords/{city}")]
+        public IActionResult GetNext20RestaurantsByCoords(string city, string categories, int offSet)
+        {
+            var result = _repository.GetNext20ResturantsByCoordinates(city, categories, offSet);
             if (result == null)
             {
                 return NotFound("Restaurants not found");
