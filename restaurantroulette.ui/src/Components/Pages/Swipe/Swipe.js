@@ -158,7 +158,7 @@ export default function Swipe(props) {
               }
             });
         } else {
-          yelpData.getRestaurantsByCoordinatesAndParams(queryCoordinates, queryName)
+          yelpData.getNext20RestaurantsByCoordinatesAndParams(queryCoordinates, queryName, restCount)
             .then((result) => {
               if (result.businesses.length === 0) {
                 const statusToUpdate = {

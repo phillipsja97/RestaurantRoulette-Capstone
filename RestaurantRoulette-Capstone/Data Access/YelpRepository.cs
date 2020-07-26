@@ -53,7 +53,7 @@ namespace RestaurantRoulette_Capstone.Data_Access
             var coordinatesSplit = coordinates.Split(",");
             var latitude = coordinatesSplit[0];
             var longitude = coordinatesSplit[1];
-            var request = new RestRequest($"?{latitude}&{longitude}&categories={cityParams}");
+            var request = new RestRequest($"?latitude={latitude}&longitude={longitude}&categories={cityParams}");
             var response = client.Get<AllRestaurantData>(request);
             if (!response.IsSuccessful)
             {
@@ -68,6 +68,23 @@ namespace RestaurantRoulette_Capstone.Data_Access
             client.AddDefaultHeaders(new Dictionary<string, string> { { "Authorization", $"Bearer {_key}" } });
 
             var request = new RestRequest($"?location={City}&categories={categories}&offset={offSet}");
+            var response = client.Get<AllRestaurantData>(request);
+            if (!response.IsSuccessful)
+            {
+                return null;
+            }
+            return response.Data;
+        }
+
+        public AllRestaurantData GetNext20ResturantsByCoordinates(string coordinates, string cityParams, int offset)
+        {
+            var client = new RestClient("https://api.yelp.com/v3/businesses/search");
+            client.AddDefaultHeaders(new Dictionary<string, string> { { "Authorization", $"Bearer {_key}" } });
+
+            var coordinatesSplit = coordinates.Split(",");
+            var latitude = coordinatesSplit[0];
+            var longitude = coordinatesSplit[1];
+            var request = new RestRequest($"?latitude={latitude}&longitude={longitude}&categories={cityParams}&offset={offset}");
             var response = client.Get<AllRestaurantData>(request);
             if (!response.IsSuccessful)
             {

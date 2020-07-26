@@ -91,5 +91,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("allRestaurants/next20byCoords/{city}")]
+        public IActionResult GetNext20RestaurantsByCoords(string city, string categories, int offSet)
+        {
+            var result = _repository.GetNext20ResturantsByCoordinates(city, categories, offSet);
+            if (result == null)
+            {
+                return NotFound("Restaurants not found");
+            }
+            return Ok(result);
+        }
     }
 }
