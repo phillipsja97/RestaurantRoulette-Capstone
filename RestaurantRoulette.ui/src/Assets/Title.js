@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable no-tabs */
 import React from 'react';

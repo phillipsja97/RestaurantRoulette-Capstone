@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   Divider,
-  Carousel,
   Steps,
 } from 'antd';
 import firebase from 'firebase/app';
@@ -14,10 +13,7 @@ import RegisterDrawer from '../../Shared/RegisterDrawer/RegisterDrawer';
 import userData from '../../../Helpers/Data/userData';
 import './Home.scss';
 
-const { Step } = Steps;
-
 export default function Home(props) {
-  const [current, setCurrent] = useState();
   const [visible, setVisible] = useState(false);
   const [user, setUser] = useState({});
 

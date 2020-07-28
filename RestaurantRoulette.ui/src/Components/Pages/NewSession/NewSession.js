@@ -21,7 +21,7 @@ export default function NewSession(props) {
   const [longitude, setLongitude] = useState();
   const [usersData, setUsersData] = useState([]);
   const foodParams = [];
-  const friendsToAdd = [];
+  const [friends, setFriends] = useState([]);
 
   const steps = [
     {
@@ -38,7 +38,7 @@ export default function NewSession(props) {
       content: <QueryParams onChange={(value) => foodParams.push(value)} />,
     },
     {
-      content: <AddFriendsParam onChange={(value) => friendsToAdd.push(value)} />,
+      content: <AddFriendsParam onChange={(value) => setFriends(value)} />,
     },
   ];
 
@@ -48,7 +48,6 @@ export default function NewSession(props) {
       if (mapping) {
         const locationCoordinates = `${latitude},${longitude}`;
         setLocation(locationCoordinates);
-        console.log(location);
         const queryToCreate = {
           sessionId: Number(props.match.params.newSessionId),
           queryCity: locationCoordinates,
@@ -90,16 +89,21 @@ export default function NewSession(props) {
 
   const done = () => {
     const addFriends = [];
-    friendsToAdd.push(Number(props.match.params.userId));
-    let length = friendsToAdd.length;
+    const owner = {
+      sessionId: Number(props.match.params.newSessionId),
+      userId: Number(props.match.params.userId),
+      isSwiped: false,
+    };
+    addFriends.push(owner);
+    let length = friends.length;
     let k = 0;
     while (length > 0) {
-      const friends = {
+      const friendToAdd = {
         sessionId: Number(props.match.params.newSessionId),
-        userId: friendsToAdd[k],
+        userId: Number(friends[k]),
         isSwiped: false,
       };
-      addFriends.push(friends);
+      addFriends.push(friendToAdd);
       k++;
       length--;
     }

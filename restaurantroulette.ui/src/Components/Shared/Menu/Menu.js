@@ -67,7 +67,6 @@ class MenuComponent extends React.Component {
   render() {
     const { visible } = this.state;
     const { authed } = this.props;
-    const user = firebase.auth().currentUser;
     return (
       <div className="menu">
         {(authed)
