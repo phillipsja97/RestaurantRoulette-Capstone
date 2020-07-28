@@ -122,7 +122,7 @@ export default function Swipe(props) {
     let queryCity = '';
     let queryName = '';
     let queryCoordinates = '';
-    let offsetNumber;
+    let offsetNumber = 0;
     queryParameterData.getQueryParametersWithSessionId(Number(props.match.params.newSessionId))
       .then((result) => {
         if (result[0].queryCity.includes('.')) {
@@ -193,8 +193,7 @@ export default function Swipe(props) {
           .then((resetUsers) => {
             setReset(resetUsers);
           });
-      })
-    ;
+      });
   };
 
   const renderCards = () => {

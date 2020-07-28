@@ -19,7 +19,6 @@ export default class SessionDetails extends React.Component {
 
   componentDidMount() {
     const theSessionId = this.props.match.params.sessionId;
-    console.log(theSessionId, 'sessionId');
     sessionData.getASession(theSessionId)
       .then((result) => {
         this.setState({ session: result });

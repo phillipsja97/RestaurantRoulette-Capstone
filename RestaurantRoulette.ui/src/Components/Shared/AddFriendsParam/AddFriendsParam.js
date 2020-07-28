@@ -1,32 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import UserButton from '../UserButton/UserButton';
+/* eslint-disable no-new-object */
+import React from 'react';
+import { Select } from 'antd';
 import UserFriendsData from '../../../Helpers/Data/userFriendsData';
 import authData from '../../../Helpers/Data/authData';
 import './AddFriendsParam.scss';
 
-export default function AddFriendsParam(props) {
-  const [friends, setFriends] = useState([]);
+const { Option } = Select;
 
-  useEffect(() => {
-    UserFriendsData.getMyFriends(authData.getUid())
-      .then((result) => {
-        setFriends(result);
-      })
-      .catch((errorFromAddFriends) => console.error(errorFromAddFriends));
-  });
+export default class AddFriendsParams extends React.Component {
+  state = {
+    friends: [],
+  }
 
-  const AddFriends = (value) => {
-    props.onChange(value);
+  // handleChange = (value) => {
+  //   console.log(`selected ${value}`);
+  // }
+
+  handleChange = (value) => {
+    const { onChange } = this.props;
+    onChange(value);
   };
 
-  return (
-    <div className="addFriendsParam">
-      <div className="addFriendsParamTitle">
-        <h1>Add Friends</h1>
-      </div>
-      <div className="userButtonContainer">
-        {friends.map((user) => <UserButton key={user.userId} user={user} AddFriends={AddFriends} />)}
-      </div>
-    </div>
-  );
+  componentDidMount() {
+    UserFriendsData.getMyFriends(authData.getUid())
+      .then((result) => {
+        this.setState({ friends: result });
+      })
+      .catch((errorFromAddFriends) => console.error(errorFromAddFriends));
+  }
+
+  render() {
+    return (
+      <div className="selectFriendsBar">
+        <div className="selectTitle">
+          <h1>Select Friends To Add</h1>
+        </div>
+        <div className="selectBar">
+          <Select mode="tags" size="large" style={{ width: '50%' }} placeholder="Select Friends To Add" onChange={this.handleChange}>
+            {this.state.friends.map((friend) => <Option key={friend.userId}>{friend.fullName}</Option>)}
+          </Select>
+        </div>
+        </div>
+    );
+  }
 }

@@ -49,7 +49,7 @@ export default function AddFriends(props) {
 
   return (
     <React.Fragment>
-      <div className="SearchContainer">
+      <div className="searchContainer">
         <div className="searchFriendsTitle">
           <h1>Search For New Users</h1>
         </div>

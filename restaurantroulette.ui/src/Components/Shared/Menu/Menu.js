@@ -1,11 +1,13 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { Link } from 'react-router-dom';
 import {
   Button,
   PageHeader,
 } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import TitleIcon from '../../../Assets/Title';
 import Drawer from '../Drawer/Drawer';
 import userData from '../../../Helpers/Data/userData';
 import './Menu.scss';
@@ -65,14 +67,13 @@ class MenuComponent extends React.Component {
   render() {
     const { visible } = this.state;
     const { authed } = this.props;
-    const user = firebase.auth().currentUser;
     return (
       <div className="menu">
         {(authed)
           ? <React.Fragment>
               <PageHeader
                 ghost={true}
-                title="Restaurant Roulette"
+                title={<Link to={'/'}><TitleIcon /></Link>}
                 extra={[
                   <Button key="1" type="ghost" icon={<UserOutlined />} onClick={this.showDrawer} />,
                   <Button key="2" type="ghost" onClick={this.logMeOut}>
@@ -85,10 +86,10 @@ class MenuComponent extends React.Component {
           : <React.Fragment>
               <PageHeader
                   ghost={true}
-                  title="Restaurant Roulette"
+                  title={<Link to={'/'}><TitleIcon /></Link>}
                   extra={[
                     <Button key="1" type="ghost" onClick={this.loginClickEvent}>
-                      Login
+                      Sign in with Google Email
                     </Button>,
                   ]}
               />
