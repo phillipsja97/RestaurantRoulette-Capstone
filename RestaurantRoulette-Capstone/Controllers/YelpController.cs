@@ -102,5 +102,16 @@ namespace RestaurantRoulette_Capstone.Controllers
             }
             return Ok(result);
         }
+
+        [HttpGet("{winningId}")]
+        public IActionResult GetTheWinningRestaurant(string winningId)
+        {
+            var result = _repository.GetWinningRestaurant(winningId);
+            if (result == null)
+            {
+                return NotFound("Restaurants are not found");
+            }
+            return Ok(result);
+        }
     }
 }

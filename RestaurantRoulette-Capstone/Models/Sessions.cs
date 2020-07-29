@@ -10,6 +10,7 @@ namespace RestaurantRoulette_Capstone.Models
         public int ID { get; set; }
         public int OwnerId { get; set; }
         public bool isSessionComplete { get; set; }
+        public string WinningId { get; set; }
     }
 
     public class SessionsWithUser

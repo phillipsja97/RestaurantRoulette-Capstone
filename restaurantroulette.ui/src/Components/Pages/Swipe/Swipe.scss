@@ -3,11 +3,8 @@
   width: 200px !important;
 }
 
-.restaurantPhoto {
-  display: flex;
-  justify-content: center;
-  margin-top: 5em;
-  height: 30em;
+.actualCard {
+  height: 100%;
   width: 100%;
   position: absolute;
   z-index: -1;
