@@ -29,6 +29,7 @@ export default function Winner(props) {
               setWinningRestaurant(restaurant);
             });
         } else {
+          console.log('did i get here?');
           props.history.push({
             pathname: `/session/${Number(props.match.params.newSessionId)}`,
           });
@@ -39,7 +40,7 @@ export default function Winner(props) {
 
   return (
     <React.Fragment>
-    {(winningRestaurant === null || winningRestaurant.includes('No matching restaurants.'))
+    {(winningRestaurant === null)
       ? <Link to={`/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/swipe`}>
         <Button type="ghost">Next 20</Button>
         </Link>

@@ -40,7 +40,8 @@ export default class SessionDetails extends React.Component {
 
   render() {
     return (
-      <React.Fragment className="sessionDetails">
+      <React.Fragment>
+        <div className="sessionDetails">
         <Result
           icon={<FoodIcon />}
           title="You have already swiped. Waiting on the rest of your party!"
@@ -70,10 +71,11 @@ export default class SessionDetails extends React.Component {
       </div>
       <div className="sessionDetailsBackButton">
         <Link to={'/'}>
-          <Button type="primary" key="console">
+          <Button type="ghost" key="console" block>
                 Head back to Sessions
           </Button>
         </Link>
+      </div>
       </div>
       </React.Fragment>
     );

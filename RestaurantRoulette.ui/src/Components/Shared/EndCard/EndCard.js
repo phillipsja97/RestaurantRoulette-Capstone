@@ -5,7 +5,8 @@ import './EndCard.scss';
 export default function MyEndCard(props) {
   return (
     <div className="finishSwipeButtonContainer">
-      {(props.acceptableRestaurants.length === 0)
+      {console.log(props.acceptableRestaurants.length, 'length')}
+      {(props.acceptableRestaurants.length <= 0)
         ? <div className="next20Button">
           <h1>It looks like you didn't like any of these restaurants. Let's get some more options</h1>
           <Button type="ghost" onClick={props.nextTwenty}>Next 20 Restaurants</Button>
