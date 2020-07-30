@@ -24,6 +24,8 @@
     "@bit/mui-org.material-ui.list-subheader": "^4.9.10",
     "@bit/mui-org.material-ui.styles": "^4.9.10",
     "@bit/mui-org.material-ui.typography": "^4.9.10",
+    "@bit/react-bootstrap.react-bootstrap.carousel": "^1.0.0",
+    "@bit/react-bootstrap.react-bootstrap.internal.style-links": "^1.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",

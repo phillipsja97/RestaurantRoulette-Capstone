@@ -1,11 +1,42 @@
-.ant-carousel .slick-slide {
-  text-align: center;
-  height: 360px;
-  line-height: 160px;
-  background: #364d79;
-  overflow: hidden;
+// .completeSessionDetails {
+
+// }
+
+.statusUserChip {
+  width: 50%;
 }
 
-.ant-carousel .slick-slide h3 {
-  color: #fff;
+.userChips {
+  width: 20%;
+  margin-left: 2em;
+}
+
+.descriptionSection {
+  display: flex !important;
+  justify-content: center;
+}
+
+.pastSessionDetailsContainer {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2em;
+}
+
+.pastSessionRestaurantDetails {
+  display: block !important;
+  margin-left: 3em;
+  margin-right: 3em;
+  margin-bottom: 3em;
+  margin-top: 1em;
+}
+
+.site-result-demo-error-icon {
+  color: red;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.hoursOpenDetails {
+  width: 15%;
 }

@@ -66,7 +66,7 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 return NotFound("There was an error getting your winning restaurant. Please try again.");
             }
-            var completeSession = _sessionsRepository.CompleteASession(sessionId);
+            var completeSession = _sessionsRepository.CompleteASession(sessionId, winningRestaurant.id);
             return Ok(winningRestaurant);
         }
 
