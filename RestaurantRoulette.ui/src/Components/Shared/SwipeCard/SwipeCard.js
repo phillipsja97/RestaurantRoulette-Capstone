@@ -1,5 +1,7 @@
 import React from 'react';
 import { withStyles } from '@bit/mui-org.material-ui.styles';
+import { List, Rate } from 'antd';
+import { StarOutlined } from '@ant-design/icons';
 import Card from '@bit/mui-org.material-ui.card';
 import CardHeader from '@bit/mui-org.material-ui.card-header';
 import CardMedia from '@bit/mui-org.material-ui.card-media';
@@ -12,6 +14,10 @@ import Typography from '@bit/mui-org.material-ui.typography';
 const styles = (theme) => ({
   card: {
     maxWidth: 400,
+    backgroundColor: '#CAEBF2',
+    borderColor: '#E27D60',
+    borderWidth: '2px',
+    color: 'black',
   },
   media: {
     height: 0,
@@ -44,22 +50,35 @@ class SwipeCard extends React.Component {
                 subheader={restaurant.display_phone}
                 />
             <CardMedia className={classes.media} image={restaurant.image_url} alt={restaurant.name} />
-            <CardContent>
-              <Typography variant="body1" className={classes.body}>
-                Rating:
-              </Typography>
-                <Typography className={classes.body}>{restaurant.rating} Stars</Typography>
-              <br/>
-              <Typography variant="body1" className={classes.body}>
-                Location:
-              </Typography>
-                <Typography className={classes.body}>{restaurant.location.display_address}</Typography>
-              <br/>
-              <Typography variant="body1" className={classes.body}>
-                Categories:
-              </Typography>
-                <Typography className={classes.body}>{title}</Typography>
-            </CardContent>
+            <div className="swipeCardListSection">
+            <List
+              itemLayout="horizontal"
+              >
+                <List.Item>
+                  <List.Item.Meta
+                    title="Rating"
+                    description={<Rate
+                                      allowHalf
+                                      disabled
+                                      defaultValue={restaurant.rating}
+                                  />}
+                  >
+                  </List.Item.Meta>
+                </List.Item>
+                <List.Item>
+                <List.Item.Meta
+                    title="Location"
+                    description={`${restaurant.location.address1} ${restaurant.location.city}, ${restaurant.location.zip_code} ${restaurant.location.state}` }
+                />
+                </List.Item>
+                <List.Item>
+                <List.Item.Meta
+                    title="Categories"
+                    description={title}
+                />
+                </List.Item>
+              </List>,
+              </div>
             </Card>
       </div>
     );

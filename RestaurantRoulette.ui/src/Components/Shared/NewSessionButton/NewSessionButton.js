@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         opacity: 0,
       },
       '& $imageTitle': {
-        border: '4px solid currentColor',
+        border: '4px solid #FF3B3F',
       },
     },
   },
@@ -73,6 +73,8 @@ const useStyles = makeStyles((theme) => ({
   imageTitle: {
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+    color: '#CAEBF2',
+    fontSize: '36px',
   },
   imageMarked: {
     height: 3,
@@ -112,7 +114,7 @@ export default function ButtonBases(props) {
             <Typography
               component="span"
               variant="subtitle1"
-              color="inherit"
+              color="#CAEBF2"
               className={classes.imageTitle}
             >
               {image.title}

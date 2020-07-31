@@ -236,6 +236,7 @@ export default function Swipe(props) {
       return (
         <Card
           className="restaurantCard"
+          style={{ backgroundColor: '#CAEBF2' }}
           key={restaurant.id}
           onSwipeLeft={onSwipeLeft}
           onSwipeRight={onSwipeRight}

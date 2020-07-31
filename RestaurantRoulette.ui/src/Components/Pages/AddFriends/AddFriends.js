@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import React, { useState, useEffect } from 'react';
 import { Input, List } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import SearchListItem from '../../Shared/SearchListItem/SearchListItem';
 import FriendsListItem from '../../Shared/FriendsListItem/FriendsListItem';
 import userFriendsData from '../../../Helpers/Data/userFriendsData';
@@ -50,6 +50,9 @@ export default function AddFriends(props) {
   return (
     <React.Fragment>
       <div className="searchContainer">
+        <div className="overallContainer">
+          <div className="overallSectionContainer">
+        <div className="upperSectionContainer">
         <div className="searchFriendsTitle">
           <h1>Search For New Users</h1>
         </div>
@@ -72,8 +75,11 @@ export default function AddFriends(props) {
             renderItem={(item) => (
               <SearchListItem key={item.id} item={item} userId={props.match.params.userId} />
             )}
-          />
+              />
+          </div>
         </div>
+        {/* <ArrowRightOutlined size="xl" style={{ marginBottom: '3em' }} /> */}
+        <div className="bottomSectionContainer">
             <div className="usersIFollowTitle">
               <h1>Users I Follow:</h1>
             </div>
@@ -87,6 +93,9 @@ export default function AddFriends(props) {
                 )}
             />
           </div>
+        </div>
+        </div>
+        </div>
       </div>
     </React.Fragment>
   );

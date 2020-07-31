@@ -32,11 +32,14 @@
 
 .ant-input-affix-wrapper {
   background: $dullAqua;
-  border-color: $darkOrange;
-  border-width: 2px;
   color: black;
 }
 
 .ant-input-affix-wrapper > input.ant-input {
   background: $dullAqua;
+}
+
+.mappingComponent {
+  display: flex;
+  justify-content: center;
 }

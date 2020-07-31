@@ -17,6 +17,12 @@ const useStyles = makeStyles({
   card: {
     maxWidth: 345,
     margin: '2em',
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#EFEFEF',
+    borderColor: '#E27D60',
+    borderWidth: '2px',
+    color: '#41B3A3',
   },
   userTitleCard: {
     marginBottom: '10px',
