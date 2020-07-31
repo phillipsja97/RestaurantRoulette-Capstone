@@ -103,7 +103,7 @@ namespace RestaurantRoulette_Capstone.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{winningId}")]
+        [HttpGet("winningRestaurantId/{winningId}")]
         public IActionResult GetTheWinningRestaurant(string winningId)
         {
             var result = _repository.GetWinningRestaurant(winningId);

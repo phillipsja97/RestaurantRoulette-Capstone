@@ -50,7 +50,7 @@ const getNext20RestaurantsByCoordinatesAndParams = (coordinates, params, offsetN
 });
 
 const getWinningRestaurantDetails = (winningId) => new Promise((resolve, reject) => {
-  axios.get(`https://localhost:44347/api/yelp/${winningId}`)
+  axios.get(`https://localhost:44347/api/yelp/winningRestaurantId/${winningId}`)
     .then((result) => resolve(result.data))
     .catch((error) => reject(error));
 });

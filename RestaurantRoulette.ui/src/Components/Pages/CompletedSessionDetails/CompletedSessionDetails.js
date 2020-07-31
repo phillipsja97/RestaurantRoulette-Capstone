@@ -1,7 +1,9 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
 import React, { useState, useEffect } from 'react';
-import { Result, Descriptions, Typography, Rate, List } from 'antd';
+import { Result, Descriptions, Typography, Rate, List, Card } from 'antd';
+import FaceIcon from '@bit/mui-org.material-ui-icons.face';
+import Chip from '@bit/mui-org.material-ui.chip';
 import { PhoneTwoTone, EnvironmentTwoTone, ClockCircleTwoTone, DollarCircleTwoTone } from '@ant-design/icons';
 import StatusChip from '@bit/aurora.aurora-ds.status-chip';
 import FoodIcon from '../../../Assets/FoodSVG';
@@ -28,19 +30,26 @@ export default function CompletedSessionDetails(props) {
       .then((result) => {
         setSession(result);
         winningId = result[0].winningId;
-      });
-    queryParameterData.getQueryParametersWithSessionId(theSessionId)
-      .then((result) => {
-        setQueryParams(result);
-      });
-    sessionData.getAllUsersOnASession(theSessionId)
-      .then((result) => {
-        setUsers(result);
-      });
-    userSessionsData.getAllUsersSwipeStatusOnSessionId(theSessionId)
-      .then((result) => {
-        setUserStatus(result);
-      }).then(() => {
+      })
+      .then(() => {
+        queryParameterData.getQueryParametersWithSessionId(theSessionId)
+          .then((result) => {
+            setQueryParams(result);
+          });
+      })
+      .then(() => {
+        sessionData.getAllUsersOnASession(theSessionId)
+          .then((result) => {
+            setUsers(result);
+          });
+      })
+      .then(() => {
+        userSessionsData.getAllUsersSwipeStatusOnSessionId(theSessionId)
+          .then((result) => {
+            setUserStatus(result);
+          });
+      })
+      .then(() => {
         yelpData.getWinningRestaurantDetails(winningId)
           .then((result) => {
             setWinningRestaurant(result);
@@ -78,14 +87,102 @@ export default function CompletedSessionDetails(props) {
   return (
     (winningRestaurant.name !== undefined)
       ? <div className="completeSessionDetails">
-          <Result
-            icon={<FoodIcon />}
-            title={`And the Winner was: ${winningRestaurant.name}!`}
-          />
+        <div className="completeSessionDetailsTopSection">
+          <div className="topSectionContainer">
+            <div className="topSectionTitle">
+              <h1>And the Winner was: {winningRestaurant.name}!</h1>
+            </div>
                 <div className="extraSection">
                   <div className="descriptionSection">
-                <Descriptions
-                  title="Winning Restaurant Information"
+                  <Descriptions
+                  title="Session Details"
+                  bordered
+                  column={
+                    {
+                      xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
+                    }
+                  }
+                  className="sessionInformationContainer">
+                    <Descriptions.Item label="Users On The Session">
+                        {users.map((user) => <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
+                        }</Descriptions.Item>
+                        <Descriptions.Item label="Categories">{queryParams.map((user) => user.queryName)}</Descriptions.Item>
+                    </Descriptions>
+                      </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div className="pastSessionDetailsContainer">
+                    <div className="pastSessionRestaurantDetails">
+                    <Card
+                    className="winningPhotoCard"
+                    cover={
+                      <img
+                        alt="example"
+                        src={winningRestaurant.image_url}
+                        className="winningPhoto"
+                      />
+                    }>
+                    </Card>
+                    <Paragraph>
+                      <EnvironmentTwoTone className="site-result-demo-error-icon" />
+                      {winningRestaurant.location.address1} {winningRestaurant.location.city}, {winningRestaurant.location.zip_code} {winningRestaurant.location.state}
+                    </Paragraph>
+                    <Paragraph>
+                      <PhoneTwoTone className="site-result-demo-error-icon" />
+                      {winningRestaurant.display_phone}
+                    </Paragraph>
+                    <Paragraph>
+                      <ClockCircleTwoTone className="site-result-demo-error-icon" />
+                      <Rate
+                          allowHalf
+                          disabled
+                          defaultValue={winningRestaurant.rating}
+                      />
+                    </Paragraph>
+                    </div>
+                    <div className="hoursOpenDetails">
+                      <div className="hoursOpenTitle">
+                        <h1>Hours of Operation</h1>
+                      </div>
+                      <List
+                        grid={{
+                          gutter: 16,
+                          xs: 1,
+                          sm: 2,
+                          md: 4,
+                          lg: 4,
+                          xl: 4,
+                          xxl: 3,
+                        }}
+                        dataSource={winningRestaurant.hours[0].open}
+                        renderItem={(item) => (
+                          <List.Item>
+                            <Card className="hoursOpenCard" title={getHours(item.day)}>{`${item.start}-${item.end}`}</Card>
+                          </List.Item>
+                        )}
+                      />,
+                        {/* <List
+                          itemLayout="horizontal"
+                          dataSource={winningRestaurant.hours[0].open}
+                          renderItem={(item) => (
+                            <List.Item>
+                              <List.Item.Meta
+                                title={getHours(item.day)}
+                                description={`${item.start}-${item.end}`}
+                              />
+                            </List.Item>
+                          )}
+                        />, */}
+                    </div>
+                </div>
+        </div>
+      : null
+  );
+}
+
+{/* <Descriptions
+                  title="Session Details"
                   bordered
                   column={
                     {
@@ -95,62 +192,4 @@ export default function CompletedSessionDetails(props) {
                   className="sessionInformationContainer">
                     <Descriptions.Item label="Yelp"><a href={winningRestaurant.url}>Check out {winningRestaurant.name} Yelp.</a></Descriptions.Item>
                     <Descriptions.Item label="Categories">{winningRestaurant.categories.map((category) => `${category.title} `)}</Descriptions.Item>
-                </Descriptions>
-                </div>
-                <div className="pastSessionDetailsContainer">
-                <div className="userChips">
-                  {userStatus.map((user) => <StatusChip
-                    title={user.fullName}
-                    message={(user.isSwiped) ? 'User has already swiped' : 'User still needs to swipe'}
-                    type={(user.isSwiped) ? 'success' : 'error'}
-                    className="statusUserChip"
-                  />)}
-                </div>
-                <div className="pastSessionRestaurantDetails">
-                <Paragraph>
-                  <Text
-                    strong
-                    style={{
-                      fontSize: 16,
-                    }}
-                  >
-                    {winningRestaurant.name} Details
-                  </Text>
-                </Paragraph>
-                <Paragraph>
-                  <EnvironmentTwoTone className="site-result-demo-error-icon" />
-                  {winningRestaurant.location.address1} {winningRestaurant.location.city}, {winningRestaurant.location.zip_code} {winningRestaurant.location.state}
-                </Paragraph>
-                <Paragraph>
-                  <PhoneTwoTone className="site-result-demo-error-icon" />
-                  {winningRestaurant.display_phone}
-                </Paragraph>
-                <Paragraph>
-                  <ClockCircleTwoTone className="site-result-demo-error-icon" />
-                  <Rate
-                      allowHalf
-                      disabled
-                      defaultValue={winningRestaurant.rating}
-                  />
-                </Paragraph>
-                </div>
-                <div className="hoursOpenDetails">
-                <List
-                  itemLayout="horizontal"
-                  dataSource={winningRestaurant.hours[0].open}
-                  renderItem={(item) => (
-                    <List.Item>
-                      <List.Item.Meta
-                        title={getHours(item.day)}
-                        description={`${item.start} - ${item.end}`}
-                      />
-                    </List.Item>
-                  )}
-                />,
-                </div>
-                </div>
-              </div>
-        </div>
-      : null
-  );
-}
+                </Descriptions> */}
