@@ -81,22 +81,26 @@ export default function Swipe(props) {
     let queryName = '';
     let queryCoordinates = '';
     let queryOffsetStatus = false;
+    let queryOffsetNumber = 0;
+    let overallOffsetNumber = 0;
     queryParameterData.getQueryParametersWithSessionId(Number(props.match.params.newSessionId))
       .then((result) => {
         if (result[0].queryCity.includes('.')) {
           queryCoordinates = result[0].queryCity;
           queryName = result[0].queryName;
           queryOffsetStatus = result[0].offsetStatus;
+          queryOffsetNumber = result[0].offsetNumber;
           setParameters(result);
         } else {
           queryCity = result[0].queryCity;
           queryName = result[0].queryName;
           queryOffsetStatus = result[0].offsetStatus;
+          queryOffsetNumber = result[0].offsetNumber;
           setParameters(result);
         }
       })
       .then(() => {
-        if (queryOffsetStatus === false) {
+        if (queryOffsetStatus === false && props.location.state === undefined) {
           if (queryCoordinates === '') {
             yelpData.getRestaurantsByParams(queryCity, queryName)
               .then((result) => {
@@ -109,8 +113,9 @@ export default function Swipe(props) {
               });
           }
         } else {
+          overallOffsetNumber = (props.location.state === undefined) ? queryOffsetNumber : props.location.state.localOffsetNumber;
           if (queryCoordinates === '') {
-            yelpData.getNext20RestaurantsByParams(queryCity, queryName, restCount)
+            yelpData.getNext20RestaurantsByParams(queryCity, queryName, overallOffsetNumber)
               .then((result) => {
                 if (result.businesses.length === 0) {
                   const statusToUpdate = {
@@ -129,7 +134,7 @@ export default function Swipe(props) {
                 }
               });
           } else {
-            yelpData.getNext20RestaurantsByCoordinatesAndParams(queryCoordinates, queryName, restCount)
+            yelpData.getNext20RestaurantsByCoordinatesAndParams(queryCoordinates, queryName, overallOffsetNumber)
               .then((result) => {
                 if (result.businesses.length === 0) {
                   const statusToUpdate = {
