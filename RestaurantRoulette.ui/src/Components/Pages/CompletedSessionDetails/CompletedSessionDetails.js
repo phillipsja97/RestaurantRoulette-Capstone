@@ -1,19 +1,26 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
 import React, { useState, useEffect } from 'react';
-import { Result, Descriptions, Typography, Rate, List, Card } from 'antd';
+import {
+  Descriptions,
+  Typography,
+  Rate,
+  Card,
+} from 'antd';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
 import Table from '@bit/react-bootstrap.react-bootstrap.table';
 import ReactBootstrapStyle from '@bit/react-bootstrap.react-bootstrap.internal.style-links';
 import Chip from '@bit/mui-org.material-ui.chip';
-import { PhoneTwoTone, EnvironmentTwoTone, ClockCircleTwoTone, DollarCircleTwoTone } from '@ant-design/icons';
-import StatusChip from '@bit/aurora.aurora-ds.status-chip';
-import FoodIcon from '../../../Assets/FoodSVG';
+import {
+  PhoneTwoTone,
+  EnvironmentTwoTone,
+  ClockCircleTwoTone,
+  DollarCircleTwoTone,
+} from '@ant-design/icons';
 import sessionData from '../../../Helpers/Data/sessionData';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import yelpData from '../../../Helpers/Data/yelpData';
-import WinningRestaurantPhoto from '../../Shared/WinningRestaurantPhoto/WinningRestaurantPhoto';
 import './CompletedSessionDetails.scss';
 
 const { Paragraph, Text } = Typography;
@@ -78,14 +85,6 @@ export default function CompletedSessionDetails(props) {
     }
   };
 
-  const customIcons = {
-    1: <DollarCircleTwoTone />,
-    2: <div><DollarCircleTwoTone /> <DollarCircleTwoTone /></div>,
-    3: <div><DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /></div>,
-    4: <div><DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /></div>,
-    5: <div><DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /> <DollarCircleTwoTone /></div>,
-  };
-
   return (
     (winningRestaurant.name !== undefined)
       ? <div className="completeSessionDetails">
@@ -145,17 +144,8 @@ export default function CompletedSessionDetails(props) {
                     </div>
                     <div className="hoursOpenDetails">
                       <div className="hoursOpenTitle">
-                        <h1>Hours of Operation</h1>
+                        <h3>Hours of Operation</h3>
                       </div>
-                      {/* <List
-                        grid={{ column: 4 }}
-                        dataSource={winningRestaurant.hours[0].open}
-                        renderItem={(item) => (
-                          <List.Item>
-                            <Card className="hoursOpenCard" title={getHours(item.day)}>{`${item.start}-${item.end}`}</Card>
-                          </List.Item>
-                        )}
-                      />, */}
                       <ReactBootstrapStyle />
                       <Table striped bordered hover>
                         <thead>
@@ -181,34 +171,9 @@ export default function CompletedSessionDetails(props) {
                           </tr>
                         </tbody>
                       </Table>
-                        {/* <List
-                          itemLayout="horizontal"
-                          dataSource={winningRestaurant.hours[0].open}
-                          renderItem={(item) => (
-                            <List.Item>
-                              <List.Item.Meta
-                                title={getHours(item.day)}
-                                description={`${item.start}-${item.end}`}
-                              />
-                            </List.Item>
-                          )}
-                        />, */}
                     </div>
                 </div>
         </div>
       : null
   );
 }
-
-{/* <Descriptions
-                  title="Session Details"
-                  bordered
-                  column={
-                    {
-                      xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
-                    }
-                  }
-                  className="sessionInformationContainer">
-                    <Descriptions.Item label="Yelp"><a href={winningRestaurant.url}>Check out {winningRestaurant.name} Yelp.</a></Descriptions.Item>
-                    <Descriptions.Item label="Categories">{winningRestaurant.categories.map((category) => `${category.title} `)}</Descriptions.Item>
-                </Descriptions> */}

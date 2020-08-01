@@ -1,6 +1,5 @@
 import React from 'react';
-import Carousel from '@bit/react-bootstrap.react-bootstrap.carousel'
-import ReactBootstrapStyle from '@bit/react-bootstrap.react-bootstrap.internal.style-links';
+import Carousel from '@bit/react-bootstrap.react-bootstrap.carousel';
 import './WinningRestaurantPhoto.scss';
 
 export default function WinningRestaurantPhoto(props) {
