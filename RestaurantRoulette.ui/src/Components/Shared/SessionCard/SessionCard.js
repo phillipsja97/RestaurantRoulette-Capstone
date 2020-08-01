@@ -1,6 +1,8 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable implicit-arrow-linebreak */
 import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
+import FoodIcon from '@bit/phillipsja97.mybitcollection.food-icon';
 import Button from '@bit/mui-org.material-ui.button';
 import Card from '@bit/mui-org.material-ui.card';
 import CardActionArea from '@bit/mui-org.material-ui.card-action-area';
@@ -13,6 +15,7 @@ import Typography from '@bit/mui-org.material-ui.typography';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import sessionData from '../../../Helpers/Data/sessionData';
+import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import './SessionCard.scss';
 
 const useStyles = makeStyles({
@@ -35,17 +38,34 @@ const useStyles = makeStyles({
   chipText: {
     color: '#41B3A3',
   },
+  iconSize: {
+    marginLeft: '1em',
+  },
 });
 
 export default function SessionCard(props) {
   const [users, setUsers] = useState([]);
+  const [queryParameters, setQueryParameters] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
     sessionData.getAllUsersOnASession(props.session.sessionId)
       .then((result) => {
         setUsers(result);
-      });
+      })
+      .then(() => {
+        const sessionId = props.session.sessionId;
+        queryParameterData.getQueryParametersWithSessionId(sessionId)
+          .then((params) => {
+            if (params[0].queryName.includes(',')) {
+              const splitParams = params[0].queryName.split(',');
+              setQueryParameters(splitParams);
+            } else {
+              setQueryParameters(params[0].queryName);
+            }
+          });
+      })
+      .catch((errorFromSessionCard) => console.error(errorFromSessionCard));
   }, [props.session.sessionId]);
 
   return (
@@ -70,9 +90,19 @@ export default function SessionCard(props) {
               <Typography variant="h5" component="h2" className={classes.userTitleCard}>
                 Users Involved:
               </Typography>
-              {users.map((user) =>
-              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
-              }
+              <Typography>
+                {users.map((user) =>
+                <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
+                }
+              </Typography>
+              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                Categories:
+              </Typography>
+              <Typography>
+                {queryParameters.map((params) =>
+                <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+                }
+              </Typography>
             </CardContent>
           </CardActionArea>
           </Link>
@@ -104,9 +134,19 @@ export default function SessionCard(props) {
               <Typography variant="h5" component="h2" className={classes.userTitleCard}>
                 Users Involved:
               </Typography>
+              <Typography>
               {users.map((user) =>
               <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText}/>)
               }
+              </Typography>
+              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                Categories:
+              </Typography>
+              <Typography>
+                {queryParameters.map((params) =>
+                <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+                }
+              </Typography>
             </CardContent>
           </CardActionArea>
           </Link>

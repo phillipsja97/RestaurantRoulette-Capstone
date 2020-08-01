@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Result, Descriptions, Typography, Rate, List, Card } from 'antd';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
+import Table from '@bit/react-bootstrap.react-bootstrap.table';
+import ReactBootstrapStyle from '@bit/react-bootstrap.react-bootstrap.internal.style-links';
 import Chip from '@bit/mui-org.material-ui.chip';
 import { PhoneTwoTone, EnvironmentTwoTone, ClockCircleTwoTone, DollarCircleTwoTone } from '@ant-design/icons';
 import StatusChip from '@bit/aurora.aurora-ds.status-chip';
@@ -145,23 +147,40 @@ export default function CompletedSessionDetails(props) {
                       <div className="hoursOpenTitle">
                         <h1>Hours of Operation</h1>
                       </div>
-                      <List
-                        grid={{
-                          gutter: 16,
-                          xs: 1,
-                          sm: 2,
-                          md: 4,
-                          lg: 4,
-                          xl: 4,
-                          xxl: 3,
-                        }}
+                      {/* <List
+                        grid={{ column: 4 }}
                         dataSource={winningRestaurant.hours[0].open}
                         renderItem={(item) => (
                           <List.Item>
                             <Card className="hoursOpenCard" title={getHours(item.day)}>{`${item.start}-${item.end}`}</Card>
                           </List.Item>
                         )}
-                      />,
+                      />, */}
+                      <ReactBootstrapStyle />
+                      <Table striped bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                            <td>{winningRestaurant.hours[0].open[1].start}-{winningRestaurant.hours[0].open[1].end}</td>
+                            <td>{winningRestaurant.hours[0].open[2].start}-{winningRestaurant.hours[0].open[2].end}</td>
+                            <td>{winningRestaurant.hours[0].open[3].start}-{winningRestaurant.hours[0].open[3].end}</td>
+                            <td>{winningRestaurant.hours[0].open[4].start}-{winningRestaurant.hours[0].open[4].end}</td>
+                            <td>{winningRestaurant.hours[0].open[5].start}-{winningRestaurant.hours[0].open[5].end}</td>
+                            <td>{winningRestaurant.hours[0].open[6].start}-{winningRestaurant.hours[0].open[6].end}</td>
+                          </tr>
+                        </tbody>
+                      </Table>
                         {/* <List
                           itemLayout="horizontal"
                           dataSource={winningRestaurant.hours[0].open}
