@@ -1,9 +1,6 @@
-.searchFriendsTitle {
-  display: flex;
-  justify-content: center;
-}
+@import '../../../styles/variables';
 
-.searchInputContainer {
+.searchFriendsTitle {
   display: flex;
   justify-content: center;
 }
@@ -23,11 +20,16 @@
   justify-content: center;
 }
 
+.bottomSectionContainer {
+  display: block;
+}
+
 .usersList {
   width: 500px;
   height: 300px;
   overflow-y: scroll;
   margin: 2em;
+  background-color: $dullAqua
 }
 
 .usersIFollowTitle {
@@ -35,6 +37,28 @@
   justify-content: center;
 }
 
-// .searchContainer {
-//   display: inline-flex;
-// }
+.searchContainer {
+  display: inline-flex;
+  justify-content: center !important;
+}
+
+.upperSectionContainer {
+  display: block !important;
+}
+
+.searchInputContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.overallContainer {
+  display: inline-flex;
+  justify-content: center !important;
+  flex-wrap: wrap;
+}
+
+.overallSectionContainer {
+  display: inline-flex;
+  justify-content: center !important;
+  flex-wrap: wrap;
+}

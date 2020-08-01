@@ -1,0 +1,11 @@
+.swipeCard {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #CAEBF2;
+}
+
+.swipeCardListSection {
+  display: flex;
+  justify-content: center;
+}

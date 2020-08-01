@@ -116,17 +116,19 @@ namespace RestaurantRoulette_Capstone.Data_Access
             }
         }
 
-        public SessionIdOnly CompleteASession(int sessionId)
+        public SessionIdOnly CompleteASession(int sessionId, string winningId)
         {
             var sql = @"update Sessions
-                            set isSessionComplete = 1
-                                where Id = @sessionId";
+                            set isSessionComplete = 1,
+                               WinningId = @winningId
+                                  where Id = @sessionId";
 
             using (var db = new SqlConnection(ConnectionString))
             {
                 var parameter = new
                 {
                     sessionId = sessionId,
+                    winningId = winningId,
                 };
                 var updateSession = db.QueryFirstOrDefault<SessionIdOnly>(sql, parameter);
                 return updateSession;

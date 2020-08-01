@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const getUserByUserId = () => new Promise((resolve, reject) => {
-  axios.get('https://localhost:44347/api/users/1')
+const getUserByUserId = (userId) => new Promise((resolve, reject) => {
+  axios.get(`https://localhost:44347/api/users/${userId}`)
     .then((result) => resolve(result.data))
     .catch((errorFromUserData) => reject(errorFromUserData));
 });

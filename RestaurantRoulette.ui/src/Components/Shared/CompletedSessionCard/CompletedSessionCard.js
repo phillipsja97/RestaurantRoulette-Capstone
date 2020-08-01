@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable implicit-arrow-linebreak */
 import React, { useEffect, useState } from 'react';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
@@ -12,11 +13,18 @@ import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import Typography from '@bit/mui-org.material-ui.typography';
 import { Link } from 'react-router-dom';
 import sessionData from '../../../Helpers/Data/sessionData';
+import queryParameterData from '../../../Helpers/Data/queryParameterData';
 
 const useStyles = makeStyles({
   card: {
     maxWidth: 345,
     margin: '2em',
+    justifyContent: 'center',
+    textAlign: 'center',
+    backgroundColor: '#EFEFEF',
+    borderColor: '#E27D60',
+    borderWidth: '2px',
+    color: '#41B3A3',
   },
   userTitleCard: {
     marginBottom: '10px',
@@ -25,13 +33,29 @@ const useStyles = makeStyles({
 
 export default function CompletedSessionCard(props) {
   const [users, setUsers] = useState([]);
+  const [queryParameters, setQueryParameters] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
     sessionData.getAllUsersOnASession(props.completedSession.sessionId)
       .then((result) => {
         setUsers(result);
-      });
+      })
+      .then(() => {
+        const sessionId = props.completedSession.sessionId;
+        queryParameterData.getQueryParametersWithSessionId(sessionId)
+          .then((params) => {
+            if (params[0].queryName.includes(',')) {
+              const splitParams = params[0].queryName.split(',');
+              setQueryParameters(splitParams);
+            } else {
+              const paramArr = [];
+              paramArr.push(params[0].queryName);
+              setQueryParameters(paramArr);
+            }
+          });
+      })
+      .catch((errorFromCompletedSessionsCard) => console.error(errorFromCompletedSessionsCard));
   }, [props.completedSession.sessionId]);
 
   return (
@@ -49,9 +73,19 @@ export default function CompletedSessionCard(props) {
               <Typography variant="h5" component="h2" className={classes.userTitleCard}>
                 Users Involved:
               </Typography>
-              {users.map((user) =>
-              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
-              }
+              <Typography>
+                {users.map((user) =>
+                <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
+                }
+              </Typography>
+              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                Categories:
+              </Typography>
+              <Typography>
+                {queryParameters.map((params) =>
+                <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+                }
+              </Typography>
             </CardContent>
           </CardActionArea>
           </Link>

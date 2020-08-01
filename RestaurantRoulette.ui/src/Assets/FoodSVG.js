@@ -4,7 +4,7 @@ import React from 'react';
 import Icon from '@ant-design/icons';
 
 const FoodSvg = () => (
-  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="302.459px" height="302.46px" viewBox="0 0 302.459 302.46">
+  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="202.459px" height="202.46px" viewBox="0 0 302.459 302.46">
 <g>
 	<g>
 		<path d="M163.816,222.91c38.745,0,70.269-31.514,70.269-70.259c0-38.745-31.523-70.274-70.269-70.274

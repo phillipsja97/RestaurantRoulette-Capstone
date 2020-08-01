@@ -66,7 +66,7 @@ namespace RestaurantRoulette_Capstone.Controllers
             {
                 return NotFound("There was an error getting your winning restaurant. Please try again.");
             }
-            var completeSession = _sessionsRepository.CompleteASession(sessionId);
+            var completeSession = _sessionsRepository.CompleteASession(sessionId, winningRestaurant.id);
             return Ok(winningRestaurant);
         }
 
@@ -99,6 +99,17 @@ namespace RestaurantRoulette_Capstone.Controllers
             if (result == null)
             {
                 return NotFound("Restaurants not found");
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("winningRestaurantId/{winningId}")]
+        public IActionResult GetTheWinningRestaurant(string winningId)
+        {
+            var result = _repository.GetWinningRestaurant(winningId);
+            if (result == null)
+            {
+                return NotFound("Restaurants are not found");
             }
             return Ok(result);
         }
