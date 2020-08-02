@@ -3,7 +3,6 @@
   justify-content: center;
   height: 100%;
   width: 100%;
-  background-color: #A9A9A9;
 }
 
 .finishSwipeButton {
@@ -28,4 +27,15 @@
   height: 100%;
   width: 100%;
   background-color: #A9A9A9;
+}
+
+.swipeLoading {
+  display: flex;
+  justify-content: center;
+}
+
+.loadingImage {
+  display: flex;
+  justify-content: center;
+  margin-top: 5em;
 }

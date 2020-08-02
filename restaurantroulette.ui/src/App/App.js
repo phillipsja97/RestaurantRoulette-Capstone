@@ -20,6 +20,7 @@ import Winner from '../Components/Pages/Winner/Winner';
 import SessionDetails from '../Components/Pages/SessionDetails/SessionDetails';
 import CompletedSessionDetails from '../Components/Pages/CompletedSessionDetails/CompletedSessionDetails';
 import AddFriends from '../Components/Pages/AddFriends/AddFriends';
+import NoWinner from '../Components/Pages/NoWinner/NoWinner';
 import './App.scss';
 import 'antd/dist/antd.css';
 
@@ -78,6 +79,7 @@ class App extends React.Component {
               <PrivateRoute path="/newSession/:userId/:newSessionId" exact component={(props) => <NewSession {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId/swipe" exact component={(props) => <Swipe {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId/winner" exact component={(props) => <Winner {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/newSession/:userId/:newSessionId/noMatches" exact component={(props) => <NoWinner {...props} authed={authed} />} authed={authed} />
             </Switch>
         </Router>
       </div>

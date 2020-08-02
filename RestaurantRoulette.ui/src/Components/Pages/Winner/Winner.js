@@ -29,6 +29,7 @@ const { Paragraph, Text } = Typography;
 
 export default function Winner(props) {
   const [allUsersStatus, setAllUsersStatus] = useState([]);
+  const [newRestCount, setNewRestCount] = useState(0);
   const [status, setStatus] = useState(false);
   const [winningRestaurant, setWinningRestaurant] = useState([]);
   const [hours, setHours] = useState([]);
@@ -72,9 +73,17 @@ export default function Winner(props) {
         if (ifStatusCompleteCallWinner(updatedStatus)) {
           yelpData.getWinningRestaurant(Number(props.match.params.newSessionId))
             .then((restaurant) => {
-              setWinningRestaurant(restaurant);
-              setHours(restaurant.hours);
-              setLocation(restaurant.location);
+              if (typeof restaurant === 'string') {
+                setNewRestCount(newRestCount + props.location.state);
+                props.history.push({
+                  pathname: `/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/noMatches`,
+                });
+              } else {
+                setWinningRestaurant(restaurant);
+                setLocation(restaurant.location);
+                setHours(restaurant.hours);
+                setNewRestCount(props.location.state);
+              }
             }).then(() => {
               setRestaurantStatus(true);
             })
