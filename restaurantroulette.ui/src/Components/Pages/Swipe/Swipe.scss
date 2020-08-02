@@ -51,3 +51,11 @@
     transition: all 0.3s ease-in-out;
     cursor: grab;
 }
+
+.swipeLoading {
+  display: flex;
+  justify-content: center;
+  bottom: 30%;
+  left: 37%;
+  position: absolute;
+}

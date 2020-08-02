@@ -1,3 +1,5 @@
+/* eslint-disable prefer-template */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-lonely-if */
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-destructuring */
@@ -10,6 +12,7 @@ import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestauran
 import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import yelpData from '../../../Helpers/Data/yelpData';
 import SwipeCard from '../../Shared/SwipeCard/SwipeCard';
+// import LoadingScreen from 'public\circleMotion-unscreen.gif';
 import './Swipe.scss';
 
 export default function Swipe(props) {
@@ -21,10 +24,11 @@ export default function Swipe(props) {
   const [next20Status, setNext20Status] = useState([]);
   const [restCount, setRestCount] = useState(21);
   const [reset, setReset] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getEndCard = () => {
     return (
-      <MyEndCard finishSwipe={finishSwipe} next20Status={next20Status} nextTwenty={nextTwenty} acceptableRestaurants={acceptableRestaurants} parameters={parameters} />
+      <MyEndCard finishSwipe={finishSwipe} next20Status={next20Status} nextTwenty={nextTwenty} acceptableRestaurants={acceptableRestaurants} parameters={parameters} restaurants={restaurants} />
     );
   };
 
@@ -105,11 +109,13 @@ export default function Swipe(props) {
             yelpData.getRestaurantsByParams(queryCity, queryName)
               .then((result) => {
                 setRestaurants(result.businesses);
+                setLoading(false);
               });
           } else {
             yelpData.getRestaurantsByCoordinatesAndParams(queryCoordinates, queryName)
               .then((result) => {
                 setRestaurants(result.businesses);
+                setLoading(false);
               });
           }
         } else {
@@ -131,6 +137,7 @@ export default function Swipe(props) {
                   setRestCount(restCount - 20);
                 } else {
                   setRestaurants(result.businesses);
+                  setLoading(false);
                 }
               });
           } else {
@@ -150,6 +157,7 @@ export default function Swipe(props) {
                   setRestCount(restCount - 20);
                 } else {
                   setRestaurants(result.businesses);
+                  setLoading(false);
                 }
               });
           }
@@ -195,6 +203,7 @@ export default function Swipe(props) {
                 setRestCount(restCount - 20);
               } else {
                 setRestaurants(result.businesses);
+                setLoading(false);
               }
             });
         } else {
@@ -214,6 +223,7 @@ export default function Swipe(props) {
                 setRestCount(restCount - 20);
               } else {
                 setRestaurants(result.businesses);
+                setLoading(false);
               }
             });
         }
@@ -239,27 +249,32 @@ export default function Swipe(props) {
   const renderCards = () => {
     return restaurants.map((restaurant) => {
       return (
-        <Card
-          className="restaurantCard"
-          style={{ backgroundColor: '#EAE3EA' }}
-          key={restaurant.id}
-          onSwipeLeft={onSwipeLeft}
-          onSwipeRight={onSwipeRight}
-          data={restaurant}
-        >
-          <div className="actualCard">
-            <SwipeCard key={restaurant.id} restaurant={restaurant} />
-          </div>
-        </Card>
+      <Card
+        className="restaurantCard"
+        style={{ backgroundColor: '#EAE3EA' }}
+        key={restaurant.id}
+        onSwipeLeft={onSwipeLeft}
+        onSwipeRight={onSwipeRight}
+        data={restaurant}
+      >
+        <div className="actualCard">
+          <SwipeCard key={restaurant.id} restaurant={restaurant} />
+        </div>
+      </Card>
       );
     });
   };
 
   return (
     <div>
-    <CardWrapper addEndCard={getEndCard.bind(this)}>
-     {renderCards()}
-    </CardWrapper>
-  </div>
+      {(!loading)
+        ? <CardWrapper addEndCard={getEndCard.bind(this)}>
+            {renderCards()}
+          </CardWrapper>
+        : <div className="swipeLoading">
+            <img src={'https://i.pinimg.com/originals/c4/cb/9a/c4cb9abc7c69713e7e816e6a624ce7f8.gif'} className="loadingImage" alt="loading" />
+          </div>
+      }
+    </div>
   );
 }
