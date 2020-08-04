@@ -3,9 +3,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
-  Button,
   Typography,
   Rate,
   Descriptions,

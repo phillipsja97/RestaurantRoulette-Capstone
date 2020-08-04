@@ -1,8 +1,10 @@
 /* eslint-disable no-new-object */
 import React from 'react';
-import { Select } from 'antd';
+import { Select, Input, List } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 import UserFriendsData from '../../../Helpers/Data/userFriendsData';
 import authData from '../../../Helpers/Data/authData';
+import userData from '../../../Helpers/Data/userData';
 import './AddFriendsParam.scss';
 
 const { Option } = Select;
@@ -10,11 +12,9 @@ const { Option } = Select;
 export default class AddFriendsParams extends React.Component {
   state = {
     friends: [],
+    users: [],
+    input: [],
   }
-
-  // handleChange = (value) => {
-  //   console.log(`selected ${value}`);
-  // }
 
   handleChange = (value) => {
     const { onChange } = this.props;
@@ -40,7 +40,7 @@ export default class AddFriendsParams extends React.Component {
             {this.state.friends.map((friend) => <Option key={friend.userId}>{friend.fullName}</Option>)}
           </Select>
         </div>
-        </div>
+      </div>
     );
   }
 }
