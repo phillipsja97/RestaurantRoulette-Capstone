@@ -5,7 +5,6 @@ import {
   Button,
   Card,
   Divider,
-  Steps,
 } from 'antd';
 import { Link } from 'react-router-dom';
 import Media from 'react-media';

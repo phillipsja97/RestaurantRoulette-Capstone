@@ -1,7 +1,6 @@
 /* eslint-disable no-lonely-if */
 import React, { useState } from 'react';
-import { Result, Button, Typography } from 'antd';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import { Result, Button } from 'antd';
 import userSessionsData from '../../../Helpers/Data/userSessionsData';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 
@@ -18,18 +17,14 @@ export default function NoWinner(props) {
         if (result[0].queryCity.includes('.')) {
           if (result[0].offsetStatus) {
             newOffsetNumber = +result[0].offsetNumber + 20;
-            console.log(result[0].offsetStatus, 'offsetStatus');
             setRestCount(newOffsetNumber);
-            console.log(newOffsetNumber, 'restcount');
           } else {
             newOffsetNumber = 21;
           }
         } else {
           if (result[0].offsetStatus) {
             newOffsetNumber = +result[0].offsetNumber + 20;
-            console.log(result[0].offsetStatus, 'offsetStatus');
             setRestCount((state) => state + 20);
-            console.log(newOffsetNumber, 'restcount');
           } else {
             newOffsetNumber = 21;
           }

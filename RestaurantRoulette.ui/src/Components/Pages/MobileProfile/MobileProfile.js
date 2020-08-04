@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  Drawer,
   Button,
   Card,
   Input,
 } from 'antd';
 import { PhoneOutlined, ContactsOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import userData from '../../../Helpers/Data/userData';

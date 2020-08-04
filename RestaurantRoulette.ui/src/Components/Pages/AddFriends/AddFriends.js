@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input, List } from 'antd';
 import Media from 'react-media';
-import { UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import SearchListItem from '../../Shared/SearchListItem/SearchListItem';
 import FriendsListItem from '../../Shared/FriendsListItem/FriendsListItem';
 import userFriendsData from '../../../Helpers/Data/userFriendsData';
