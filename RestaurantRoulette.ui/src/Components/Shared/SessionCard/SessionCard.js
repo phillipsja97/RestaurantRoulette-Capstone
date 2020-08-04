@@ -1,8 +1,8 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable implicit-arrow-linebreak */
 import EmphasisTag from '@bit/fho-wtag.tofa.emphasis-tag';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
-import FoodIcon from '@bit/phillipsja97.mybitcollection.food-icon';
 import Button from '@bit/mui-org.material-ui.button';
 import Card from '@bit/mui-org.material-ui.card';
 import CardActionArea from '@bit/mui-org.material-ui.card-action-area';
@@ -61,7 +61,9 @@ export default function SessionCard(props) {
               const splitParams = params[0].queryName.split(',');
               setQueryParameters(splitParams);
             } else {
-              setQueryParameters(params[0].queryName);
+              const paramArr = [];
+              paramArr.push(params[0].queryName);
+              setQueryParameters(paramArr);
             }
           });
       })
@@ -71,92 +73,92 @@ export default function SessionCard(props) {
   return (
     (props.session.isSwiped)
       ? <Card className={classes.card} raised={true}>
-          <Link to={{
-            pathname: `session/${props.session.sessionId}`,
-            state: { status: props.session.isSwiped },
-          }}>
-          <CardActionArea>
-              <CardMedia
-                component="img"
-                alt={props.session.sessionId}
-                height="140"
-                image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
-                title={props.session.sessionId}
-              />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
-              </Typography>
-              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
-                Users Involved:
-              </Typography>
-              <Typography>
-                {users.map((user) =>
-                <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
-                }
-              </Typography>
-              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
-                Categories:
-              </Typography>
-              <Typography>
-                {queryParameters.map((params) =>
-                <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
-                }
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          </Link>
-          <CardActions>
             <Link to={{
               pathname: `session/${props.session.sessionId}`,
               state: { status: props.session.isSwiped },
             }}>
-              <Button size="small" className={classes.button}>
-                Session Details
-              </Button>
+            <CardActionArea>
+                <CardMedia
+                  component="img"
+                  alt={props.session.sessionId}
+                  height="140"
+                  image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
+                  title={props.session.sessionId}
+                />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  <EmphasisTag text="Waiting on others" type='highlight' size='small'/>
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                  Users Involved:
+                </Typography>
+                <Typography>
+                  {users.map((user) =>
+                  <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText} />)
+                  }
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                  Categories:
+                </Typography>
+                <Typography>
+                  {queryParameters.map((params) =>
+                  <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+                  }
+                </Typography>
+              </CardContent>
+            </CardActionArea>
             </Link>
-          </CardActions>
-        </Card>
+            <CardActions>
+              <Link to={{
+                pathname: `session/${props.session.sessionId}`,
+                state: { status: props.session.isSwiped },
+              }}>
+                <Button size="small" className={classes.button}>
+                  Session Details
+                </Button>
+              </Link>
+            </CardActions>
+          </Card>
       : <Card className={classes.card} raised={true}>
-          <Link to={`/newSession/${props.session.userId}/${props.session.sessionId}/swipe`}>
-          <CardActionArea>
-              <CardMedia
-                component="img"
-                alt={props.session.sessionId}
-                height="140"
-                image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
-                title={props.session.sessionId}
-              />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                <EmphasisTag text="You need to swipe!" type='urgent' size='small'/>
-              </Typography>
-              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
-                Users Involved:
-              </Typography>
-              <Typography>
-              {users.map((user) =>
-              <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText}/>)
-              }
-              </Typography>
-              <Typography variant="h5" component="h2" className={classes.userTitleCard}>
-                Categories:
-              </Typography>
-              <Typography>
-                {queryParameters.map((params) =>
-                <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+            <Link to={`/newSession/${props.session.userId}/${props.session.sessionId}/swipe`}>
+            <CardActionArea>
+                <CardMedia
+                  component="img"
+                  alt={props.session.sessionId}
+                  height="140"
+                  image="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&w=1000&q=80"
+                  title={props.session.sessionId}
+                />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  <EmphasisTag text="You need to swipe!" type='urgent' size='small'/>
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                  Users Involved:
+                </Typography>
+                <Typography>
+                {users.map((user) =>
+                <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined" className={classes.chipText}/>)
                 }
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          </Link>
-          <CardActions>
-            <Link to={`/session/${props.session.sessionId}`}>
-              <Button size="small" className={classes.button}>
-                Session Details
-              </Button>
+                </Typography>
+                <Typography variant="h5" component="h2" className={classes.userTitleCard}>
+                  Categories:
+                </Typography>
+                <Typography>
+                  {queryParameters.map((params) =>
+                  <Chip key={params.id} label={params} variant="outlined" className={classes.chipText} />)
+                  }
+                </Typography>
+              </CardContent>
+            </CardActionArea>
             </Link>
-          </CardActions>
-        </Card>
+            <CardActions>
+              <Link to={`/session/${props.session.sessionId}`}>
+                <Button size="small" className={classes.button}>
+                  Session Details
+                </Button>
+              </Link>
+            </CardActions>
+          </Card>
   );
 }

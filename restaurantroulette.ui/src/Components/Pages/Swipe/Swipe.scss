@@ -59,3 +59,15 @@
   left: 37%;
   position: absolute;
 }
+
+.mobileSwipeLoading {
+  display: flex;
+  justify-content: center;
+  bottom: 30%;
+  position: absolute;
+}
+
+.swipePage {
+  height: 100%;
+  background-color: $background;
+}

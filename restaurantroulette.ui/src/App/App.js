@@ -21,6 +21,8 @@ import SessionDetails from '../Components/Pages/SessionDetails/SessionDetails';
 import CompletedSessionDetails from '../Components/Pages/CompletedSessionDetails/CompletedSessionDetails';
 import AddFriends from '../Components/Pages/AddFriends/AddFriends';
 import NoWinner from '../Components/Pages/NoWinner/NoWinner';
+import MobileRegister from '../Components/Pages/MobileRegister/MobileRegister';
+import MobileProfile from '../Components/Pages/MobileProfile/MobileProfile';
 import './App.scss';
 import 'antd/dist/antd.css';
 
@@ -73,7 +75,9 @@ class App extends React.Component {
             <Switch>
               <PublicRoute path="/auth" exact component={(props) => <Home {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/" exact component={(props) => <Sessions {...props} authed={authed} />} authed={authed} />
+              <PublicRoute path="/register" exact component={(props) => <MobileRegister {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/:userId/addFriends" exact component={(props) => <AddFriends {...props} authed={authed} />} authed={authed} />
+              <PrivateRoute path="/:userId/profile" exact component={(props) => <MobileProfile {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/session/:sessionId" exact component={(props) => <SessionDetails {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/completedSession/:sessionId" exact component={(props) => <CompletedSessionDetails {...props} authed={authed} />} authed={authed} />
               <PrivateRoute path="/newSession/:userId/:newSessionId" exact component={(props) => <NewSession {...props} authed={authed} />} authed={authed} />

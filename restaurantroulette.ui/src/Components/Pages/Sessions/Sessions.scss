@@ -1,6 +1,7 @@
 @import '../../../styles/_variables.scss';
 
-.sessions {
+
+.openSessions {
   height: 100%;
 }
 
@@ -8,12 +9,18 @@
   display: flex;
   justify-content: center;
   margin-top: 2em;
+  width: 50%;
+}
+
+.newSessionCardContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .previousTitle {
   display: flex;
   justify-content: center;
-  margin: 2em;
+  // margin: 2em;
 }
 
 .openTitle {
@@ -37,6 +44,13 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  height: 100% !important;
+  background-color: $background;
+}
+
+.newSessionCardContainer {
+  height: 100% !important;
+  background-color: $background;
 }
 
 .tabList {
@@ -68,4 +82,8 @@
   border-color: $darkOrange !important;
   border-width: 2px !important;
   color: black !important;
+}
+
+.tabList {
+  width: 110%;
 }

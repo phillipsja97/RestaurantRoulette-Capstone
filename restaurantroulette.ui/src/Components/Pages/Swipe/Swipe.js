@@ -6,6 +6,7 @@
 /* eslint-disable arrow-body-style */
 import React, { useEffect, useState } from 'react';
 import { Card, CardWrapper } from 'react-swipeable-cards';
+import Media from 'react-media';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestaurantsData';
@@ -265,16 +266,45 @@ export default function Swipe(props) {
     });
   };
 
+  const desktopRender = () => {
+    return <div className="swipePage">
+            {(!loading)
+              ? <CardWrapper addEndCard={getEndCard.bind(this)}>
+                  {renderCards()}
+                </CardWrapper>
+              : <div className="swipeLoading">
+                  <img src={'https://i.pinimg.com/originals/c4/cb/9a/c4cb9abc7c69713e7e816e6a624ce7f8.gif'} className="loadingImage" alt="loading" />
+                </div>
+            }
+          </div>;
+  };
+
+  const mobileRender = () => {
+    return <div className="swipePage">
+            {(!loading)
+              ? <CardWrapper addEndCard={getEndCard.bind(this)}>
+                  {renderCards()}
+                </CardWrapper>
+              : <div className="mobileSwipeLoading">
+                  <img src={'https://i.pinimg.com/originals/c4/cb/9a/c4cb9abc7c69713e7e816e6a624ce7f8.gif'} className="loadingImage" alt="loading" />
+                </div>
+            }
+    </div>;
+  };
+
   return (
-    <div>
-      {(!loading)
-        ? <CardWrapper addEndCard={getEndCard.bind(this)}>
-            {renderCards()}
-          </CardWrapper>
-        : <div className="swipeLoading">
-            <img src={'https://i.pinimg.com/originals/c4/cb/9a/c4cb9abc7c69713e7e816e6a624ce7f8.gif'} className="loadingImage" alt="loading" />
-          </div>
-      }
-    </div>
+    <Media queries={{
+      small: '(min-width: 320px) and (max-width: 767px)',
+      medium: '(min-width: 768px) and (max-width: 1024px)',
+      large: '(min-width: 1023px)',
+    }}>
+      {(matches) => (
+        <React.Fragment>
+                {matches.small && mobileRender()}
+                {matches.medium && desktopRender()}
+                {matches.large && desktopRender()}
+        </React.Fragment>
+      )}
+    </Media>
   );
 }

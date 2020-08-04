@@ -152,7 +152,7 @@ export default class DrawerOption extends React.Component {
             </div>
             <div className="addFriendsContainer">
               <div className="addFriendsButton">
-                <Link to={`${this.state.user.id}/addFriends`}>
+                <Link to={`/${this.state.user.id}/addFriends`}>
                   <Button type="ghost" block onClick={goToAddFriends}>
                     Manage Friends
                   </Button>

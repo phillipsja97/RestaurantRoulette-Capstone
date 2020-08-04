@@ -1,6 +1,7 @@
 /* eslint-disable arrow-body-style */
 import React, { useState, useEffect } from 'react';
 import { Input, List } from 'antd';
+import Media from 'react-media';
 import { UserOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import SearchListItem from '../../Shared/SearchListItem/SearchListItem';
 import FriendsListItem from '../../Shared/FriendsListItem/FriendsListItem';
@@ -47,56 +48,123 @@ export default function AddFriends(props) {
     }
   };
 
-  return (
-    <React.Fragment>
-      <div className="searchContainer">
-        <div className="overallContainer">
-          <div className="overallSectionContainer">
-        <div className="upperSectionContainer">
-        <div className="searchFriendsTitle">
-          <h1>Search For New Users</h1>
-        </div>
-          <div className="searchInputContainer">
-            <Input
-            className="searchFriends"
-            size="large"
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            value={input}
-            placeholder="Search by name or number"
-            prefix={<UserOutlined />}
-            />
-          </div>
-          <div className="usersListContainer">
-          <List
-            itemLayout="horizontal"
-            className="usersList"
-            dataSource={users}
-            renderItem={(item) => (
-              <SearchListItem key={item.id} item={item} userId={props.match.params.userId} />
-            )}
-              />
-          </div>
-        </div>
-        {/* <ArrowRightOutlined size="xl" style={{ marginBottom: '3em' }} /> */}
-        <div className="bottomSectionContainer">
-            <div className="usersIFollowTitle">
-              <h1>Users I Follow:</h1>
+  const desktopRender = () => {
+    return <React.Fragment>
+          <div className="searchContainer">
+            <div className="overallContainer">
+              <div className="overallSectionContainer">
+            <div className="upperSectionContainer">
+            <div className="searchFriendsTitle">
+              <h1>Search For New Users</h1>
             </div>
-          <div className="usersListContainer">
-            <List
+              <div className="searchInputContainer">
+                <Input
+                className="searchFriends"
+                size="large"
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                value={input}
+                placeholder="Search by name or number"
+                prefix={<UserOutlined />}
+                />
+              </div>
+              <div className="usersListContainer">
+              <List
                 itemLayout="horizontal"
                 className="usersList"
-                dataSource={friends}
+                dataSource={users}
                 renderItem={(item) => (
-                  <FriendsListItem key={item.id} item={item} userId={props.match.params.userId} />
+                  <SearchListItem key={item.id} item={item} userId={props.match.params.userId} />
                 )}
-            />
+                  />
+              </div>
+            </div>
+            <div className="bottomSectionContainer">
+                <div className="usersIFollowTitle">
+                  <h1>Users I Follow:</h1>
+                </div>
+              <div className="usersListContainer">
+                <List
+                    itemLayout="horizontal"
+                    className="usersList"
+                    dataSource={friends}
+                    renderItem={(item) => (
+                      <FriendsListItem key={item.id} item={item} userId={props.match.params.userId} />
+                    )}
+                />
+              </div>
+            </div>
+            </div>
+            </div>
           </div>
-        </div>
-        </div>
-        </div>
-      </div>
-    </React.Fragment>
+        </React.Fragment>;
+  };
+
+  const mobileRender = () => {
+    return <React.Fragment>
+          <div className="mobileSearchContainer">
+            <div className="overallMobileContainer">
+              <div className="overallMobileSectionContainer">
+            <div className="upperSectionContainer">
+            <div className="searchFriendsTitle">
+              <h1>Search For New Users</h1>
+            </div>
+              <div className="searchInputContainer">
+                <Input
+                className="searchFriends"
+                size="large"
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                value={input}
+                placeholder="Search by name or number"
+                prefix={<UserOutlined />}
+                />
+              </div>
+              <div className="usersListContainer">
+              <List
+                itemLayout="horizontal"
+                className="usersList"
+                dataSource={users}
+                renderItem={(item) => (
+                  <SearchListItem key={item.id} item={item} userId={props.match.params.userId} />
+                )}
+                  />
+              </div>
+            </div>
+            <div className="bottomSectionContainer">
+                <div className="usersIFollowTitle">
+                  <h1>Users I Follow:</h1>
+                </div>
+              <div className="usersListContainer">
+                <List
+                    itemLayout="horizontal"
+                    className="usersList"
+                    dataSource={friends}
+                    renderItem={(item) => (
+                      <FriendsListItem key={item.id} item={item} userId={props.match.params.userId} />
+                    )}
+                />
+              </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </React.Fragment>;
+  };
+
+  return (
+    <Media queries={{
+      small: '(min-width: 320px) and (max-width: 767px)',
+      medium: '(min-width: 768px) and (max-width: 1024px)',
+      large: '(min-width: 1023px)',
+    }}>
+      {(matches) => (
+        <React.Fragment>
+                {matches.small && mobileRender()}
+                {matches.medium && desktopRender()}
+                {matches.large && desktopRender()}
+        </React.Fragment>
+      )}
+    </Media>
   );
 }

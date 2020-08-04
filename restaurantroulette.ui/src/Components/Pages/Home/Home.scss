@@ -83,3 +83,19 @@
   border-color: $darkOrange;
   color: black;
 }
+
+.loginMobileButtonGroup {
+  display: block;
+  justify-content: center;
+}
+
+.registerMobileButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.googleMobileSignIn {
+  display: flex;
+  justify-content: center;
+}

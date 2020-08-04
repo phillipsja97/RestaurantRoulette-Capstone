@@ -1,6 +1,4 @@
-// .completeSessionDetails {
-
-// }
+@import '../../../styles/variables';
 
 .statusUserChip {
   width: 50%;
@@ -24,12 +22,32 @@
   margin-top: 2em;
 }
 
+.pastSessionMobileDetailsContainer {
+  display: block;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2em;
+}
+
 .pastSessionRestaurantDetails {
   display: block !important;
   margin-left: 3em;
   margin-right: 3em;
   margin-bottom: 3em;
   margin-top: 1em;
+  height: 100%;
+  background-color: $background;
+}
+
+.pastSessionMobileRestaurantDetails {
+  background-color: $background !important;
+  margin-bottom: 2em;
+}
+
+.pastSessionMobileDetailsContainer {
+  display: block !important;
+  height: 100% !important;
+  background-color: $background !important;
 }
 
 .site-result-demo-error-icon {
@@ -37,11 +55,6 @@
   margin-left: 1em;
   margin-right: 1em;
 }
-
-// .hoursOpenDetails {
-//   display: flex;
-//   justify-content: center;
-// }
 
 .actualHoursSection {
   display: flex;
@@ -60,7 +73,9 @@
 }
 
 .completeSessionDetails {
-  height: 100vh;
+  justify-content: center;
+  height: 100%;
+  background-color: $background;
 }
 
 .hoursOpenCard {
@@ -68,14 +83,42 @@
 }
 
 .hoursOpenDetails {
-  margin-top: 1em;
+  background-color: $background;
+  margin-bottom: 1em;
+  padding-bottom: 1em;
 }
 
 .hoursOpenTitle {
   margin-bottom: 3em;
+  background-color: $background;
 }
 
 .topSectionTitle {
+  display: block !important;
+  justify-content: center !important;
+}
+
+.topSectionActualTitle {
   display: flex !important;
+  justify-content: center !important;
+}
+
+.topSectionTitleName {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.actualTitle {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.winningPhotoCard {
+  justify-content: center;
+}
+
+.winningPhotoContainer {
+  display: flex;
   justify-content: center;
 }

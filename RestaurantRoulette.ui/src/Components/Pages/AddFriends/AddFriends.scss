@@ -38,8 +38,22 @@
 }
 
 .searchContainer {
-  display: inline-flex;
+  display: flex;
   justify-content: center !important;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 3em;
+}
+
+.mobileSearchContainer {
+  display: block;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+  margin-top: 3em;
+  margin-bottom: 5em;
 }
 
 .upperSectionContainer {
@@ -52,13 +66,34 @@
 }
 
 .overallContainer {
-  display: inline-flex;
+  display: flex;
   justify-content: center !important;
   flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+}
+
+.overallMobileContainer {
+  display: block;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  background-color: $background;
+}
+
+.overallMobileSectionContainer {
+  display: block;
+  justify-content: center !important;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-bottom: 3em;
+  background-color: $background;
 }
 
 .overallSectionContainer {
-  display: inline-flex;
+  display: flex;
   justify-content: center !important;
-  flex-wrap: wrap;
+  width: 100%;
 }

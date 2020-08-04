@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-const-assign */
@@ -118,6 +119,62 @@ export default function NewSession(props) {
     });
   };
 
+  const desktopRender = () => {
+    return <div className="newSession">
+      <div className="newSessionTitle">
+        <h1>Let's get Started!</h1>
+      </div>
+      <Steps current={current} className="stepsContainer" size="small">
+        {steps.map((item) => (
+          <Step key={item.title} title={item.title} className="stepsContent" />
+        ))}
+      </Steps>
+      <div className="steps-content">
+        {steps[current].content}
+      </div>
+      <div className="steps-action">
+         {current < steps.length - 1 && (
+          <Button type="ghost" block className="nextButtonSession" onClick={() => next()}>
+            Next Section
+          </Button>
+         )}
+        {current === steps.length - 1 && (
+          <Button type="ghost" block className="nextButtonSession" onClick={() => done()}>
+            Done
+          </Button>
+        )}
+      </div>
+    </div>;
+  };
+
+  const mobileRender = () => {
+    return <div className="newSession">
+    <div className="newSessionTitle">
+      <h1>Let's get Started!</h1>
+    </div>
+    <Steps current={current} className="stepsContainer" size="small">
+      {steps.map((item) => (
+        <Step key={item.title} title={item.title} className="stepsContent" />
+      ))}
+    </Steps>
+    <div className="steps-content">
+      {steps[current].content}
+    </div>
+    <div className="steps-action">
+       {current < steps.length - 1 && (
+        <Button type="ghost" block className="nextMobileButtonSession" onClick={() => next()}>
+          Next Section
+        </Button>
+       )}
+      {current === steps.length - 1 && (
+        <Button type="ghost" block className="nextButtonSession" onClick={() => done()}>
+          Done
+        </Button>
+      )}
+    </div>
+  </div>;
+  };
+
   return (
     <div className="newSession">
       <div className="newSessionTitle">
@@ -146,4 +203,3 @@ export default function NewSession(props) {
     </div>
   );
 }
-// }

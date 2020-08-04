@@ -1,16 +1,12 @@
 import React from 'react';
 import { withStyles } from '@bit/mui-org.material-ui.styles';
 import { List, Rate } from 'antd';
-import { StarOutlined } from '@ant-design/icons';
 import FoodIcon from '@bit/phillipsja97.mybitcollection.food-icon';
 import Card from '@bit/mui-org.material-ui.card';
 import CardHeader from '@bit/mui-org.material-ui.card-header';
 import CardMedia from '@bit/mui-org.material-ui.card-media';
 import CardContent from '@bit/mui-org.material-ui.card-content';
-import CardActions from '@bit/mui-org.material-ui.card-actions';
 import Avatar from '@bit/mui-org.material-ui.avatar';
-import IconButton from '@bit/mui-org.material-ui.icon-button';
-import Typography from '@bit/mui-org.material-ui.typography';
 
 const styles = (theme) => ({
   card: {
