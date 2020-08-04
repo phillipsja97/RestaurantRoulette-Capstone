@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-return-assign */
 import React, { useState } from 'react';
 import {
@@ -6,6 +7,8 @@ import {
   Divider,
   Steps,
 } from 'antd';
+import { Link } from 'react-router-dom';
+import Media from 'react-media';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import LoginForm from '../../Shared/LoginForm/LoginForm';
@@ -50,30 +53,74 @@ export default function Home(props) {
       .catch((errorFromMenuComponent) => console.error(errorFromMenuComponent));
   };
 
-  return (
-    <div className="home">
-      <div className="loginPictureForm">
-        <div className="loginCardContainer">
-          <Card style={{ width: 600, backgroundColor: '#ddf5f8' }} className="loginCard">
-            <div className="loginCardContent">
-            <Divider>Sign in</Divider>
-              <div className="signInWithGoogle">
-                <LoginForm />
-              </div>
-                <Divider>Or Sign Up</Divider>
-              <div className="loginButtonGroup">
-                <div className="googleSignIn">
-                  <Button type="ghost" onClick={loginClickEvent}>Sign In With Google Email</Button>
+  const desktopRender = () => {
+    return <div className="home">
+          <div className="loginPictureForm">
+            <div className="loginCardContainer">
+              <Card style={{ width: 600, backgroundColor: '#EFEFEF' }} className="loginCard">
+                <div className="loginCardContent">
+                <Divider>Sign in</Divider>
+                  <div className="signInWithGoogle">
+                    <LoginForm />
+                  </div>
+                    <Divider>Or Sign Up</Divider>
+                  <div className="loginButtonGroup">
+                    <div className="googleSignIn">
+                      <Button type="ghost" onClick={loginClickEvent}>Sign In With Google Email</Button>
+                    </div>
+                    <div className="registerButton">
+                      <Button type="ghost" onClick={showDrawer}>Register For An Account</Button>
+                    </div>
+                  </div>
                 </div>
-                <div className="registerButton">
-                  <Button type="ghost" onClick={showDrawer}>Register For An Account</Button>
-                </div>
-              </div>
+              </Card>
             </div>
-          </Card>
-         </div>
-      </div>
-      <RegisterDrawer visible={visible} setVisible={setVisible} />
-    </div>
+          </div>
+          <RegisterDrawer visible={visible} setVisible={setVisible} />
+        </div>;
+  };
+
+  const mobileRender = () => {
+    return <div className="home">
+          <div className="loginPictureForm">
+            <div className="loginCardContainer">
+              <Card style={{ width: 300, backgroundColor: '#EFEFEF' }} className="loginCard">
+                <div className="loginCardContent">
+                <Divider>Sign in</Divider>
+                  <div className="signInWithGoogle">
+                    <LoginForm />
+                  </div>
+                  <div className="loginMobileButtonGroup">
+                    <div className="googleMobileSignIn">
+                      <Button type="ghost" onClick={loginClickEvent}>Sign In With Google Email</Button>
+                    </div>
+                    <Divider>Or Sign Up</Divider>
+                    <div className="registerMobileButton">
+                      <Link to={'/register'}>
+                        <Button type="ghost" onClick={showDrawer}>Register For An Account</Button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </div>;
+  };
+
+  return (
+    <Media queries={{
+      small: '(min-width: 320px) and (max-width: 767px)',
+      medium: '(min-width: 768px) and (max-width: 1024px)',
+      large: '(min-width: 1023px)',
+    }}>
+      {(matches) => (
+        <React.Fragment>
+                {matches.small && mobileRender()}
+                {matches.medium && desktopRender()}
+                {matches.large && desktopRender()}
+        </React.Fragment>
+      )}
+    </Media>
   );
 }

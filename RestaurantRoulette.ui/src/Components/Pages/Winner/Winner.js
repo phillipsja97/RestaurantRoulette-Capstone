@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
@@ -15,6 +16,7 @@ import {
   EnvironmentTwoTone,
   ClockCircleTwoTone,
 } from '@ant-design/icons';
+import Media from 'react-media';
 import FaceIcon from '@bit/mui-org.material-ui-icons.face';
 import Chip from '@bit/mui-org.material-ui.chip';
 import Table from '@bit/react-bootstrap.react-bootstrap.table';
@@ -108,102 +110,229 @@ export default function Winner(props) {
       .catch((errorFromGetUsersStatus) => console.error(errorFromGetUsersStatus));
   }, [props.match.params.newSessionId]);
 
+  const desktopRender = () => {
+    return (winningRestaurant.name !== undefined)
+      ? <div className="completeSessionDetails">
+            <div className="completeSessionDetailsTopSection">
+              <div className="topSectionContainer">
+              <div className="topSectionTitle">
+                  <div className="topSectionActualTitle">
+                    <Typography variant="h1">And the Winner was:</Typography>
+                  </div>
+                  <div className="topSectionTitleName">
+                    <h1 className="actualTitle">{winningRestaurant.name}</h1>
+                  </div>
+                </div>
+                    <div className="extraSection">
+                      <div className="descriptionSection">
+                      <Descriptions
+                      title="Session Details"
+                      bordered
+                      column={
+                        {
+                          xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
+                        }
+                      }
+                      className="sessionInformationContainer">
+                        <Descriptions.Item label="Users On The Session">
+                            {users.map((user) => <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
+                            }</Descriptions.Item>
+                            <Descriptions.Item label="Categories">{queryParams.map((user) => user.queryName)}</Descriptions.Item>
+                        </Descriptions>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div className="pastSessionDetailsContainer">
+                        <div className="pastSessionRestaurantDetails">
+                        <Card
+                        className="winningPhotoCard"
+                        cover={
+                          <img
+                            alt="example"
+                            src={winningRestaurant.image_url}
+                            className="winningPhoto"
+                          />
+                        }>
+                        </Card>
+                        <Paragraph>
+                          <EnvironmentTwoTone className="site-result-demo-error-icon" />
+                          {winningRestaurant.location.address1} {winningRestaurant.location.city}, {winningRestaurant.location.zip_code} {winningRestaurant.location.state}
+                        </Paragraph>
+                        <Paragraph>
+                          <PhoneTwoTone className="site-result-demo-error-icon" />
+                          {winningRestaurant.display_phone}
+                        </Paragraph>
+                        <Paragraph>
+                          <ClockCircleTwoTone className="site-result-demo-error-icon" />
+                          <Rate
+                              allowHalf
+                              disabled
+                              defaultValue={winningRestaurant.rating}
+                          />
+                        </Paragraph>
+                        </div>
+                        <div className="hoursOpenDetails">
+                          <div className="hoursOpenTitle">
+                            <h3>Hours of Operation</h3>
+                          </div>
+                          <ReactBootstrapStyle />
+                          <Table striped bordered hover>
+                            <thead>
+                              <tr>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                                <th>Sunday</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                                <td>{winningRestaurant.hours[0].open[1].start}-{winningRestaurant.hours[0].open[1].end}</td>
+                                <td>{winningRestaurant.hours[0].open[2].start}-{winningRestaurant.hours[0].open[2].end}</td>
+                                <td>{winningRestaurant.hours[0].open[3].start}-{winningRestaurant.hours[0].open[3].end}</td>
+                                <td>{winningRestaurant.hours[0].open[4].start}-{winningRestaurant.hours[0].open[4].end}</td>
+                                <td>{winningRestaurant.hours[0].open[5].start}-{winningRestaurant.hours[0].open[5].end}</td>
+                                <td>{winningRestaurant.hours[0].open[6].start}-{winningRestaurant.hours[0].open[6].end}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </div>
+                    </div>
+            </div>
+      : null;
+  };
+
+  const mobileRender = () => {
+    return (winningRestaurant.name !== undefined)
+      ? <div className="completeSessionDetails">
+            <div className="completeSessionDetailsTopSection">
+              <div className="topSectionContainer">
+                <div className="topSectionTitle">
+                  <div className="topSectionActualTitle">
+                    <Typography variant="h1">And the Winner was:</Typography>
+                  </div>
+                  <div className="topSectionTitleName">
+                    <h1 className="actualTitle">{winningRestaurant.name}</h1>
+                  </div>
+                </div>
+                    <div className="extraSection">
+                      <div className="descriptionSection">
+                      <Descriptions
+                      title="Session Details"
+                      bordered
+                      column={
+                        {
+                          xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
+                        }
+                      }
+                      className="sessionInformationContainer">
+                        <Descriptions.Item label="Users On The Session">
+                            {users.map((user) => <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
+                            }</Descriptions.Item>
+                            <Descriptions.Item label="Categories">{queryParams.map((user) => user.queryName)}</Descriptions.Item>
+                        </Descriptions>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                        <div className="pastSessionMobileDetailsContainer">
+                        <div className="pastSessionMobileRestaurantDetails">
+                          <div className="winningPhotoContainer">
+                            <Card
+                            className="winningPhotoCard"
+                            cover={
+                              <img
+                                alt="example"
+                                src={winningRestaurant.image_url}
+                                className="winningPhoto"
+                              />
+                            }>
+                            </Card>
+                          </div>
+                        <Paragraph>
+                          <EnvironmentTwoTone className="site-result-demo-error-icon" />
+                          {winningRestaurant.location.address1} {winningRestaurant.location.city}, {winningRestaurant.location.zip_code} {winningRestaurant.location.state}
+                        </Paragraph>
+                        <Paragraph>
+                          <PhoneTwoTone className="site-result-demo-error-icon" />
+                          {winningRestaurant.display_phone}
+                        </Paragraph>
+                        <Paragraph>
+                          <ClockCircleTwoTone className="site-result-demo-error-icon" />
+                          <Rate
+                              allowHalf
+                              disabled
+                              defaultValue={winningRestaurant.rating}
+                          />
+                        </Paragraph>
+                        </div>
+                        <div className="hoursOpenDetails">
+                          <div className="hoursOpenTitle">
+                            <h3>Hours of Operation</h3>
+                          </div>
+                          <ReactBootstrapStyle />
+                          <Table striped bordered hover>
+                            <thead>
+                              <tr>
+                                <th>Day</th>
+                                <th>Hours Open</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Monday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Tuesday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Wednesday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Thursday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Friday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Saturday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                              <tr>
+                                <td>Sunday</td>
+                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
+                              </tr>
+                            </tbody>
+                          </Table>
+                        </div>
+                    </div>
+            </div>
+      : null;
+  };
+
   return (
-    <React.Fragment>
-    {(!restaurantStatus)
-      ? (winningRestaurant === null)
-        ? <Link to={`/newSession/${Number(props.match.params.userId)}/${Number(props.match.params.newSessionId)}/swipe`}>
-          <Button type="ghost">Next 20</Button>
-          </Link>
-        : <h1>Loading...</h1>
-      : <div className="completeSessionDetails">
-      <div className="completeSessionDetailsTopSection">
-        <div className="topSectionContainer">
-          <div className="topSectionTitle">
-            <h1>And the Winner is: {winningRestaurant.name}!</h1>
-          </div>
-              <div className="extraSection">
-                <div className="descriptionSection">
-                <Descriptions
-                title="Session Details"
-                bordered
-                column={
-                  {
-                    xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
-                  }
-                }
-                className="sessionInformationContainer">
-                  <Descriptions.Item label="Users On The Session">
-                      {users.map((user) => <Chip icon={<FaceIcon />} key={user.id} label={user.fullName} variant="outlined"/>)
-                      }</Descriptions.Item>
-                      <Descriptions.Item label="Categories">{queryParams.map((user) => user.queryName)}</Descriptions.Item>
-                  </Descriptions>
-                    </div>
-                  </div>
-                  </div>
-                  </div>
-                  <div className="pastSessionDetailsContainer">
-                  <div className="pastSessionRestaurantDetails">
-                  <Card
-                  className="winningPhotoCard"
-                  cover={
-                    <img
-                      alt="example"
-                      src={winningRestaurant.image_url}
-                      className="winningPhoto"
-                    />
-                  }>
-                  </Card>
-                  <Paragraph>
-                    <EnvironmentTwoTone className="site-result-demo-error-icon" />
-                    {winningRestaurant.location.address1} {winningRestaurant.location.city}, {winningRestaurant.location.zip_code} {winningRestaurant.location.state}
-                  </Paragraph>
-                  <Paragraph>
-                    <PhoneTwoTone className="site-result-demo-error-icon" />
-                    {winningRestaurant.display_phone}
-                  </Paragraph>
-                  <Paragraph>
-                    <ClockCircleTwoTone className="site-result-demo-error-icon" />
-                    <Rate
-                        allowHalf
-                        disabled
-                        defaultValue={winningRestaurant.rating}
-                    />
-                  </Paragraph>
-                  </div>
-                  <div className="hoursOpenDetails">
-                    <div className="hoursOpenTitle">
-                      <h3>Hours of Operation</h3>
-                    </div>
-                    <ReactBootstrapStyle />
-                    <Table striped bordered hover>
-                      <thead>
-                        <tr>
-                          <th>Monday</th>
-                          <th>Tuesday</th>
-                          <th>Wednesday</th>
-                          <th>Thursday</th>
-                          <th>Friday</th>
-                          <th>Saturday</th>
-                          <th>Sunday</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
-                          <td>{winningRestaurant.hours[0].open[1].start}-{winningRestaurant.hours[0].open[1].end}</td>
-                          <td>{winningRestaurant.hours[0].open[2].start}-{winningRestaurant.hours[0].open[2].end}</td>
-                          <td>{winningRestaurant.hours[0].open[3].start}-{winningRestaurant.hours[0].open[3].end}</td>
-                          <td>{winningRestaurant.hours[0].open[4].start}-{winningRestaurant.hours[0].open[4].end}</td>
-                          <td>{winningRestaurant.hours[0].open[5].start}-{winningRestaurant.hours[0].open[5].end}</td>
-                          <td>{winningRestaurant.hours[0].open[6].start}-{winningRestaurant.hours[0].open[6].end}</td>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </div>
-              </div>
-      </div>
-    }
-    </React.Fragment>
+    <Media queries={{
+      small: '(min-width: 320px) and (max-width: 767px)',
+      medium: '(min-width: 768px) and (max-width: 1024px)',
+      large: '(min-width: 1025px)',
+    }}>
+      {(matches) => (
+        <React.Fragment>
+                {matches.small && mobileRender()}
+                {matches.medium && mobileRender()}
+                {matches.large && desktopRender()}
+        </React.Fragment>
+      )}
+    </Media>
   );
 }

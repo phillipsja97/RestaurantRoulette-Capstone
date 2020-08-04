@@ -15,6 +15,7 @@ export default function Sessions(props) {
   const [userId, setUserId] = useState('');
   const [sessions, setSessions] = useState([]);
   const [completedSessions, setCompletedSessions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   function callback(key) {
   }
@@ -87,8 +88,10 @@ export default function Sessions(props) {
                   </div>
             </TabPane>
             <TabPane tab="Start A New Session" key="3">
+            <div className="newSessionCardContainer">
               <div className="newSessionButton">
                 <NewSessionButton createSession={createSession} />
+              </div>
               </div>
             </TabPane>
           </Tabs>

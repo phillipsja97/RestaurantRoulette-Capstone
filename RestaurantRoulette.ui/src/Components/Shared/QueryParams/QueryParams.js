@@ -1,9 +1,11 @@
+/* eslint-disable arrow-body-style */
+import React from 'react';
+import Media from 'react-media';
 import GridList from '@bit/mui-org.material-ui.grid-list';
 import GridListTile from '@bit/mui-org.material-ui.grid-list-tile';
 import GridListTileBar from '@bit/mui-org.material-ui.grid-list-tile-bar';
 import { makeStyles } from '@bit/mui-org.material-ui.styles';
 import { Checkbox } from 'antd';
-import React from 'react';
 import './QueryParams.scss';
 
 const tileData = [
@@ -102,26 +104,65 @@ export default function QueryParams(props) {
     return joined;
   }
 
-  return (
-    <div className="queryParams">
-      <div className="queryParamsTitle">
-        <h1>What categories?</h1>
+  const desktopRender = () => {
+    return <div className="queryParams">
+        <div className="queryParamsTitle">
+          <h1>What categories?</h1>
+        </div>
+        <div className={classes.root} style={{ width: 'auto', height: 'auto' }}>
+        <GridList cellHeight={180} className={classes.gridList}>
+          {tileData.map((tile) => (
+            <GridListTile key={tile.img}>
+              <img src={tile.img} alt={tile.title} />
+              <GridListTileBar
+                title={tile.title}
+                actionIcon={
+                  <Checkbox value={tile.value} onChange={onChange}></Checkbox>
+                }
+              />
+            </GridListTile>
+          ))}
+        </GridList>
       </div>
-      <div className={classes.root} style={{ width: 'auto', height: 'auto' }}>
-      <GridList cellHeight={180} className={classes.gridList}>
-        {tileData.map((tile) => (
-          <GridListTile key={tile.img}>
-            <img src={tile.img} alt={tile.title} />
-            <GridListTileBar
-              title={tile.title}
-              actionIcon={
-                <Checkbox value={tile.value} onChange={onChange}></Checkbox>
-              }
-            />
-          </GridListTile>
-        ))}
-      </GridList>
-    </div>
-    </div>
+      </div>;
+  };
+
+  const mobileRender = () => {
+    return <div className="queryParamsMobile">
+        <div className="queryParamsTitle">
+          <h1>What categories?</h1>
+        </div>
+        <div className={classes.root} style={{ width: 'auto', height: 'auto' }}>
+        <GridList cellHeight={180} className={classes.gridList}>
+          {tileData.map((tile) => (
+            <GridListTile key={tile.img}>
+              <img src={tile.img} alt={tile.title} />
+              <GridListTileBar
+                title={tile.title}
+                actionIcon={
+                  <Checkbox value={tile.value} onChange={onChange}></Checkbox>
+                }
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+      </div>
+      </div>;
+  };
+
+  return (
+    <Media queries={{
+      small: '(min-width: 320px) and (max-width: 767px)',
+      medium: '(min-width: 768px) and (max-width: 1024px)',
+      large: '(min-width: 1023px)',
+    }}>
+      {(matches) => (
+        <React.Fragment>
+                {matches.small && mobileRender()}
+                {matches.medium && desktopRender()}
+                {matches.large && desktopRender()}
+        </React.Fragment>
+      )}
+    </Media>
   );
 }

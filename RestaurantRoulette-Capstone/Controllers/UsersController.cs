@@ -71,7 +71,7 @@ namespace RestaurantRoulette_Capstone.Controllers
                 }
                 return Created("New User Created", newUser);
             }
-            return Ok("User already exists");
+            return Ok(userCheck);
         }
 
         [HttpPut("updateProfile/{userId}")]

@@ -1,5 +1,13 @@
+@import '../../../styles/variables.scss';
+
 .queryParams {
   height: 60vh;
+  background-color: $background;
+}
+
+.queryParamsMobile {
+  height: 100%;
+  background-color: $background;
 }
 
 .queryParamsTitle {
