@@ -26,6 +26,7 @@ export default function NewSession(props) {
 
   const steps = [
     {
+      title: 'Add Location',
       content: <LocationParam onChange={(value) => setLocation(value)}
                               latitude={latitude}
                               longitude={longitude}
@@ -36,9 +37,11 @@ export default function NewSession(props) {
                               />,
     },
     {
+      title: 'Add Categories',
       content: <QueryParams onChange={(value) => foodParams.push(value)} />,
     },
     {
+      title: 'Add Friends',
       content: <AddFriendsParam onChange={(value) => setFriends(value)} />,
     },
   ];

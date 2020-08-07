@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
         opacity: 0,
       },
       '& $imageTitle': {
-        border: '4px solid #FF3B3F',
+        border: '4px solid #B56357',
       },
     },
   },

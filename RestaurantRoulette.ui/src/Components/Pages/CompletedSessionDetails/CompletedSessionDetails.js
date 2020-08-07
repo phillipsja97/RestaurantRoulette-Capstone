@@ -17,6 +17,8 @@ import {
   PhoneTwoTone,
   EnvironmentTwoTone,
   ClockCircleTwoTone,
+  StarTwoTone,
+  StarOutlined,
 } from '@ant-design/icons';
 import sessionData from '../../../Helpers/Data/sessionData';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
@@ -86,6 +88,33 @@ export default function CompletedSessionDetails(props) {
     }
   };
 
+  const toStandardTime = (militaryTime) => {
+    console.log(militaryTime);
+  const newTime = Array.from(militaryTime);
+  const hours = `${newTime[0]}${newTime[1]}`;
+  const minutes = `${newTime[2]}${newTime[3]}`;
+  console.log(hours);
+  console.log(minutes);
+  console.log(newTime);
+    if (hours > 12) {
+      return `${hours - 12}:${minutes} PM`;
+    }
+    else {
+        return `${hours}:${minutes} AM`;
+    }
+  }
+
+  // const toStandardTime = (militaryTime) => {
+  //   militaryTime = militaryTime.split(':');
+  //   if (militaryTime[0].charAt(0) === 1 && militaryTime[0].charAt(1) > 2) {
+  //     return (militaryTime[0] - 12) + ':' + militaryTime[1] + ':' + militaryTime[2] + ' P.M.';
+  //   } else {
+  //     return militaryTime.join(':') + ' A.M.';
+  //   }
+  // }
+
+
+
   const desktopRender = () => {
     return (winningRestaurant.name !== undefined)
       ? <div className="completeSessionDetails">
@@ -106,7 +135,7 @@ export default function CompletedSessionDetails(props) {
                       bordered
                       column={
                         {
-                          xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
+                          xxl: 3, xl: 3, lg: 3, md: 3, sm: 2, xs: 1,
                         }
                       }
                       className="sessionInformationContainer">
@@ -140,7 +169,7 @@ export default function CompletedSessionDetails(props) {
                           {winningRestaurant.display_phone}
                         </Paragraph>
                         <Paragraph>
-                          <ClockCircleTwoTone className="site-result-demo-error-icon" />
+                          <StarTwoTone className="site-result-demo-error-icon" />
                           <Rate
                               allowHalf
                               disabled
@@ -166,14 +195,14 @@ export default function CompletedSessionDetails(props) {
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>{winningRestaurant.hours[0].open[0].start}-{winningRestaurant.hours[0].open[0].end}</td>
-                                <td>{winningRestaurant.hours[0].open[1].start}-{winningRestaurant.hours[0].open[1].end}</td>
-                                <td>{winningRestaurant.hours[0].open[2].start}-{winningRestaurant.hours[0].open[2].end}</td>
-                                <td>{winningRestaurant.hours[0].open[3].start}-{winningRestaurant.hours[0].open[3].end}</td>
-                                <td>{winningRestaurant.hours[0].open[4].start}-{winningRestaurant.hours[0].open[4].end}</td>
-                                <td>{winningRestaurant.hours[0].open[5].start}-{winningRestaurant.hours[0].open[5].end}</td>
-                                <td>{winningRestaurant.hours[0].open[6].start}-{winningRestaurant.hours[0].open[6].end}</td>
+                              <tr>                            
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[0].start)}-{toStandardTime(winningRestaurant.hours[0].open[0].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[1].start)}-{toStandardTime(winningRestaurant.hours[0].open[1].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[2].start)}-{toStandardTime(winningRestaurant.hours[0].open[2].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[3].start)}-{toStandardTime(winningRestaurant.hours[0].open[3].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[4].start)}-{toStandardTime(winningRestaurant.hours[0].open[4].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[5].start)}-{toStandardTime(winningRestaurant.hours[0].open[5].end)}</td>
+                                <td>{toStandardTime(winningRestaurant.hours[0].open[6].start)}-{toStandardTime(winningRestaurant.hours[0].open[6].end)}</td>
                               </tr>
                             </tbody>
                           </Table>
@@ -239,7 +268,7 @@ export default function CompletedSessionDetails(props) {
                           {winningRestaurant.display_phone}
                         </Paragraph>
                         <Paragraph>
-                          <ClockCircleTwoTone className="site-result-demo-error-icon" />
+                          <StarOutlined className="site-result-demo-error-icon" />
                           <Rate
                               allowHalf
                               disabled
