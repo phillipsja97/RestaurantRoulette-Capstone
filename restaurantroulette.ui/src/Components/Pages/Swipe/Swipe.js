@@ -7,6 +7,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardWrapper } from 'react-swipeable-cards';
 import Media from 'react-media';
+import { Typography } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import MyEndCard from '../../Shared/EndCard/EndCard';
 import queryParameterData from '../../../Helpers/Data/queryParameterData';
 import acceptableRestaurantsData from '../../../Helpers/Data/acceptableRestaurantsData';
@@ -15,6 +17,8 @@ import yelpData from '../../../Helpers/Data/yelpData';
 import SwipeCard from '../../Shared/SwipeCard/SwipeCard';
 // import LoadingScreen from 'public\circleMotion-unscreen.gif';
 import './Swipe.scss';
+
+const { Title } = Typography;
 
 export default function Swipe(props) {
   const [parameters, setParameters] = useState([]);
@@ -269,9 +273,14 @@ export default function Swipe(props) {
   const desktopRender = () => {
     return <div className="swipePage">
             {(!loading)
-              ? <CardWrapper addEndCard={getEndCard.bind(this)}>
-                  {renderCards()}
-                </CardWrapper>
+              ? <div className="swipeSection">
+                <div className="swipeTitle">
+                  <Title level={2}><spantitle><ArrowLeftOutlined /> No</spantitle>Swipe<spantitle2>Yes <ArrowRightOutlined /></spantitle2></Title>
+                </div>
+                  <CardWrapper addEndCard={getEndCard.bind(this)}>
+                    {renderCards()}
+                  </CardWrapper>
+                </div>
               : <div className="swipeLoading">
                   <img src={'https://i.pinimg.com/originals/c4/cb/9a/c4cb9abc7c69713e7e816e6a624ce7f8.gif'} className="loadingImage" alt="loading" />
                 </div>
